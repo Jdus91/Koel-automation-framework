@@ -28,7 +28,7 @@ public class LoginPage extends BasePage {
 
     //Fluent interface
     public LoginPage provideEmail(String email) {
-        emailField.sendKeys(email);
+    emailField.sendKeys(email);
         return this;
     }
 
@@ -38,14 +38,15 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage clickSubmit() {
-        click(submitBtn);
+       click(submitBtn);
         return this;
     }
 
-    public void assertLoginFailed() {
+    public boolean assertLoginFailed() {
         // Wait for the 'class' attribute of the loginFormContainer to contain "error".
         // This is the assertion for failed login.
         wait.until(ExpectedConditions.attributeContains(loginFormContainer, "class", "error"));
+        return false;
     }
 
     public void assertLoginFailed2() {

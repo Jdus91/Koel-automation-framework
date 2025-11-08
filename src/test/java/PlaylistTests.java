@@ -2,6 +2,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagefactory.HomePage;
 import pagefactory.LoginPage;
+import stepDefinition.BaseTest;
 
 public class PlaylistTests extends BaseTest {
     @Test

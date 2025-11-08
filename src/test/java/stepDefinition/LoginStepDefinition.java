@@ -18,7 +18,7 @@ import pagefactory.LoginPage;
 
 import java.time.Duration;
 
-public class LoginStepDefinition {
+public class LoginStepDefinition extends BaseTest{
     WebDriver driver;
     WebDriverWait wait;
 
@@ -115,6 +115,70 @@ public class LoginStepDefinition {
         // Assertion 2: Check that the form element is still visible.
         Assert.assertTrue(driver.findElement(formLocator).isDisplayed(),
                 "Login form is not displayed, suggesting the page content changed.");
+    }
+    @And("I navigate to {string}")
+    public void iNavigateTo(String pageName) {
+        HomePage homePage = new HomePage(driver);
+        homePage.navigateToPage(pageName);
+    }
+
+    @And("I navigate to Favorites page")
+    public void iNavigateToFavoritesPage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.navigateToPage("Favorites");
+    }
+
+    @And("I log out")
+    public void iLogOut() {
+        // AC 4, 6: Logs the user out
+        HomePage homePage = new HomePage(driver);
+        homePage.logOut();
+    }
+
+    @Then("I am taken to the {string} page")
+    public void iAmTakenToThePage(String expectedPage) {
+        // AC 3 & 4: Checks if the URL/element matches the page
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.assertPageLoaded(expectedPage),
+                "Assertion Failed: Expected to land on the '" + expectedPage + "' page.");
+    }
+
+    @When("I update my password from {string} to {string}")
+    public void iUpdateMyPasswordFromTo(String oldPassword, String newPassword) {
+        // AC 6: Simulates the action of updating the password
+        HomePage homePage = new HomePage(driver);
+        homePage.updatePassword(oldPassword, newPassword);
+    }
+
+    @When("I update my email from {string} to {string} using password {string}")
+    public void iUpdateMyEmailFromToUsingPassword(String oldEmail, String newEmail, String password) {
+        // AC 5: Simulates the action of updating the email
+        HomePage homePage = new HomePage(driver);
+        homePage.updateEmail(newEmail, password);
+    }
+
+    @Then("I can log in with {string} and password {string}")
+    public void iCanLogInWithAndPassword(String email, String password) {
+        // This is a full re-login, starting from the login page
+        driver.get("https://qa.koel.app");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.provideEmail(email).providePassword(password).clickSubmit();
+
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed(),
+                "Assertion Failed: Login with NEW credentials failed.");
+    }
+
+    @And("I cannot log in with {string} and password {string}")
+    public void iCannotLogInWithAndPassword(String email, String password) {
+        // This is a full re-login, starting from the login page
+        driver.get("https://qa.koel.app");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.provideEmail(email).providePassword(password).clickSubmit();
+
+        // Assert that the login FAILED (the error shake appeared)
+        Assert.assertTrue(loginPage.assertLoginFailed(),
+                "Assertion Failed: Login with OLD credentials should have failed, but it succeeded.");
     }
 
     @After

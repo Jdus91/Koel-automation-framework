@@ -1,6 +1,7 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagefactory.RegistrationPage;
+import stepDefinition.BaseTest;
 
 public class RegistrationTest extends BaseTest {
     @Test

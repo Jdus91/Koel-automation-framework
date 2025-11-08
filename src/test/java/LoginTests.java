@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import pagefactory.LoginPage;
 import pagefactory.HomePage;
 import DataProvider.TestDataProviders;
+import stepDefinition.BaseTest;
 
 public class LoginTests extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(LoginTests.class);

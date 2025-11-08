@@ -15,6 +15,32 @@ public class HomePage extends BasePage {
     @FindBy(css = "img.avatar")
     WebElement userAvatarIcon;
 
+    @FindBy(css = "a[data-testid='btn-logout']")
+    WebElement logoutButton;
+
+    @FindBy(css = "a[data-testid='view-profile-link']")
+    WebElement profileLink;
+
+    // --- Navigation Locators (AC 3, 4) ---
+    // Universal locator for sidebar navigation items (All Songs, Albums, Favorites, etc.)
+    private final String navLinkXpath = "//nav//a[contains(.,'%s')]";
+
+    // --- Profile & Preferences Form Locators (AC 5, 6) ---
+    @FindBy(css = "form[data-testid='update-profile-form'] input[name='email']")
+    WebElement profileEmailField;
+
+    @FindBy(css = "form[data-testid='update-profile-form'] input[name='password']")
+    WebElement currentPasswordField; // Used for BOTH email and password changes
+
+    @FindBy(css = "form[data-testid='update-profile-form'] input[name='new_password']")
+    WebElement newPasswordField;
+
+    @FindBy(css = "form[data-testid='update-profile-form'] button[type='submit']")
+    WebElement profileSaveButton;
+
+    @FindBy(xpath = "//button[@aria-label='Close']")
+    WebElement updateProfileModalCloseButton;
+
     @FindBy(css = "input[type='search']")
     WebElement searchField;
 
@@ -49,6 +75,66 @@ public class HomePage extends BasePage {
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
+    }
+
+    public void logOut() {
+        click(userAvatarIcon);
+        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        click(logoutButton);
+    }
+
+    // --- Navigation Methods (AC 3, 4) ---
+    public void navigateToPage(String pageName) {
+        // This dynamic locator handles "Favorites", "All Songs", "Albums", etc. (AC 3)
+        By locator = By.xpath(String.format("//nav//a[text()='%s']", pageName));
+        // Wait for the element to be clickable before attempting to find it and click
+        WebElement link = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        click(link);
+    }
+
+    public boolean assertPageLoaded(String expectedPage) {
+        // Asserts URL contains the page name (e.g., "favorites") (AC 4)
+        String expectedUrlPart = expectedPage.toLowerCase().replace(" ", "");
+        try {
+            wait.until(ExpectedConditions.urlContains(expectedUrlPart));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // --- Account Update Methods (AC 5, 6) ---
+    public void openProfileSettings() {
+        click(userAvatarIcon);
+        wait.until(ExpectedConditions.visibilityOf(profileLink));
+        click(profileLink);
+        wait.until(ExpectedConditions.elementToBeClickable(profileSaveButton));
+        wait.until(ExpectedConditions.visibilityOf(currentPasswordField));
+    }
+
+    public void updatePassword(String oldPassword, String newPassword) {
+        openProfileSettings();
+        currentPasswordField.sendKeys(oldPassword);
+        newPasswordField.sendKeys(newPassword);
+        click(profileSaveButton);
+    }
+
+    public void updateEmail(String newEmail, String password) {
+        openProfileSettings();
+        currentPasswordField.sendKeys(password);
+        profileEmailField.clear();
+        profileEmailField.sendKeys(newEmail);
+        click(profileSaveButton);
+    }
+
+    public boolean isSuccessMessageDisplayed() {
+        // Used to confirm AC 5 and 6 were successful
+        try {
+            wait.until(ExpectedConditions.visibilityOf(notificationSuccess));
+            return notificationSuccess.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void searchSong(String songName) {
