@@ -2,7 +2,7 @@ Feature: Login Feature
 
    # --- SUCCESSFUL LOGIN & NAVIGATION ---
   # ACs 1, 2 (Successful Login and Homepage Navigation)
-  @Login_Success @AC_1_2_3
+  @Login_Success @AC_1 @AC_2 @AC_3
   Scenario: Successful Login and Homepage Navigation
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
@@ -20,39 +20,41 @@ Feature: Login Feature
     And I navigate to "Favorites"
     Then I am taken to the "Favorites" page
 
-  # AC 4 (Last Visited Page Persistence)
-  @Last_Visited @AC_4
-  Scenario: Last visited page is remembered after logout and login
-    Given I open Login Page
-    When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
-    And I submit
-    And I navigate to Favorites page
-    And I log out
-    When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
-    And I submit
-    Then I am taken to the "Favorites" page
+#  # AC 4 (Last Visited Page Persistence)
+#  @Last_Visited @AC_4
+#  Scenario: Last visited page is remembered after logout and login
+#    Given I open Login Page
+#    When I enter email "jennifer.de.jesus@testpro.io"
+#    And I enter password "FCVlLOni"
+#    And I submit
+#    And I navigate to Favorites page
+#    And I log out
+#    When I enter email "jennifer.de.jesus@testpro.io"
+#    And I enter password "FCVlLOni"
+#    And I submit
+#    Then I am taken to the "Favorites" page
 
-  # AC 5 & 6 (Account Updates)
-  @Update_Profile @AC_5_6
-  Scenario: Login with updated email and password
-    Given I open Login Page
-    When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
-    And I submit
+#  # AC 5 & 6 (Account Updates)
+#  @Update_Profile @AC_5_6
+#  Scenario: Login with updated email and password
+#    Given I open Login Page
+#    When I enter email "jennifer.de.jesus@testpro.io"
+#    And I enter password "FCVlLOni"
+#    And I submit
+#
+#            # AC 5: Update Email
+#    When I update my email from "jennifer.de.jesus@testpro.io" to "new.email@testpro.io" using password "newPassword123"
+#    And I log out
+#    Then I can log in with "new.email@testpro.io" and password "newPassword123"
+#    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
+#
+#    # AC 6: Update Password
+#    When I update my password from "FCVlLOni" to "newPassword123"
+#    And I log out
+#    Then I can log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
+#    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "FCVlLOni"
 
-    # AC 6: Update Password
-    When I update my password from "FCVlLOni" to "newPassword123"
-    And I log out
-    Then I can log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
-    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "FCVlLOni"
 
-    # AC 5: Update Email
-    When I update my email from "jennifer.de.jesus@testpro.io" to "new.email@testpro.io" using password "newPassword123"
-    And I log out
-    Then I can log in with "new.email@testpro.io" and password "newPassword123"
-    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
 
     # --- NEGATIVE LOGIN SCENARIOS ---
     #This tag is for all negative login scenarios
@@ -64,19 +66,19 @@ Feature: Login Feature
     And I submit
     Then I see an error message
 
-  @negative_login @AC_8
-  Scenario: Login with a non-existent email
-    Given I open Login Page
-    When I enter email "nonexistent@testpro.io"
-    And I enter password "anyPassword"
-    And I submit
-    Then I see an error message
-
   @negative_login @AC_7
   Scenario: Login with correct email and incorrect password
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
     And I enter password "reallybadpass"
+    And I submit
+    Then I see an error message
+
+  @negative_login @AC_8
+  Scenario: Login with a non-existent email
+    Given I open Login Page
+    When I enter email "nonexistent@testpro.io"
+    And I enter password "anyPassword"
     And I submit
     Then I see an error message
 

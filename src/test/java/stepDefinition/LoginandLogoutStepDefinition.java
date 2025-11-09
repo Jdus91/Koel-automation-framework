@@ -18,7 +18,7 @@ import pagefactory.LoginPage;
 
 import java.time.Duration;
 
-public class LoginStepDefinition extends BaseTest{
+public class LoginandLogoutStepDefinition extends BaseTest{
     WebDriver driver;
     WebDriverWait wait;
 
@@ -181,11 +181,41 @@ public class LoginStepDefinition extends BaseTest{
                 "Assertion Failed: Login with OLD credentials should have failed, but it succeeded.");
     }
 
+    // NEW steps to assert presence/adjacency and pages
+    @Then("I am on the Home page")
+    public void iAmOnTheHomePage() {
+        // URL contains #!/home and avatar visible
+        Assert.assertTrue(driver.getCurrentUrl().contains("/#!/home"));
+        HomePage home = new HomePage(driver);
+        Assert.assertTrue(home.getUserAvatar().isDisplayed(), "Avatar not visible on Home");
+    }
+
+    @Then("I should see the {string} control")
+    public void iShouldSeeTheControl(String label) {
+        HomePage home = new HomePage(driver);
+        Assert.assertTrue(home.isHeaderControlVisible(label),
+                "Expected to see control: " + label);
+    }
+
+    @Then("the {string} control is next to the {string} control")
+    public void controlIsNextToControl(String right, String left) {
+        HomePage home = new HomePage(driver);
+        Assert.assertTrue(home.areHeaderControlsAdjacent(left, right),
+                "Expected '" + right + "' next to '" + left + "'");
+    }
+
+    @Then("I am on the Login page")
+    public void iAmOnTheLoginPageAssert() {
+        // Koel login is the base route; accept either / or /#!/login if your app uses hash routing
+        String url = driver.getCurrentUrl();
+        boolean looksLikeLogin = url.equals("https://qa.koel.app/") ||
+                url.contains("/#!/login");
+        Assert.assertTrue(looksLikeLogin, "Not on Login page. URL: " + url);
+    }
     @After
     public void closeBrowser() {
-        if (driver != null) {
-            driver.quit();
+            if (driver != null) {
+                driver.quit();
+            }
         }
     }
-}
-

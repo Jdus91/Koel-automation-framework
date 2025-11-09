@@ -46,7 +46,7 @@ public class LoginPage extends BasePage {
         // Wait for the 'class' attribute of the loginFormContainer to contain "error".
         // This is the assertion for failed login.
         wait.until(ExpectedConditions.attributeContains(loginFormContainer, "class", "error"));
-        return false;
+        return true;
     }
 
     public void assertLoginFailed2() {

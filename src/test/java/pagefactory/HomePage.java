@@ -21,6 +21,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "a[data-testid='view-profile-link']")
     WebElement profileLink;
 
+    @FindBy(css = "header, .header, .app-header")
+    WebElement headerBar;
+
     // --- Navigation Locators (AC 3, 4) ---
     // Universal locator for sidebar navigation items (All Songs, Albums, Favorites, etc.)
     private final String navLinkXpath = "//nav//a[contains(.,'%s')]";
@@ -135,6 +138,47 @@ public class HomePage extends BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isHeaderControlVisible(String label) {
+        // Support both text and data-testid lookups
+        // For your Koel build we already have reliable elements; also handle literal text just in case
+        try {
+            if ("Log student out".equalsIgnoreCase(label) || "Log out".equalsIgnoreCase(label)) {
+                wait.until(ExpectedConditions.visibilityOf(logoutButton));
+                return logoutButton.isDisplayed();
+            }
+            if ("Profile".equalsIgnoreCase(label)) {
+                wait.until(ExpectedConditions.visibilityOf(profileLink));
+                return profileLink.isDisplayed();
+            }
+            // Fallback: text search
+            By generic = By.xpath("//header//*[normalize-space()='" + label + "']");
+            return !driver.findElements(generic).isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean areHeaderControlsAdjacent(String leftLabel, String rightLabel) {
+        // Use the known elements if labels match; otherwise a light DOM check
+        WebElement left = "Profile".equalsIgnoreCase(leftLabel) ? profileLink
+                : driver.findElement(By.xpath("//header//*[normalize-space()='" + leftLabel + "']"));
+        WebElement right = ("Log student out".equalsIgnoreCase(rightLabel) || "Log out".equalsIgnoreCase(rightLabel))
+                ? logoutButton
+                : driver.findElement(By.xpath("//header//*[normalize-space()='" + rightLabel + "']"));
+
+        // Same parent and right comes after left among siblings
+        WebElement parent = left.findElement(By.xpath(".."));
+        if (!parent.equals(right.findElement(By.xpath("..")))) return false;
+
+        var siblings = parent.findElements(By.xpath("./*"));
+        int li = -1, ri = -1;
+        for (int i = 0; i < siblings.size(); i++) {
+            if (siblings.get(i).equals(left)) li = i;
+            if (siblings.get(i).equals(right)) ri = i;
+        }
+        return li >= 0 && ri == li + 1;
     }
 
     public void searchSong(String songName) {
