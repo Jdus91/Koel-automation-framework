@@ -20,6 +20,27 @@ Feature: Login Feature
     And I navigate to "Favorites"
     Then I am taken to the "Favorites" page
 
+    # AC 4 (Last Visited Page Persistence)
+    @Last_Visited @AC_4
+    Scenario: Last visited page is remembered after logout and login
+    # 1. First, log in and set the application state
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni"
+    And I submit
+    # 2. Navigate to a non-default page to set the "last visited" cookie/session
+    When I navigate to "Favorites"
+    And I am taken to the "Favorites" page
+    # 3. Log out.
+    And I log out
+    # 4. Log in again. After logout, you should be back on the Login Page.
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni"
+    And I submit
+    # 5. This is the key assertion for AC 4.
+    # Instead of the homepage, we should land on "Favorites".
+    Then I am taken to the "Favorites" page
+
 #  # AC 4 (Last Visited Page Persistence)
 #  @Last_Visited @AC_4
 #  Scenario: Last visited page is remembered after logout and login

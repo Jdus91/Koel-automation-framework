@@ -81,4 +81,10 @@ public class LoginPage extends BasePage {
         Assert.assertTrue(passwordField.isDisplayed(),
                 "Password input element is not displayed, suggesting the page content changed.");
     }
+
+    public boolean isPageVisible() {
+        wait.until(ExpectedConditions.visibilityOf(loginFormContainer));
+
+        return loginFormContainer.isDisplayed();
+    }
 }

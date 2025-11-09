@@ -133,6 +133,9 @@ public class LoginandLogoutStepDefinition extends BaseTest{
         // AC 4, 6: Logs the user out
         HomePage homePage = new HomePage(driver);
         homePage.logOut();
+
+        LoginPage loginPage = new LoginPage(driver);
+        Assert.assertTrue(loginPage.isPageVisible());
     }
 
     @Then("I am taken to the {string} page")

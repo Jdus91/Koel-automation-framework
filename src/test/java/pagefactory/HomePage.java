@@ -81,7 +81,6 @@ public class HomePage extends BasePage {
     }
 
     public void logOut() {
-        click(userAvatarIcon);
         wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         click(logoutButton);
     }
