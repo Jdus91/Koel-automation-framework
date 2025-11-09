@@ -41,20 +41,6 @@ Feature: Login Feature
     # Instead of the homepage, we should land on "Favorites".
     Then I am taken to the "Favorites" page
 
-#  # AC 4 (Last Visited Page Persistence)
-#  @Last_Visited @AC_4
-#  Scenario: Last visited page is remembered after logout and login
-#    Given I open Login Page
-#    When I enter email "jennifer.de.jesus@testpro.io"
-#    And I enter password "FCVlLOni"
-#    And I submit
-#    And I navigate to Favorites page
-#    And I log out
-#    When I enter email "jennifer.de.jesus@testpro.io"
-#    And I enter password "FCVlLOni"
-#    And I submit
-#    Then I am taken to the "Favorites" page
-
 #  # AC 5 & 6 (Account Updates)
 #  @Update_Profile @AC_5_6
 #  Scenario: Login with updated email and password
@@ -74,8 +60,6 @@ Feature: Login Feature
 #    And I log out
 #    Then I can log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
 #    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "FCVlLOni"
-
-
 
     # --- NEGATIVE LOGIN SCENARIOS ---
     #This tag is for all negative login scenarios
