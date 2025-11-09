@@ -16,7 +16,7 @@ public class LoginTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         HomePage homePage = new HomePage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
@@ -69,7 +69,7 @@ public class LoginTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
 
         loginPage.provideEmail("") // Blank email
-                .providePassword("FCVlLOni")
+                .providePassword("FCVlLOni12!")
                 .clickSubmit();
 
         // Assertion: Verify the submission was blocked, focused on the email field (first required field)

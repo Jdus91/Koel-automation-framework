@@ -11,7 +11,7 @@ public class PlaylistTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         HomePage homePage = new HomePage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
 
@@ -32,7 +32,7 @@ public class PlaylistTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         HomePage homePage = new HomePage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
 
@@ -51,7 +51,7 @@ public class PlaylistTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         HomePage homePage = new HomePage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
 
@@ -70,7 +70,7 @@ public class PlaylistTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         HomePage homePage = new HomePage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
 
         String playlistId = "Jennys Playlist";
@@ -90,7 +90,7 @@ public class PlaylistTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         HomePage homePage = new HomePage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
 
         String playlistId = "Jennys fourth Playlist";

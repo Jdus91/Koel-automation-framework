@@ -6,7 +6,7 @@ Feature: Login Feature
   Scenario: Successful Login and Homepage Navigation
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
+    And I enter password "FCVlLOni12!"
     And I submit
     Then I am logged in
 
@@ -15,7 +15,7 @@ Feature: Login Feature
   Scenario: User can navigate to all pages after login
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
+    And I enter password "FCVlLOni12!"
     And I submit
     And I navigate to "Favorites"
     Then I am taken to the "Favorites" page
@@ -26,7 +26,7 @@ Feature: Login Feature
     # 1. First, log in and set the application state
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
+    And I enter password "FCVlLOni12!"
     And I submit
     # 2. Navigate to a non-default page to set the "last visited" cookie/session
     When I navigate to "Favorites"
@@ -35,7 +35,7 @@ Feature: Login Feature
     And I log out
     # 4. Log in again. After logout, you should be back on the Login Page.
     When I enter email "jennifer.de.jesus@testpro.io"
-    And I enter password "FCVlLOni"
+    And I enter password "FCVlLOni12!"
     And I submit
     # 5. This is the key assertion for AC 4.
     # Instead of the homepage, we should land on "Favorites".
@@ -46,7 +46,7 @@ Feature: Login Feature
 #  Scenario: Login with updated email and password
 #    Given I open Login Page
 #    When I enter email "jennifer.de.jesus@testpro.io"
-#    And I enter password "FCVlLOni"
+#    And I enter password "FCVlLOni12!"
 #    And I submit
 #
 #            # AC 5: Update Email
@@ -56,10 +56,10 @@ Feature: Login Feature
 #    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
 #
 #    # AC 6: Update Password
-#    When I update my password from "FCVlLOni" to "newPassword123"
+#    When I update my password from "FCVlLOni12!" to "newPassword123"
 #    And I log out
 #    Then I can log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
-#    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "FCVlLOni"
+#    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "FCVlLOni12!"
 
     # --- NEGATIVE LOGIN SCENARIOS ---
     #This tag is for all negative login scenarios
@@ -91,7 +91,7 @@ Feature: Login Feature
   Scenario: Login with incorrect email format and correct password
     Given I open Login Page
     When I enter email "notanemail@testpro.com"
-    And I enter password "FCVlLOni"
+    And I enter password "FCVlLOni12!"
     And I submit
     Then I see an error message
 
@@ -115,6 +115,6 @@ Feature: Login Feature
   Scenario: Login with blank email and correct password
     Given I open Login Page
     When I enter email ""
-    And I enter password "FCVlLOni"
+    And I enter password "FCVlLOni12!"
     And I submit
     Then I see the email required field validation message

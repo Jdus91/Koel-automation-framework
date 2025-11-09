@@ -17,7 +17,7 @@ public class SongTest extends BaseTest {
         HomePage homePage = new HomePage(getDriver());
         AllSongsPage allSongs = new AllSongsPage(getDriver());
 
-        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni").clickSubmit();
+        loginPage.provideEmail("jennifer.de.jesus@testpro.io").providePassword("FCVlLOni12!").clickSubmit();
 
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
 
