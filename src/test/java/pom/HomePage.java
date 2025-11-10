@@ -63,7 +63,7 @@ public class HomePage extends BasePage {
     }
 
     public void openPlaylist(String playlistName) {
-        WebElement playlist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href, '/playlist/105750')]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href, '/playlist/105750')]")));
         doubleClick(playlistLocatorById());
     }
 
