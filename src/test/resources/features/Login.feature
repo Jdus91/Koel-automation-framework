@@ -21,8 +21,8 @@ Feature: Login Feature
     Then I am taken to the "Favorites" page
 
     # AC 4 (Last Visited Page Persistence)
-    @Last_Visited @AC_4
-    Scenario: Last visited page is remembered after logout and login
+  @Last_Visited @AC_4
+  Scenario: Last visited page is remembered after logout and login
     # 1. First, log in and set the application state
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
@@ -41,19 +41,30 @@ Feature: Login Feature
     # Instead of the homepage, we should land on "Favorites".
     Then I am taken to the "Favorites" page
 
-#  # AC 5 & 6 (Account Updates)
-#  @Update_Profile @AC_5_6
-#  Scenario: Login with updated email and password
-#    Given I open Login Page
-#    When I enter email "jennifer.de.jesus@testpro.io"
-#    And I enter password "FCVlLOni12!"
-#    And I submit
-#
-#            # AC 5: Update Email
-#    When I update my email from "jennifer.de.jesus@testpro.io" to "new.email@testpro.io" using password "newPassword123"
-#    And I log out
-#    Then I can log in with "new.email@testpro.io" and password "newPassword123"
-#    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
+    # AC 5 Email update validation
+  @Update_Email @AC_5
+  Scenario: Update Email and log in
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    And I am logged in
+    When profile icon is available
+    And I click profile icon
+    When profile and preferences form appears
+    And I enter new email in profile and preferences form "jennifer.de.bademail@testpro.io"
+    And I enter current password in profile and preferences form "FCVlLOni12!"
+    When I click save on profile and preferences form a "Profile updated." message appears
+    And I log out
+    When I enter email "jennifer.de.bademail@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    And I am logged in
+    And I log out
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I see an error message
 #
 #    # AC 6: Update Password
 #    When I update my password from "FCVlLOni12!" to "newPassword123"

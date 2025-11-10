@@ -76,11 +76,9 @@ public class LoginandLogoutStepDefinition extends BaseTest{
     @Then("I see an error message")
     public void iSeeAnErrorMessage() {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.assertLoginFailed();
-        //By formLocator = By.xpath("//*[@id='app']/div/div/form");
-        //wait.until(ExpectedConditions.attributeContains(formLocator, "class", "error"));
-        //Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='app']/div/div/form"))).isDisplayed());
+        Assert.assertTrue(loginPage.assertLoginFailed(),"Error message not found.");
     }
+
     @Then("I see the email required field validation message")
     public void iSeeTheEmailRequiredFieldValidationMessage() {
         // 1. Define the expected Login Page URL (ensure this is correct)
@@ -153,12 +151,26 @@ public class LoginandLogoutStepDefinition extends BaseTest{
         homePage.updatePassword(oldPassword, newPassword);
     }
 
-    @When("I update my email from {string} to {string} using password {string}")
-    public void iUpdateMyEmailFromToUsingPassword(String oldEmail, String newEmail, String password) {
+    @And ("I enter new email in profile and preferences form {string}")
+    public void iUpdateMyEmailInProfileAndPreferencesForm(String newEmail) {
         // AC 5: Simulates the action of updating the email
         HomePage homePage = new HomePage(driver);
-        homePage.updateEmail(newEmail, password);
+        homePage.updateEmailFieldInProfileAndPreferencesForm(newEmail);
     }
+
+    @And ("I enter current password in profile and preferences form {string}")
+    public void iEnterMyCurrentPasswordInProfileAndPreferencesForm(String currentPassword) {
+        // AC 5: Simulates the action of entering the current password
+        HomePage homePage = new HomePage(driver);
+        homePage.enterMyCurrentPasswordInProfileAndPreferencesForm(currentPassword);
+    }
+
+    @When ("I click save on profile and preferences form a {string} message appears")
+    public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage){
+        HomePage homePage = new HomePage(driver);
+        homePage.IClickSaveButtonInProfileAndPreferencesForm(successMessage);
+    }
+
 
     @Then("I can log in with {string} and password {string}")
     public void iCanLogInWithAndPassword(String email, String password) {
@@ -215,6 +227,27 @@ public class LoginandLogoutStepDefinition extends BaseTest{
                 url.contains("/#!/login");
         Assert.assertTrue(looksLikeLogin, "Not on Login page. URL: " + url);
     }
+
+    //New step definitions for AC5
+
+    @When("profile icon is available")
+    public void profileIconIsAvailable(){
+        HomePage homepage = new HomePage(driver);
+        Assert.assertTrue(homepage.profileSettingsLinkAvailable(), "Profile icon not available.");
+    }
+
+    @And("I click profile icon")
+    public void clickProfileIcon(){
+        HomePage homePage = new HomePage(driver);
+        homePage.openProfileSettings();
+    }
+    @When("profile and preferences form appears")
+    public void profileAndPreferencesFormIsDisplayed(){
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.profileSettingsFormAvailable(), "Profile and Preferences form not available.");
+
+    }
+
     @After
     public void closeBrowser() {
             if (driver != null) {
