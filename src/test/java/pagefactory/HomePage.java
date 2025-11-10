@@ -6,6 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.time.Duration;
+import java.util.Objects;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver givenDriver) {
@@ -29,16 +34,20 @@ public class HomePage extends BasePage {
     private final String navLinkXpath = "//nav//a[contains(.,'%s')]";
 
     // --- Profile & Preferences Form Locators (AC 5, 6) ---
+
+    @FindBy(css = "form[data-testid='update-profile-form']")
+    WebElement profileForm;
+
     @FindBy(css = "form[data-testid='update-profile-form'] input[name='email']")
     WebElement profileEmailField;
 
-    @FindBy(css = "form[data-testid='update-profile-form'] input[name='password']")
+    @FindBy(css = "form[data-testid='update-profile-form'] input[name='current_password']")
     WebElement currentPasswordField; // Used for BOTH email and password changes
 
     @FindBy(css = "form[data-testid='update-profile-form'] input[name='new_password']")
     WebElement newPasswordField;
 
-    @FindBy(css = "form[data-testid='update-profile-form'] button[type='submit']")
+    @FindBy(css = "form[data-testid='update-profile-form'] button[type='submit'][class='btn-submit']")
     WebElement profileSaveButton;
 
     @FindBy(xpath = "//button[@aria-label='Close']")
@@ -81,8 +90,8 @@ public class HomePage extends BasePage {
     }
 
     public void logOut() {
-        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        click(logoutButton);
+       wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+       click(logoutButton);
     }
 
     // --- Navigation Methods (AC 3, 4) ---
@@ -104,14 +113,20 @@ public class HomePage extends BasePage {
             return false;
         }
     }
-
+    public boolean profileSettingsLinkAvailable() {
+        wait.until(ExpectedConditions.visibilityOf(userAvatarIcon));
+        return userAvatarIcon.isDisplayed();
+    }
     // --- Account Update Methods (AC 5, 6) ---
     public void openProfileSettings() {
-        click(userAvatarIcon);
-        wait.until(ExpectedConditions.visibilityOf(profileLink));
-        click(profileLink);
-        wait.until(ExpectedConditions.elementToBeClickable(profileSaveButton));
-        wait.until(ExpectedConditions.visibilityOf(currentPasswordField));
+        if (profileSettingsLinkAvailable()) {
+            click(profileLink);
+        }
+    }
+
+    public boolean profileSettingsFormAvailable() {
+        wait.until(ExpectedConditions.visibilityOf(profileForm));
+        return profileForm.isDisplayed();
     }
 
     public void updatePassword(String oldPassword, String newPassword) {
@@ -121,13 +136,33 @@ public class HomePage extends BasePage {
         click(profileSaveButton);
     }
 
-    public void updateEmail(String newEmail, String password) {
-        openProfileSettings();
-        currentPasswordField.sendKeys(password);
+    public void updateEmailFieldInProfileAndPreferencesForm(String newEmail) {
+        wait.until(ExpectedConditions.visibilityOf(profileEmailField));
         profileEmailField.clear();
         profileEmailField.sendKeys(newEmail);
-        click(profileSaveButton);
     }
+
+    public void enterMyCurrentPasswordInProfileAndPreferencesForm(String currentPassword) {
+        wait.until(ExpectedConditions.visibilityOf(currentPasswordField));
+        currentPasswordField.clear();
+        currentPasswordField.sendKeys(currentPassword);
+    }
+    public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage) {
+        wait.until(ExpectedConditions.visibilityOf(profileSaveButton));
+        click(profileSaveButton);
+        wait.until(ExpectedConditions.visibilityOf(notificationSuccess));
+        Assert.assertEquals(successMessage, notificationSuccess.getText());
+
+        WebDriverWait _wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        _wait.until(ExpectedConditions.invisibilityOf(notificationSuccess));
+    }
+
+    public void updatePasswordFieldInProfileAndPreferencesForm(String newPassword) {
+        wait.until(ExpectedConditions.visibilityOf(newPasswordField));
+        newPasswordField.clear();
+        newPasswordField.sendKeys(newPassword);
+    }
+
 
     public boolean isSuccessMessageDisplayed() {
         // Used to confirm AC 5 and 6 were successful
