@@ -90,12 +90,6 @@ Feature: Login Feature
     And I enter password "FCVlLOni12!"
     And I submit
     Then I see an error message
-#
-#    # AC 6: Update Password
-#    When I update my password from "FCVlLOni12!" to "newPassword123"
-#    And I log out
-#    Then I can log in with "jennifer.de.jesus@testpro.io" and password "newPassword123"
-#    And I cannot log in with "jennifer.de.jesus@testpro.io" and password "FCVlLOni12!"
 
     # --- NEGATIVE LOGIN SCENARIOS ---
     #This tag is for all negative login scenarios
