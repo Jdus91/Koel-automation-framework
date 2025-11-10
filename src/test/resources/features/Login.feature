@@ -65,6 +65,31 @@ Feature: Login Feature
     And I enter password "FCVlLOni12!"
     And I submit
     Then I see an error message
+
+    # AC 6 Password update validation
+  @Update_Password @AC_6
+  Scenario: Update Password and log in
+    Given I open Login Page
+    When I enter email "jennifer.de.bademail@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    And I am logged in
+    When profile icon is available
+    And I click profile icon
+    When profile and preferences form appears
+    And I enter new password in profile and preferences form "badpassword!1"
+    And I enter current password in profile and preferences form "FCVlLOni12!"
+    When I click save on profile and preferences form a "Profile updated." message appears
+    And I log out
+    When I enter email "jennifer.de.bademail@testpro.io"
+    And I enter password "badpassword!1"
+    And I submit
+    And I am logged in
+    And I log out
+    When I enter email "jennifer.de.bademail@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I see an error message
 #
 #    # AC 6: Update Password
 #    When I update my password from "FCVlLOni12!" to "newPassword123"

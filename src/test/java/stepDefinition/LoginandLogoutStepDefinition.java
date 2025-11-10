@@ -18,7 +18,7 @@ import pagefactory.LoginPage;
 
 import java.time.Duration;
 
-public class LoginandLogoutStepDefinition extends BaseTest{
+public class LoginandLogoutStepDefinition extends BaseTest {
     WebDriver driver;
     WebDriverWait wait;
 
@@ -76,7 +76,7 @@ public class LoginandLogoutStepDefinition extends BaseTest{
     @Then("I see an error message")
     public void iSeeAnErrorMessage() {
         LoginPage loginPage = new LoginPage(driver);
-        Assert.assertTrue(loginPage.assertLoginFailed(),"Error message not found.");
+        Assert.assertTrue(loginPage.assertLoginFailed(), "Error message not found.");
     }
 
     @Then("I see the email required field validation message")
@@ -114,6 +114,7 @@ public class LoginandLogoutStepDefinition extends BaseTest{
         Assert.assertTrue(driver.findElement(formLocator).isDisplayed(),
                 "Login form is not displayed, suggesting the page content changed.");
     }
+
     @And("I navigate to {string}")
     public void iNavigateTo(String pageName) {
         HomePage homePage = new HomePage(driver);
@@ -151,22 +152,29 @@ public class LoginandLogoutStepDefinition extends BaseTest{
         homePage.updatePassword(oldPassword, newPassword);
     }
 
-    @And ("I enter new email in profile and preferences form {string}")
+    @And("I enter new email in profile and preferences form {string}")
     public void iUpdateMyEmailInProfileAndPreferencesForm(String newEmail) {
         // AC 5: Simulates the action of updating the email
         HomePage homePage = new HomePage(driver);
         homePage.updateEmailFieldInProfileAndPreferencesForm(newEmail);
     }
 
-    @And ("I enter current password in profile and preferences form {string}")
+    @And("I enter new password in profile and preferences form {string}")
+    public void iUpdateMyPasswordInProfileAndPreferencesForm(String newPassword) {
+        // AC 6: Simulates the action of updating the password
+        HomePage homePage = new HomePage(driver);
+        homePage.updatePasswordFieldInProfileAndPreferencesForm(newPassword);
+    }
+
+    @And("I enter current password in profile and preferences form {string}")
     public void iEnterMyCurrentPasswordInProfileAndPreferencesForm(String currentPassword) {
         // AC 5: Simulates the action of entering the current password
         HomePage homePage = new HomePage(driver);
         homePage.enterMyCurrentPasswordInProfileAndPreferencesForm(currentPassword);
     }
 
-    @When ("I click save on profile and preferences form a {string} message appears")
-    public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage){
+    @When("I click save on profile and preferences form a {string} message appears")
+    public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage) {
         HomePage homePage = new HomePage(driver);
         homePage.IClickSaveButtonInProfileAndPreferencesForm(successMessage);
     }
@@ -231,18 +239,19 @@ public class LoginandLogoutStepDefinition extends BaseTest{
     //New step definitions for AC5
 
     @When("profile icon is available")
-    public void profileIconIsAvailable(){
+    public void profileIconIsAvailable() {
         HomePage homepage = new HomePage(driver);
         Assert.assertTrue(homepage.profileSettingsLinkAvailable(), "Profile icon not available.");
     }
 
     @And("I click profile icon")
-    public void clickProfileIcon(){
+    public void clickProfileIcon() {
         HomePage homePage = new HomePage(driver);
         homePage.openProfileSettings();
     }
+
     @When("profile and preferences form appears")
-    public void profileAndPreferencesFormIsDisplayed(){
+    public void profileAndPreferencesFormIsDisplayed() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.profileSettingsFormAvailable(), "Profile and Preferences form not available.");
 
@@ -250,8 +259,8 @@ public class LoginandLogoutStepDefinition extends BaseTest{
 
     @After
     public void closeBrowser() {
-            if (driver != null) {
-                driver.quit();
-            }
+        if (driver != null) {
+            driver.quit();
         }
     }
+}

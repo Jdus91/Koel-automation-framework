@@ -157,14 +157,11 @@ public class HomePage extends BasePage {
         _wait.until(ExpectedConditions.invisibilityOf(notificationSuccess));
     }
 
-    public void updateEmailFieldInProfileAndPreferencesForm(String newEmail, String password) {
-        openProfileSettings();
-        currentPasswordField.sendKeys(password);
-        profileEmailField.clear();
-        profileEmailField.sendKeys(newEmail);
-        click(profileSaveButton);
+    public void updatePasswordFieldInProfileAndPreferencesForm(String newPassword) {
+        wait.until(ExpectedConditions.visibilityOf(newPasswordField));
+        newPasswordField.clear();
+        newPasswordField.sendKeys(newPassword);
     }
-
 
 
     public boolean isSuccessMessageDisplayed() {
