@@ -112,6 +112,7 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
     public boolean profileSettingsLinkAvailable() {
         wait.until(ExpectedConditions.visibilityOf(userAvatarIcon));
         return userAvatarIcon.isDisplayed();
@@ -119,20 +120,25 @@ public class HomePage extends BasePage {
 
     // --- Account Update Methods (AC 5, 6) ---
     public void openProfileSettings() {
-        if (profileSettingsLinkAvailable()) {
-            click(profileLink);
-        }
+        click(userAvatarIcon);
+        wait.until(ExpectedConditions.visibilityOf(profileLink));
+        click(profileLink);
+        wait.until(ExpectedConditions.elementToBeClickable(profileSaveButton));
+        wait.until(ExpectedConditions.visibilityOf(currentPasswordField));
     }
 
-    public boolean profileSettingsFormAvailable() {
-        wait.until(ExpectedConditions.visibilityOf(profileForm));
-        return profileForm.isDisplayed();
+    public void updatePassword(String oldPassword, String newPassword) {
+        openProfileSettings();
+        currentPasswordField.sendKeys(oldPassword);
+        newPasswordField.sendKeys(newPassword);
+        click(profileSaveButton);
     }
 
     public void updateEmailFieldInProfileAndPreferencesForm(String newEmail) {
         wait.until(ExpectedConditions.visibilityOf(profileEmailField));
         profileEmailField.clear();
         profileEmailField.sendKeys(newEmail);
+        click(profileSaveButton);
     }
 
     public void enterMyCurrentPasswordInProfileAndPreferencesForm(String currentPassword) {

@@ -174,13 +174,14 @@ public class LoginandLogoutStepDefinition extends BaseTest {
         homePage.openProfileSettings();
     }
 
-    @When("profile and preferences form appears")
-    public void profileAndPreferencesFormIsDisplayed() {
-        HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.profileSettingsFormAvailable(), "Profile and Preferences form not available.");
-
+    @Then("I am on the Login page")
+    public void iAmOnTheLoginPageAssert() {
+        // Koel login is the base route; accept either / or /#!/login if your app uses hash routing
+        String url = driver.getCurrentUrl();
+        boolean looksLikeLogin = url.equals("https://qa.koel.app/") ||
+                url.contains("/#!/login");
+        Assert.assertTrue(looksLikeLogin, "Not on Login page. URL: " + url);
     }
-
     @After
     public void closeBrowser() {
         if (driver != null) {
