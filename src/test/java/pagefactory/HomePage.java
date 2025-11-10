@@ -86,7 +86,6 @@ public class HomePage extends BasePage {
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
-
     }
 
     public void logOut() {
@@ -117,6 +116,7 @@ public class HomePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(userAvatarIcon));
         return userAvatarIcon.isDisplayed();
     }
+
     // --- Account Update Methods (AC 5, 6) ---
     public void openProfileSettings() {
         if (profileSettingsLinkAvailable()) {
@@ -127,13 +127,6 @@ public class HomePage extends BasePage {
     public boolean profileSettingsFormAvailable() {
         wait.until(ExpectedConditions.visibilityOf(profileForm));
         return profileForm.isDisplayed();
-    }
-
-    public void updatePassword(String oldPassword, String newPassword) {
-        openProfileSettings();
-        currentPasswordField.sendKeys(oldPassword);
-        newPasswordField.sendKeys(newPassword);
-        click(profileSaveButton);
     }
 
     public void updateEmailFieldInProfileAndPreferencesForm(String newEmail) {
@@ -147,6 +140,7 @@ public class HomePage extends BasePage {
         currentPasswordField.clear();
         currentPasswordField.sendKeys(currentPassword);
     }
+
     public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage) {
         wait.until(ExpectedConditions.visibilityOf(profileSaveButton));
         click(profileSaveButton);
@@ -161,58 +155,6 @@ public class HomePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(newPasswordField));
         newPasswordField.clear();
         newPasswordField.sendKeys(newPassword);
-    }
-
-
-    public boolean isSuccessMessageDisplayed() {
-        // Used to confirm AC 5 and 6 were successful
-        try {
-            wait.until(ExpectedConditions.visibilityOf(notificationSuccess));
-            return notificationSuccess.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public boolean isHeaderControlVisible(String label) {
-        // Support both text and data-testid lookups
-        // For your Koel build we already have reliable elements; also handle literal text just in case
-        try {
-            if ("Log student out".equalsIgnoreCase(label) || "Log out".equalsIgnoreCase(label)) {
-                wait.until(ExpectedConditions.visibilityOf(logoutButton));
-                return logoutButton.isDisplayed();
-            }
-            if ("Profile".equalsIgnoreCase(label)) {
-                wait.until(ExpectedConditions.visibilityOf(profileLink));
-                return profileLink.isDisplayed();
-            }
-            // Fallback: text search
-            By generic = By.xpath("//header//*[normalize-space()='" + label + "']");
-            return !driver.findElements(generic).isEmpty();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public boolean areHeaderControlsAdjacent(String leftLabel, String rightLabel) {
-        // Use the known elements if labels match; otherwise a light DOM check
-        WebElement left = "Profile".equalsIgnoreCase(leftLabel) ? profileLink
-                : driver.findElement(By.xpath("//header//*[normalize-space()='" + leftLabel + "']"));
-        WebElement right = ("Log student out".equalsIgnoreCase(rightLabel) || "Log out".equalsIgnoreCase(rightLabel))
-                ? logoutButton
-                : driver.findElement(By.xpath("//header//*[normalize-space()='" + rightLabel + "']"));
-
-        // Same parent and right comes after left among siblings
-        WebElement parent = left.findElement(By.xpath(".."));
-        if (!parent.equals(right.findElement(By.xpath("..")))) return false;
-
-        var siblings = parent.findElements(By.xpath("./*"));
-        int li = -1, ri = -1;
-        for (int i = 0; i < siblings.size(); i++) {
-            if (siblings.get(i).equals(left)) li = i;
-            if (siblings.get(i).equals(right)) ri = i;
-        }
-        return li >= 0 && ri == li + 1;
     }
 
     public void searchSong(String songName) {
@@ -238,9 +180,6 @@ public class HomePage extends BasePage {
     public void choosePlaylist(String playlistName) {
         WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class,'playlist') and normalize-space(text())='Jennys Playlist']")));
         click(playlist);
-        //public void choosePlaylist(String playlistName) {
-        //WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), '" + playlistName + "')]")));
-        //click(playlist);
     }
 
     public void chooseAllSongsList() {
@@ -248,51 +187,25 @@ public class HomePage extends BasePage {
     }
 
     public String getAddToPlaylistSuccessMsg() {
-        //WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.success.show")));
-        //return notificationSuccess.getText().trim();
         return findElement(notificationSuccess).getText();
     }
 
     public String getDeletePlaylistSuccessMsg() {
-        //WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.success.show")));
-        //return notificationSuccess.getText().trim();
         return findElement(notificationSuccess).getText();
     }
 
     public void openPlaylist(String playlistId) {
         doubleClick(currentPlaylist);
 
-
-        //public void openPlaylist(String playlistName) {
-        // WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        // By.xpath("//a[contains(.,'" + playlistName + "')]")));
-        //WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        //By.xpath("//a[text()='" + playlistName + "']")));
-        //doubleClick(playlistToOpen);
     }
         public void openPlaylist2 (String playlistId){
             doubleClick(currentPlaylist2);
 
-//public void openPlaylist2(String playlistName) {
-        //WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        //By.xpath("//a[contains(.,'" + playlistName + "')]")));
-        //WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        //By.xpath("//a[text()='" + playlistName + "']")));
-        //doubleClick(playlistToOpen);
-
-
-        //public void openPlaylist2(String playlistName) {
-        // doubleClick(currentPlaylist2);
-        //}
     }
 
     public void renamePlaylist(String newPlaylistName) {
-        //WebElement inputField = wait.until(ExpectedConditions.visibilityOf(playlistInputField));
-        //inputField.sendKeys(Keys.chord(Keys.CONTROL, "A", Keys.BACK_SPACE));
-        //inputField.sendKeys(newPlaylistName);
-        //inputField.sendKeys(Keys.ENTER);
         playlistInputField = findElement(playlistInputField);
         playlistInputField.sendKeys(Keys.chord(Keys.CONTROL, "A", Keys.BACK_SPACE));
         playlistInputField.sendKeys(newPlaylistName);
