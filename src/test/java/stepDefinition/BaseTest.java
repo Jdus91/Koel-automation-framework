@@ -15,9 +15,9 @@ import org.testng.annotations.Parameters;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
+//import java.net.URL;
 import java.time.Duration;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class BaseTest {
 
@@ -96,8 +96,8 @@ public class BaseTest {
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return new RemoteWebDriver(URI.create(gridUrl).toURL(), caps);
 
-            case "cloud":
-                return lambdaTest();
+            /*case "cloud":
+                return lambdaTest();*/
 
             case "chrome":
             default: // Default case handles "chrome" and any other value.
@@ -108,7 +108,7 @@ public class BaseTest {
         }
     }
 
-    public WebDriver lambdaTest() throws MalformedURLException {
+    /*public WebDriver lambdaTest() throws MalformedURLException {
         String hubURL = "https://hub.lambdatest.com/wd/hub";
         ChromeOptions browserOptions = new ChromeOptions();
         browserOptions.setPlatformName("Windows 10");
@@ -123,6 +123,5 @@ public class BaseTest {
         ltOptions.put("plugin", "java-testNG");
         browserOptions.setCapability("LT:Options", ltOptions);
 
-        return new RemoteWebDriver(new URL(hubURL), browserOptions);
+        return new RemoteWebDriver(new URL(hubURL), browserOptions);*/
     }
-}

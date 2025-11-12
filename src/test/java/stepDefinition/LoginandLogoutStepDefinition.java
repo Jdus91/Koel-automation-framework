@@ -131,7 +131,7 @@ public class LoginandLogoutStepDefinition extends BaseTest {
     public void iLogOut() {
         // AC 4, 6: Logs the user out
         HomePage homePage = new HomePage(driver);
-        homePage.logOut();
+        homePage.clickLogout();
 
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
@@ -205,7 +205,7 @@ public class LoginandLogoutStepDefinition extends BaseTest {
     }
 
     // NEW steps to assert presence/adjacency and pages
-    @Then("I am on the Home page")
+    @Then("I am on the Homepage")
     public void iAmOnTheHomePage() {
         // URL contains #!/home and avatar visible
         Assert.assertTrue(driver.getCurrentUrl().contains("/#!/home"));
@@ -256,6 +256,41 @@ public class LoginandLogoutStepDefinition extends BaseTest {
         Assert.assertTrue(homePage.profileSettingsFormAvailable(), "Profile and Preferences form not available.");
 
     }
+
+    //Logout new sep definitions
+     @Then("Logout option is visible")
+    public void logoutOptionIsVisible() {
+        // Write code here that turns the phrase above into concrete actions
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.logoutButton().isDisplayed(), "Logout option not visible.");
+    }
+    
+    @When("I click on Logout option")
+    public void iClickOnLogoutOption() {
+        // Write code here that turns the phrase above into concrete actions
+        HomePage homePage = new HomePage(driver);
+        homePage.clickLogout();
+
+        LoginPage loginPage = new LoginPage(driver);
+        Assert.assertTrue(loginPage.isPageVisible());
+    }
+
+    @Then("I am logged out")
+    public void iAmLoggedOut() {    
+        // Write code here that turns the phrase above into concrete actions
+        LoginPage loginPage = new LoginPage(driver);
+        Assert.assertTrue(loginPage.isPageVisible());
+    }
+
+    @Then("I am redirected to Login Page")
+    public void iAmRedirectedToLoginPage() {
+        // Write code here that turns the phrase above into concrete actions
+        LoginPage loginPage = new LoginPage(driver);
+        Assert.assertTrue(loginPage.isPageVisible());
+    }
+
+    
+
 
     @After
     public void closeBrowser() {

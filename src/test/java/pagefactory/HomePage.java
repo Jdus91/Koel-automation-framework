@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.Objects;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver givenDriver) {
@@ -28,10 +27,6 @@ public class HomePage extends BasePage {
 
     @FindBy(css = "header, .header, .app-header")
     WebElement headerBar;
-
-    // --- Navigation Locators (AC 3, 4) ---
-    // Universal locator for sidebar navigation items (All Songs, Albums, Favorites, etc.)
-    private final String navLinkXpath = "//nav//a[contains(.,'%s')]";
 
     // --- Profile & Preferences Form Locators (AC 5, 6) ---
 
@@ -88,8 +83,12 @@ public class HomePage extends BasePage {
         return findElement(userAvatarIcon);
 
     }
+    public WebElement logoutButton() {
+       wait.until(ExpectedConditions.visibilityOf(logoutButton));
+       return logoutButton;
+    }
 
-    public void logOut() {
+    public void clickLogout() {
        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
        click(logoutButton);
     }
