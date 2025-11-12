@@ -10,7 +10,7 @@ Feature: Login Feature
     And I submit
     Then I am logged in
 
-    # AC 3 (Navigation)
+  # AC 3 (Navigation)
   @Navigation @AC_3
   Scenario: User can navigate to all pages after login
     Given I open Login Page

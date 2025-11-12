@@ -83,8 +83,12 @@ public class HomePage extends BasePage {
         return findElement(userAvatarIcon);
 
     }
+    public WebElement logoutButton() {
+       wait.until(ExpectedConditions.visibilityOf(logoutButton));
+       return logoutButton;
+    }
 
-    public void logOut() {
+    public void clickLogout() {
        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
        click(logoutButton);
     }
