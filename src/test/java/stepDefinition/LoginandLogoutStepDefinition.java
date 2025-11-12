@@ -18,7 +18,7 @@ import pagefactory.LoginPage;
 
 import java.time.Duration;
 
-public class LoginStepDefinition extends BaseTest {
+public class LoginandLogoutStepDefinition extends BaseTest {
     WebDriver driver;
     WebDriverWait wait;
 
@@ -205,7 +205,7 @@ public class LoginStepDefinition extends BaseTest {
     }
 
     // NEW steps to assert presence/adjacency and pages
-    @Then("I am on the Home page")
+    @Then("I am on the Homepage")
     public void iAmOnTheHomePage() {
         // URL contains #!/home and avatar visible
         Assert.assertTrue(driver.getCurrentUrl().contains("/#!/home"));
@@ -264,7 +264,6 @@ public class LoginStepDefinition extends BaseTest {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.logoutButton().isDisplayed(), "Logout option not visible.");
     }
-
     
     @When("I click on Logout option")
     public void iClickOnLogoutOption() {
