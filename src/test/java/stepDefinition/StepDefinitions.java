@@ -13,12 +13,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import pagefactory.AllSongsPage;
 import pagefactory.HomePage;
 import pagefactory.LoginPage;
 
 import java.time.Duration;
 
-public class LoginandLogoutStepDefinition extends BaseTest {
+public class StepDefinitions extends BaseTest {
     WebDriver driver;
     WebDriverWait wait;
 
@@ -289,7 +291,98 @@ public class LoginandLogoutStepDefinition extends BaseTest {
         Assert.assertTrue(loginPage.isPageVisible());
     }
 
-    
+    //Step definitions for InfoPanel.feature
+
+    @When("I play a song")
+    public void iPlayASong() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        allSongsPage.hoverMediaPlayer();
+        allSongsPage.clickPlay();
+    }
+
+    @Then ("I verify Album name is displayed")//Add method in AllSongsPage
+    public void iVerifyAlbumNameIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.isAlbumNameDisplayed(), "Album name is not displayed in Info Panel.");
+    }
+
+    @And("I verify Cover name is displayed")//Add method in AllSongsPage
+    public void iVerifyCoverNameIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.isCoverNameDisplayed(), "Cover name is not displayed in Info Panel.");
+    }
+
+    @And("I verify Lyrics is displayed")//Add method in AllSongsPage
+    public void iVerifyLyricsIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.isLyricsDisplayed(), "Lyrics are not displayed in Info Panel.");
+    }
+
+    @And ("I verify Artist name is displayed")//Add method in AllSongsPage
+    public void iVerifyArtistNameIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.isArtistNameDisplayed(), "Artist name is not displayed in Info Panel.");
+    }
+
+    @And ("I open Info Panel")//Add method in AllSongsPage
+    public void iOpenInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //allSongsPage.openInfoPanel();
+    }
+
+    @Then("I verify Info Panel is opened")//Add method in AllSongsPage
+    public void iVerifyInfoPanelIsOpened() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.isInfoPanelOpened(), "Info Panel is not opened.");
+    }
+
+    @When("I close Info Panel")//Add method in AllSongsPage
+    public void iCloseInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //allSongsPage.closeInfoPanel();
+    }
+
+    @Then("I verify Info Panel is closed")//Add method in AllSongsPage
+    public void iVerifyInfoPanelIsClosed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.isInfoPanelClosed(), "Info Panel is not closed.");
+    }       
+
+    @When("I select Album tab in Info Panel")//Add method in AllSongsPage
+    public void iSelectAlbumTabInInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //allSongsPage.selectAlbumTab();
+    }
+
+    @And ("I select Shuffle button from Album tab")//Add method in AllSongsPage
+    public void iSelectShuffleButtonFromAlbumTab() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+       //allSongsPage.clickShuffleButton();
+    }
+
+    @Then("I verify songs are shuffled by Album")//Add method in AllSongsPage
+    public void iVerifySongsAreShuffledByAlbum() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.areSongsShuffledByAlbum(), "Songs are not shuffled by Album.");
+    }
+
+    @When("I select Artist tab from the Info Panel")//Add method in AllSongsPage
+    public void iSelectArtistTabFromTheInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //allSongsPage.selectArtistTab();
+    }
+
+    @And("I select Shuffle button from Artist tab")//Add method in AllSongsPage
+    public void iSelectShuffleButtonFromArtistTab() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //allSongsPage.clickShuffleButton();
+    }
+
+    @Then("I verify songs are shuffled by Artist")//Add method in AllSongsPage
+    public void iVerifySongsAreShuffledByArtist() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        //Assert.assertTrue(allSongsPage.areSongsShuffledByArtist(), "Songs are not shuffled by Artist.");
+    }   
 
 
     @After
