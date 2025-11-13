@@ -36,4 +36,68 @@ public class AllSongsPage extends BasePage {
     public boolean isSongPlaying() {
         return findElement(soundBarPlaying).isDisplayed();
     }
+
+    public boolean isAlbumNameDisplayed() {
+        boolean result = false;
+        return result;
+    }
+
+    public boolean isCoverNameDisplayed() {
+        boolean result = false;
+        return result;
+    }
+
+    public boolean isLyricsDisplayed() {
+        boolean result = false;
+        return result;
+    }
+
+     public boolean isArtistNameDisplayed() {
+        boolean result = false;
+        return result;
+    }
+
+    public void openInfoPanel() {
+        // Implementation to open Info Panel
+    }
+
+    public boolean isInfoPanelOpened() {
+        boolean result = false;
+        return result;
+    }
+
+    public void closeInfoPanel() {
+        // Implementation to close Info Panel
+    }
+
+    public boolean isInfoPanelClosed() {
+        boolean result = false;
+        return result;
+    }
+
+    public void selectAlbumTab() {
+        // Implementation to select Album tab in Info Panel
+    }
+
+    public void clickShuffleButton() {
+        // Implementation to click Shuffle button from Album tab
+    }
+
+    public boolean areSongsShuffledByAlbum() {
+        boolean result = false;
+        return result;
+    }
+
+    public void selectArtistTab() {
+        // Implementation to select Artist tab in Info Panel
+    }
+
+    public void clickShuffleButtonFromArtistTab() {
+        // Implementation to click Shuffle button from Artist tab
+    }
+
+    public boolean areSongsShuffledByArtist() {
+        boolean result = false;
+        return result;
+    }    
 }
