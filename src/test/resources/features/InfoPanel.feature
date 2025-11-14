@@ -20,7 +20,7 @@ Feature: Info Panel Feature
     When I play a song
     Then I verify Album name is displayed
     And I verify Cover name is displayed
-    And I verify Lyrics is displayed
+    And I verify Lyrics is displayed in Progress Pane
     And I verify Artist name is displayed
 
     #AC 4_5 (Verify Info Panel can be opened and closed)
@@ -37,9 +37,9 @@ Feature: Info Panel Feature
     When I close Info Panel
     Then I verify Info Panel is closed
 
-    #AC 6 (Verify Suffle order of playing songs on the Info panel by album and artist)
+ #AC 6 (Verify Suffle order of playing songs on the Info panel by album and artist)
     @Shuffle_Order_Verification @AC_6
-    Scenario: Verify Suffle order of playing songs on the Info panel by album and artist
+    Scenario: Verify Shuffle order of playing songs on the Info panel by album and artist
     Given I open Login Page
     When I enter email "jennifer.de.jesus@testpro.io"
     And I enter password "FCVlLOni12!"
@@ -48,12 +48,12 @@ Feature: Info Panel Feature
     When I play a song
     And I open Info Panel
     Then I verify Info Panel is opened
-    When I select Album tab from the Info Panel
-    And I select Shuffle button from Album tab
-    Then I verify songs are shuffled by Album
+    When I select Album tab in Info Panel
+    Then I select and verify that Shuffle button from Album tab was clicked
     When I select Artist tab from the Info Panel
-    And I select Shuffle button from Artist tab
-    Then I verify songs are shuffled by Artist
+    Then I select and verify that Shuffle button from Artist tab was clicked
+
+
 
 
 

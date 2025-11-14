@@ -27,4 +27,13 @@ test {
         systemProperty "browser", System.getProperty("browser")
     }
 
+    // Add these lines for remote debugging
+    debugOptions {
+        enabled = true
+        // Set the port to listen on (5005 is the default)
+        port = 5005
+        // 'true' means it waits for the debugger before running tests
+        suspend = true 
+    }
+
 }
