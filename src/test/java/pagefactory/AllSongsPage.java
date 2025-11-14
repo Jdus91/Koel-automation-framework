@@ -89,11 +89,17 @@ public class AllSongsPage extends BasePage {
     public boolean isAlbumNameDisplayed() { // to be implemented first
         return findElement(albumName).isDisplayed();
     }
-
+    /*
+     * Implementing method to verify if Cover name is displayed
+     * returns boolean
+     */
     public boolean isCoverNameDisplayed() {
         return findElement(coverName).isDisplayed();
     }
-
+    /*
+     * Implementing method to verify if Lyrics are inside progressPane
+     * returns boolean
+     */
     public boolean isLyricsInProgressPane() {
         // Hypothetical XPath for a lyrics element inside the progressPane
         String wrongLocationXPath = "//div[@id='progressPane']//div[@class='lyrics-text-container']";
@@ -105,23 +111,38 @@ public class AllSongsPage extends BasePage {
         }
 
     }
-
+    /*
+     * Implementing method to verify if Artist name is displayed
+     * returns boolean
+     */
     public boolean isArtistNameDisplayed() {
         return findElement(artistName).isDisplayed();
     }
-
+    /*
+     * Implementing method to open Info Panel
+     * returns void
+     */
     public void iOpenInfoPanel() {
         click(infoPanelButton);
     }
-
+    /*
+     * Implementing method to verify if Info Panel is opened
+     * returns boolean
+     */
     public boolean isInfoPanelOpened() {
         return findElement(infoPanelButton).isDisplayed();
     }
-
+    /*
+     * Implementing method to close Info Panel
+     * returns void
+     */
     public void closeInfoPanel() {
         click(infoPanelButton);
     }
-
+    /*
+     * Implementing method to verify if Info Panel is closed
+     * returns boolean
+     */
     public boolean isInfoPanelClosed() {
         try {
             // If the element is found AND displayed, the panel IS open, so return FALSE.
@@ -132,12 +153,18 @@ public class AllSongsPage extends BasePage {
             return true;
         }
     }
-
+    /*
+     * Implementing method to select Album tab
+     * returns void
+     */
     public void selectAlbumTab() {
         click(infoPanelButton);
         click(albumTab);
     }
-
+    /*
+     * Implementing method to click Shuffle button from Album tab and confirm
+     * returns boolean
+     */
     public boolean clickShuffleButtonFromAlbumTabAndConfirm() {
         Boolean buttonClicked = false;
         try {
@@ -149,15 +176,18 @@ public class AllSongsPage extends BasePage {
 
         return buttonClicked;
     }
-
+    /*
+     * Implementing method to select Artist tab
+     * returns void
+     */
     public void selectArtistTab() {
-        // Implementation to select Artist tab in Info Panel
-       // click(infoPanelButton);
         click(artistTab);
     }
-
+    /*
+     * Implementing method to click Shuffle button from Artist tab and confirm
+     * returns boolean
+     */
     public boolean clickShuffleButtonFromArtistTabAndConfirm() {
-        // Implementation to click Shuffle button from Artist tab
         Boolean buttonClicked = false;
         try {
             click(shuffleButtonArtistTab);

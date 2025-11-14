@@ -36,43 +36,32 @@ public class StepDefinitions extends BaseTest {
 
     @Given("I open Login Page")
     public void iOpenLoginPage() {
-        // Write code here that turns the phrase above into concrete actions
         driver.get("https://qa.koel.app");
     }
 
     @When("I enter email {string}")
     public void iEnterEmail(String email) {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         loginPage.provideEmail(email);
-        /*wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']"))).clear();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']"))).sendKeys(email);*/
     }
 
     @And("I enter password {string}")
     public void iEnterPassword(String password) {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         loginPage.providePassword(password);
-        /*wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']"))).clear();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']"))).sendKeys(password);*/
     }
 
     @And("I submit")
     public void iSubmit() {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickSubmit();
-        /*wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']"))).click();*/
     }
 
     @Then("I am logged in")
     public void iAmLoggedIn() {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(driver);
         homePage.getUserAvatar();
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
-        //Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar"))).isDisplayed());
     }
 
     @Then("I see an error message")
@@ -262,14 +251,12 @@ public class StepDefinitions extends BaseTest {
     //Logout new sep definitions
      @Then("Logout option is visible")
     public void logoutOptionIsVisible() {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.logoutButton().isDisplayed(), "Logout option not visible.");
     }
     
     @When("I click on Logout option")
     public void iClickOnLogoutOption() {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(driver);
         homePage.clickLogout();
 
@@ -279,14 +266,12 @@ public class StepDefinitions extends BaseTest {
 
     @Then("I am logged out")
     public void iAmLoggedOut() {    
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
     }
 
     @Then("I am redirected to Login Page")
     public void iAmRedirectedToLoginPage() {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
     }

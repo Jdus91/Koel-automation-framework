@@ -237,9 +237,6 @@ public class HomePage extends BasePage {
     public void choosePlaylist(String playlistName) {
         WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class,'playlist') and normalize-space(text())='Jennys Playlist']")));
         click(playlist);
-        //public void choosePlaylist(String playlistName) {
-        //WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), '" + playlistName + "')]")));
-        //click(playlist);
     }
 
     public void chooseAllSongsList() {
@@ -247,51 +244,25 @@ public class HomePage extends BasePage {
     }
 
     public String getAddToPlaylistSuccessMsg() {
-        //WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.success.show")));
-        //return notificationSuccess.getText().trim();
         return findElement(notificationSuccess).getText();
     }
 
     public String getDeletePlaylistSuccessMsg() {
-        //WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.success.show")));
-        //return notificationSuccess.getText().trim();
         return findElement(notificationSuccess).getText();
     }
 
     public void openPlaylist(String playlistId) {
-        doubleClick(currentPlaylist);
-
-
-        //public void openPlaylist(String playlistName) {
-        // WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        // By.xpath("//a[contains(.,'" + playlistName + "')]")));
-        //WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        //By.xpath("//a[text()='" + playlistName + "']")));
-        //doubleClick(playlistToOpen);
+        doubleClick(currentPlaylist);        
     }
+
         public void openPlaylist2 (String playlistId){
             doubleClick(currentPlaylist2);
 
-//public void openPlaylist2(String playlistName) {
-        //WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        //By.xpath("//a[contains(.,'" + playlistName + "')]")));
-        //WebElement playlistToOpen = wait.until(ExpectedConditions.elementToBeClickable(
-        //By.xpath("//a[text()='" + playlistName + "']")));
-        //doubleClick(playlistToOpen);
-
-
-        //public void openPlaylist2(String playlistName) {
-        // doubleClick(currentPlaylist2);
-        //}
     }
 
     public void renamePlaylist(String newPlaylistName) {
-        //WebElement inputField = wait.until(ExpectedConditions.visibilityOf(playlistInputField));
-        //inputField.sendKeys(Keys.chord(Keys.CONTROL, "A", Keys.BACK_SPACE));
-        //inputField.sendKeys(newPlaylistName);
-        //inputField.sendKeys(Keys.ENTER);
         playlistInputField = findElement(playlistInputField);
         playlistInputField.sendKeys(Keys.chord(Keys.CONTROL, "A", Keys.BACK_SPACE));
         playlistInputField.sendKeys(newPlaylistName);
