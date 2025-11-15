@@ -13,15 +13,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import pagefactory.AllSongsPage;
 import pagefactory.HomePage;
 import pagefactory.LoginPage;
 
 import java.time.Duration;
 
-public class LoginandLogoutStepDefinition extends BaseTest {
+public class StepDefinitions extends BaseTest {
     WebDriver driver;
     WebDriverWait wait;
-
+    
     @Before
     public void openBrowser() {
         WebDriverManager.chromedriver().setup();
@@ -34,43 +36,32 @@ public class LoginandLogoutStepDefinition extends BaseTest {
 
     @Given("I open Login Page")
     public void iOpenLoginPage() {
-        // Write code here that turns the phrase above into concrete actions
         driver.get("https://qa.koel.app");
     }
 
     @When("I enter email {string}")
     public void iEnterEmail(String email) {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         loginPage.provideEmail(email);
-        /*wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']"))).clear();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']"))).sendKeys(email);*/
     }
 
     @And("I enter password {string}")
     public void iEnterPassword(String password) {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         loginPage.providePassword(password);
-        /*wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']"))).clear();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']"))).sendKeys(password);*/
     }
 
     @And("I submit")
     public void iSubmit() {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickSubmit();
-        /*wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']"))).click();*/
     }
 
     @Then("I am logged in")
     public void iAmLoggedIn() {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(driver);
         homePage.getUserAvatar();
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
-        //Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar"))).isDisplayed());
     }
 
     @Then("I see an error message")
@@ -131,6 +122,7 @@ public class LoginandLogoutStepDefinition extends BaseTest {
     public void iLogOut() {
         // AC 4, 6: Logs the user out
         HomePage homePage = new HomePage(driver);
+        homePage.clickLogout();
         homePage.clickLogout();
 
         LoginPage loginPage = new LoginPage(driver);
@@ -206,6 +198,7 @@ public class LoginandLogoutStepDefinition extends BaseTest {
 
     // NEW steps to assert presence/adjacency and pages
     @Then("I am on the Homepage")
+    @Then("I am on the Homepage")
     public void iAmOnTheHomePage() {
         // URL contains #!/home and avatar visible
         Assert.assertTrue(driver.getCurrentUrl().contains("/#!/home"));
@@ -260,14 +253,12 @@ public class LoginandLogoutStepDefinition extends BaseTest {
     //Logout new sep definitions
      @Then("Logout option is visible")
     public void logoutOptionIsVisible() {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.logoutButton().isDisplayed(), "Logout option not visible.");
     }
     
     @When("I click on Logout option")
     public void iClickOnLogoutOption() {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(driver);
         homePage.clickLogout();
 
@@ -277,19 +268,96 @@ public class LoginandLogoutStepDefinition extends BaseTest {
 
     @Then("I am logged out")
     public void iAmLoggedOut() {    
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
     }
 
     @Then("I am redirected to Login Page")
     public void iAmRedirectedToLoginPage() {
-        // Write code here that turns the phrase above into concrete actions
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
     }
 
-    
+    //Step definitions for InfoPanel.feature
+
+    @When("I play a song")
+    public void iPlayASong() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        allSongsPage.hoverMediaPlayer();
+        allSongsPage.clickPlay();
+    }
+
+    @Then ("I verify Album name is displayed")
+    public void iVerifyAlbumNameIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.isAlbumNameDisplayed(), "Album name is not displayed.");
+    }
+
+    @And("I verify Cover name is displayed")
+    public void iVerifyCoverNameIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.isCoverNameDisplayed(), "Cover name is not displayed.");
+    }
+
+   @And("I verify Lyrics is displayed in Progress Pane")
+    public void iVerifyLyricsIsDisplayedInProgressPane() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertFalse(allSongsPage.isLyricsInProgressPane(), "FAILURE: A Lyrics element was unexpectedly found inside the progress pane.");
+    }
+
+    @And ("I verify Artist name is displayed")
+    public void iVerifyArtistNameIsDisplayed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.isArtistNameDisplayed(), "Artist name is not displayed in Info Panel.");
+    }
+
+   @And ("I open Info Panel")
+    public void iOpenInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        allSongsPage.iOpenInfoPanel();
+    }
+
+    @Then("I verify Info Panel is opened")
+    public void iVerifyInfoPanelIsOpened() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.isInfoPanelOpened(), "Info Panel is not opened.");
+    }
+
+    @When("I close Info Panel")
+    public void iCloseInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        allSongsPage.closeInfoPanel();
+    }
+
+    @Then("I verify Info Panel is closed")
+    public void iVerifyInfoPanelIsClosed() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.isInfoPanelClosed(), "Info Panel is not closed.");
+    }       
+
+    @When("I select Album tab in Info Panel")
+    public void iSelectAlbumTabInInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        allSongsPage.selectAlbumTab();
+    }
+
+    @Then ("I select and verify that Shuffle button from Album tab was clicked")
+    public void iSelectAndVerifyShuffleButtonFromAlbumTabClicked() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.clickShuffleButtonFromAlbumTabAndConfirm(), "Shuffle button from Album tab was not clicked.");
+    }
+
+   @When("I select Artist tab from the Info Panel")//Add method in AllSongsPage
+    public void iSelectArtistTabFromTheInfoPanel() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        allSongsPage.selectArtistTab();
+    }
+
+    @Then ("I select and verify that Shuffle button from Artist tab was clicked")
+    public void iSelectAndVerifyShuffleButtonFromArtistTabClicked() {
+        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        Assert.assertTrue(allSongsPage.clickShuffleButtonFromArtistTabAndConfirm(), "Shuffle button from Artist tab was not clicked.");
+    }
 
 
     @After
