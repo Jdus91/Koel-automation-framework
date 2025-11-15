@@ -29,11 +29,11 @@ test {
 
     // Add these lines for remote debugging
     debugOptions {
-        enabled = true
+        enabled = false  // Set to 'true' to enable debugging
         // Set the port to listen on (5005 is the default)
         port = 5005
         // 'true' means it waits for the debugger before running tests
-        suspend = true 
+        suspend = false 
     }
 
 }
