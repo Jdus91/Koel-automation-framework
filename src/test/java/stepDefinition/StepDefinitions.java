@@ -123,6 +123,7 @@ public class StepDefinitions extends BaseTest {
         // AC 4, 6: Logs the user out
         HomePage homePage = new HomePage(driver);
         homePage.clickLogout();
+        homePage.clickLogout();
 
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
@@ -196,6 +197,7 @@ public class StepDefinitions extends BaseTest {
     }
 
     // NEW steps to assert presence/adjacency and pages
+    @Then("I am on the Homepage")
     @Then("I am on the Homepage")
     public void iAmOnTheHomePage() {
         // URL contains #!/home and avatar visible
