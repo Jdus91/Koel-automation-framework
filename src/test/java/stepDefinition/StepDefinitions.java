@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.en_scouse.An;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -357,6 +358,72 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(allSongsPage.clickShuffleButtonFromArtistTabAndConfirm(), "Shuffle button from Artist tab was not clicked.");
     }
 
+    //Step definitions for ProfileandPreferences.feature
+    @And ("And I enter new name in profile and preferences form {string}")
+    public void iEnterNewNameInProfileAndPreferencesForm(String newName) {
+        HomePage homePage = new HomePage(driver);
+        homePage.updateNameFieldInProfileAndPreferencesForm(newName);
+    }
+
+    @And ("I select Home tab from the navigation menu")
+    public void iSelectHomeTabFromTheNavigationMenu() {
+        HomePage homePage = new HomePage(driver);
+        homePage.navigateToPage("Home");
+    }
+
+    @Then ("I verify that the updated name {string} is displayed on the Homepage")
+    public void iVerifyThatTheUpdatedNameIsDisplayedOnTheHomepage(String updatedName) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isUpdatedNameDisplayedOnHomepage(updatedName), "Updated name is not displayed on the Homepage.");
+    }
+
+    @And ("I select {string} theme in profile and preferences form")
+    public void iSelectThemeInProfileAndPreferencesForm(String themeName) {
+        HomePage homePage = new HomePage(driver);
+        homePage.selectThemeInProfileAndPreferencesForm(themeName);
+    }
+
+    @And ("I verify that the {string} theme is applied on the Homepage")
+    public void iVerifyThatTheThemeIsAppliedOnTheHomepage(String themeName) {   
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isThemeAppliedOnHomepage(themeName), "Theme is not applied on the Homepage.");
+    }
+
+    @And ("I check the Show Now Playing checkbox in profile and preferences form")
+    public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.checkShowNowPlayingCheckboxInProfileAndPreferencesForm();
+    }
+
+    @Then ("I verify that the Now Playing notification is displayed on the Homepage")
+    public void iVerifyThatTheNowPlayingNotificationIsDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isNowPlayingNotificationDisplayedOnHomepage(), "Now Playing notification is not displayed on the Homepage.");
+    }
+
+    @And ("I check the \"Confirm before closing Koel\" checkbox in profile and preferences form")
+    public void iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.checkConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm();
+    }
+
+    @Then ("I verify that the confirmation window is displayed when attempting to close Koel")
+    public void iVerifyThatTheConfirmationWindowIsDisplayedWhenAttemptingToCloseKoel()  {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isConfirmationWindowDisplayedOnLogout(), "Confirmation window is not displayed when attempting to close Koel.");
+    }
+
+    @And ("I check the Show a translucent, blurred overlay of the current albums art checkbox in profile and preferences form")
+    public void iCheckTheShowATranslucentBlurredOverlayOfTheCurrentAlbumsArtCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.checkShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm();
+    }
+
+    @Then ("I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage")
+    public void iVerifyThatTheTranslucentBlurredOverlayOfTheCurrentAlbumsArtIsDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(), "Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
+    }
 
     @After
     public void closeBrowser() {
