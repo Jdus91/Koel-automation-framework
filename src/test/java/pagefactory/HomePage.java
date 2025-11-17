@@ -81,6 +81,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "[name='name']")
     WebElement playlistInputField;
 
+    @FindBy(xpath = "//nav//a[text()='Home']")
+    WebElement Hometab;
+
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -292,5 +295,9 @@ public class HomePage extends BasePage {
 
     public void selectDeleteBtn() {
         click(deleteButton);
+    }
+
+    public void iSelectHomeTabFromTheNavigationMenu() {
+        click (Hometab);
     }
 }

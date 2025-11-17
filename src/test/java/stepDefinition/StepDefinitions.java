@@ -365,13 +365,13 @@ public class StepDefinitions extends BaseTest {
 
     }
 
-    /*@And ("I select Home tab from the navigation menu")
+    @And ("I select Home tab from the navigation menu")
     public void iSelectHomeTabFromTheNavigationMenu() {
         HomePage homePage = new HomePage(driver);
-        homePage.navigateToPage("Home");
+        homePage.iSelectHomeTabFromTheNavigationMenu();
     }
 
-    @Then ("I verify that the updated name {string} is displayed on the Homepage")
+    /*@Then ("I verify that the updated name {string} is displayed on the Homepage")
     public void iVerifyThatTheUpdatedNameIsDisplayedOnTheHomepage(String updatedName) {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isUpdatedNameDisplayedOnHomepage(updatedName), "Updated name is not displayed on the Homepage.");

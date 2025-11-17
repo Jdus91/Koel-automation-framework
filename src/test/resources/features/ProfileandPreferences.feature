@@ -22,7 +22,7 @@ Feature: Profile and Preferences
     And I enter new name in profile and preferences form "Jennifer"
     And I enter current password in profile and preferences form "FCVlLOni12!"
     When I click save on profile and preferences form a "Profile updated." message appears
-    And I select Home tab from the navigation menu #code to be completed in HomePage.java?
+    And I select Home tab from the navigation menu
     Then I am on the Homepage
     And I verify that the updated name "Jennifer" is displayed on the Homepage #code to be completed in HomePage.java
 
