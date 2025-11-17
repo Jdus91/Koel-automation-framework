@@ -33,6 +33,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "form[data-testid='update-profile-form']")
     WebElement profileForm;
 
+    @FindBy(css = "form[data-testid='update-profile-form'] input[name='name']")
+    WebElement profilenameField;
+
     @FindBy(css = "form[data-testid='update-profile-form'] input[name='email']")
     WebElement profileEmailField;
 
@@ -133,6 +136,12 @@ public class HomePage extends BasePage {
         currentPasswordField.sendKeys(oldPassword);
         newPasswordField.sendKeys(newPassword);
         click(profileSaveButton);
+    }
+
+    public void ienterNewNameInProfileAndPreferencesForm(String newName) { //WIP
+        wait.until(ExpectedConditions.visibilityOf(profilenameField));
+        profilenameField.clear();
+        profilenameField.sendKeys(newName);
     }
 
     public void updateEmailFieldInProfileAndPreferencesForm(String newEmail) {

@@ -6,7 +6,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.en_scouse.An;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -346,7 +345,7 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(allSongsPage.clickShuffleButtonFromAlbumTabAndConfirm(), "Shuffle button from Album tab was not clicked.");
     }
 
-   @When("I select Artist tab from the Info Panel")//Add method in AllSongsPage
+   @When("I select Artist tab from the Info Panel")
     public void iSelectArtistTabFromTheInfoPanel() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
         allSongsPage.selectArtistTab();
@@ -359,13 +358,14 @@ public class StepDefinitions extends BaseTest {
     }
 
     //Step definitions for ProfileandPreferences.feature
-    @And ("And I enter new name in profile and preferences form {string}")
-    public void iEnterNewNameInProfileAndPreferencesForm(String newName) {
+    @And ("I enter new name in profile and preferences form {string}")
+    public void ienterNewNameInProfileAndPreferencesForm(String newName) {
         HomePage homePage = new HomePage(driver);
-        homePage.updateNameFieldInProfileAndPreferencesForm(newName);
+        homePage.ienterNewNameInProfileAndPreferencesForm(newName);
+
     }
 
-    @And ("I select Home tab from the navigation menu")
+    /*@And ("I select Home tab from the navigation menu")
     public void iSelectHomeTabFromTheNavigationMenu() {
         HomePage homePage = new HomePage(driver);
         homePage.navigateToPage("Home");
@@ -423,7 +423,7 @@ public class StepDefinitions extends BaseTest {
     public void iVerifyThatTheTranslucentBlurredOverlayOfTheCurrentAlbumsArtIsDisplayedOnTheHomepage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(), "Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
-    }
+    }*/
 
     @After
     public void closeBrowser() {

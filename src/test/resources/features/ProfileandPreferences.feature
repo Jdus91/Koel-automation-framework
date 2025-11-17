@@ -19,7 +19,7 @@ Feature: Profile and Preferences
     When profile icon is available
     And I click profile icon
     When profile and preferences form appears
-    And I enter new name in profile and preferences form "Jennifer" #code to be completed in HomePage.java
+    And I enter new name in profile and preferences form "Jennifer"
     And I enter current password in profile and preferences form "FCVlLOni12!"
     When I click save on profile and preferences form a "Profile updated." message appears
     And I select Home tab from the navigation menu #code to be completed in HomePage.java?
