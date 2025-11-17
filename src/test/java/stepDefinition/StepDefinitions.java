@@ -389,13 +389,13 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(homePage.isThemeAppliedOnHomepage(themeName), "Theme is not applied on the Homepage.");
     }
 
-    /*@And ("I check the Show Now Playing checkbox in profile and preferences form")
-    public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm() {
+    @And ("I check the {string} checkbox in profile and preferences form")
+    public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(String checkboxName) {
         HomePage homePage = new HomePage(driver);
-        homePage.checkShowNowPlayingCheckboxInProfileAndPreferencesForm();
+        homePage.iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(checkboxName);
     }
 
-    @Then ("I verify that the Now Playing notification is displayed on the Homepage")
+    /*@Then ("I verify that the Now Playing notification is displayed on the Homepage")
     public void iVerifyThatTheNowPlayingNotificationIsDisplayedOnTheHomepage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isNowPlayingNotificationDisplayedOnHomepage(), "Now Playing notification is not displayed on the Homepage.");

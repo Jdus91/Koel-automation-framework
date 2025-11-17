@@ -87,6 +87,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@data-testid='theme-card-oak']")
     WebElement themeOption;
 
+    @FindBy(xpath = "//input[@type='checkbox' and @name='notify']")
+    WebElement nowPlayingCheckbox;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -343,6 +346,12 @@ public class HomePage extends BasePage {
         } catch (Exception e) {
             
             return false; 
+        }
+    }
+    
+    public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(String checkboxName) {
+        if (!nowPlayingCheckbox.isSelected()) {
+            click(nowPlayingCheckbox);
         }
     }
 }
