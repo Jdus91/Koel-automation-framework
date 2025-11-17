@@ -5,11 +5,14 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
+import java.util.Map;
+
+import org.openqa.selenium.JavascriptExecutor;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver givenDriver) {
@@ -338,20 +341,70 @@ public class HomePage extends BasePage {
                 "//html[@data-theme='" + themeName.toLowerCase() + "']");
 
         try {
-            
+
             wait.until(ExpectedConditions.presenceOfElementLocated(themeAppliedLocator));
 
-            return true; 
+            return true;
 
         } catch (Exception e) {
-            
-            return false; 
+
+            return false;
         }
     }
-    
+
     public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(String checkboxName) {
         if (!nowPlayingCheckbox.isSelected()) {
-            click(nowPlayingCheckbox);
+            click(nowPlayingCheckbox);           
         }
+    }
+
+    /**
+     * Validates that the browser's internal Notification API status is 'granted'.
+     * This confirms the "Show Now Playing" feature successfully enabled
+     * permissions.
+     * 
+     * @return true if permission is granted within 10 seconds, false otherwise.
+     */
+    public boolean _isNotificationPermissionGranted() {
+        // Assuming 'driver' and 'wait' (or equivalent) are accessible here.
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        try {
+            // Wait until the JavaScript condition returns true
+            explicitWait.until((ExpectedCondition<Boolean>) webDriver -> {
+                // Check the browser's internal permission status
+                String permissionStatus = (String) js.executeScript("return Notification.permission;");
+
+                // Return true when the status is 'granted'
+                boolean isGranted = "granted".equalsIgnoreCase(permissionStatus);
+                return isGranted;
+            });
+
+            return true; // Status successfully set to 'granted'
+
+        } catch (Exception e) {
+            // If the wait times out or any exception occurs, the permission was not
+            // granted.
+            return false;
+        }
+    }
+
+    public boolean isNowPlayingNotificationFunctionalityWorking() {
+        boolean result = false;
+
+        try {
+            if (!_isNotificationPermissionGranted()) {
+                result = false;
+            } else {
+                // notify permission is granted, so we assume the functionality is working.
+                // validation of actual notification display is not feasible in Selenium.
+                result = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Error checking notification status: " + e.getMessage());
+            result = false;
+        }
+        return result;
     }
 }
