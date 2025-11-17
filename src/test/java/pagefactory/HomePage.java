@@ -84,19 +84,22 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//nav//a[text()='Home']")
     WebElement Hometab;
 
+    @FindBy(xpath = "//div[@data-testid='theme-card-oak']")
+    WebElement themeOption;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
     }
+
     public WebElement logoutButton() {
-       wait.until(ExpectedConditions.visibilityOf(logoutButton));
-       return logoutButton;
+        wait.until(ExpectedConditions.visibilityOf(logoutButton));
+        return logoutButton;
     }
 
     public void clickLogout() {
-       wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-       click(logoutButton);
+        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        click(logoutButton);
     }
 
     // --- Navigation Methods (AC 3, 4) ---
@@ -118,10 +121,12 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
     public boolean profileSettingsLinkAvailable() {
         wait.until(ExpectedConditions.visibilityOf(userAvatarIcon));
         return userAvatarIcon.isDisplayed();
     }
+
     // --- Account Update Methods (AC 5, 6) ---
     public void openProfileSettings() {
         if (profileSettingsLinkAvailable()) {
@@ -141,7 +146,7 @@ public class HomePage extends BasePage {
         click(profileSaveButton);
     }
 
-    public void ienterNewNameInProfileAndPreferencesForm(String newName) { //WIP
+    public void ienterNewNameInProfileAndPreferencesForm(String newName) { // WIP
         wait.until(ExpectedConditions.visibilityOf(profilenameField));
         profilenameField.clear();
         profilenameField.sendKeys(newName);
@@ -158,6 +163,7 @@ public class HomePage extends BasePage {
         currentPasswordField.clear();
         currentPasswordField.sendKeys(currentPassword);
     }
+
     public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage) {
         wait.until(ExpectedConditions.visibilityOf(profileSaveButton));
         click(profileSaveButton);
@@ -174,7 +180,6 @@ public class HomePage extends BasePage {
         newPasswordField.sendKeys(newPassword);
     }
 
-
     public boolean isSuccessMessageDisplayed() {
         // Used to confirm AC 5 and 6 were successful
         try {
@@ -187,7 +192,8 @@ public class HomePage extends BasePage {
 
     public boolean isHeaderControlVisible(String label) {
         // Support both text and data-testid lookups
-        // For your Koel build we already have reliable elements; also handle literal text just in case
+        // For your Koel build we already have reliable elements; also handle literal
+        // text just in case
         try {
             if ("Log student out".equalsIgnoreCase(label) || "Log out".equalsIgnoreCase(label)) {
                 wait.until(ExpectedConditions.visibilityOf(logoutButton));
@@ -215,13 +221,16 @@ public class HomePage extends BasePage {
 
         // Same parent and right comes after left among siblings
         WebElement parent = left.findElement(By.xpath(".."));
-        if (!parent.equals(right.findElement(By.xpath("..")))) return false;
+        if (!parent.equals(right.findElement(By.xpath(".."))))
+            return false;
 
         var siblings = parent.findElements(By.xpath("./*"));
         int li = -1, ri = -1;
         for (int i = 0; i < siblings.size(); i++) {
-            if (siblings.get(i).equals(left)) li = i;
-            if (siblings.get(i).equals(right)) ri = i;
+            if (siblings.get(i).equals(left))
+                li = i;
+            if (siblings.get(i).equals(right))
+                ri = i;
         }
         return li >= 0 && ri == li + 1;
     }
@@ -247,7 +256,8 @@ public class HomePage extends BasePage {
     }
 
     public void choosePlaylist(String playlistName) {
-        WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class,'playlist') and normalize-space(text())='Jennys Playlist']")));
+        WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(@class,'playlist') and normalize-space(text())='Jennys Playlist']")));
         click(playlist);
     }
 
@@ -266,11 +276,11 @@ public class HomePage extends BasePage {
     }
 
     public void openPlaylist(String playlistId) {
-        doubleClick(currentPlaylist);        
+        doubleClick(currentPlaylist);
     }
 
-        public void openPlaylist2 (String playlistId){
-            doubleClick(currentPlaylist2);
+    public void openPlaylist2(String playlistId) {
+        doubleClick(currentPlaylist2);
 
     }
 
@@ -298,6 +308,41 @@ public class HomePage extends BasePage {
     }
 
     public void iSelectHomeTabFromTheNavigationMenu() {
-        click (Hometab);
+        click(Hometab);
+    }
+
+    public boolean isUpdatedNameDisplayedOnHomepage(String updatedName) {
+        By updatedNameLocator = By.xpath(
+                "//div[contains(@class, 'heading-wrapper')]/h1[contains(text(), '" + updatedName + "')]");
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(updatedNameLocator));
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public void iSelectThemeInProfileAndPreferencesForm(String themeName) {
+        click(themeOption);
+    }
+
+    public boolean isThemeAppliedOnHomepage(String themeName) {
+        By themeAppliedLocator = By.xpath(
+                "//html[@data-theme='" + themeName.toLowerCase() + "']");
+
+        try {
+            
+            wait.until(ExpectedConditions.presenceOfElementLocated(themeAppliedLocator));
+
+            return true; 
+
+        } catch (Exception e) {
+            
+            return false; 
+        }
     }
 }

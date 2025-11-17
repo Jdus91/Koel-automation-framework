@@ -371,7 +371,7 @@ public class StepDefinitions extends BaseTest {
         homePage.iSelectHomeTabFromTheNavigationMenu();
     }
 
-    /*@Then ("I verify that the updated name {string} is displayed on the Homepage")
+    @Then ("I verify that the updated name {string} is displayed on the Homepage")
     public void iVerifyThatTheUpdatedNameIsDisplayedOnTheHomepage(String updatedName) {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isUpdatedNameDisplayedOnHomepage(updatedName), "Updated name is not displayed on the Homepage.");
@@ -380,7 +380,7 @@ public class StepDefinitions extends BaseTest {
     @And ("I select {string} theme in profile and preferences form")
     public void iSelectThemeInProfileAndPreferencesForm(String themeName) {
         HomePage homePage = new HomePage(driver);
-        homePage.selectThemeInProfileAndPreferencesForm(themeName);
+        homePage.iSelectThemeInProfileAndPreferencesForm(themeName);
     }
 
     @And ("I verify that the {string} theme is applied on the Homepage")
@@ -389,7 +389,7 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(homePage.isThemeAppliedOnHomepage(themeName), "Theme is not applied on the Homepage.");
     }
 
-    @And ("I check the Show Now Playing checkbox in profile and preferences form")
+    /*@And ("I check the Show Now Playing checkbox in profile and preferences form")
     public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm() {
         HomePage homePage = new HomePage(driver);
         homePage.checkShowNowPlayingCheckboxInProfileAndPreferencesForm();
