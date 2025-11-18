@@ -32,9 +32,9 @@ Feature: Current Queue
     Then I am logged in
     And I select Home tab from the navigation menu
     Then I am on the Homepage
-    When I play a song from the Most Played section #code to be implemented in Homepage
-    And I select Current Queue tab from the navigation menu #code to be implemented in Homepage
-    Then I verify that the currently played song is displayed in the Current Queue page #code to be implemented in Current Queue
+    When I play a song from the Most Played section 
+    And I select Current Queue tab from the navigation menu 
+    Then I verify that the currently played song is displayed in the Current Queue page 
     And I verify the total number of songs in the Current Queue page is accurate #code to be implemented in Current Queue
     And I verify the total duration of songs in the Current Queue page is accurate #code to be implemented in Current Queue
     And I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page #code to be implemented in Current Queue

@@ -442,6 +442,116 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(),"Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
     }
 
+    @When("I play a song from the Most Played section")
+    public void iPlayASongFromTheMostPlayedSection() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iPlayASongFromTheMostPlayedSection();
+    }
+
+    @And("I select Current Queue tab from the navigation menu")
+    public void iSelectCurrentQueueTabFromTheNavigationMenu() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectCurrentQueueTabFromTheNavigationMenu();
+    }
+
+    @Then("I verify that the currently played song is displayed in the Current Queue page")
+    public void iVerifyThatTheCurrentlyPlayedSongIsDisplayedInTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isCurrentlyPlayedSongDisplayedInCurrentQueuePage(),
+                "The currently played song is not displayed in the Current Queue page.");
+    }
+
+    @And("I verify the total number of songs in the Current Queue page is accurate")
+    public void iVerifyTheTotalNumberOfSongsInTheCurrentQueuePageIsAccurate() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isTotalNumberOfSongsInCurrentQueueAccurate(),
+                "The total number of songs in the Current Queue page is not accurate.");
+    }
+
+    @And("I verify the total duration of songs in the Current Queue page is accurate")
+    public void iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isTotalDurationOfSongsInCurrentQueueAccurate(),
+                "The total duration of songs in the Current Queue page is not accurate.");
+    }
+
+    @And("I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page")
+    public void iVerifyThatIDTitleArtistAlbumAndTimeDetailsAreDisplayedInTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSongDetailsDisplayedInCurrentQueuePage(),
+                "ID, Title, Artist, Album, and time details are not displayed in the Current Queue page.");
+    }
+
+    @When("I select Album tab from the navigation menu")
+    public void iSelectAlbumTabFromTheNavigationMenu() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectAlbumTabFromTheNavigationMenu();
+    }
+
+    @Then("I am on the Album page")
+    public void iAmOnTheAlbumPage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isOnAlbumPage(), "Not on the Album page.");
+    }
+
+    @And("I double click to play a song from the Album page")
+    public void iDoubleClickToPlayASongFromTheAlbumPage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iDoubleClickToPlayASongFromTheAlbumPage();
+    }
+
+    @Then("I verify that I am navigated to the Current Queue page")
+    public void iVerifyThatIAmNavigatedToTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isOnCurrentQueuePage(), "Not navigated to the Current Queue page.");
+    }
+
+    @When("I select shuffle all songs button")
+    public void iSelectShuffleAllSongsButton() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectShuffleAllSongsButton();
+    }
+
+    @Then("I verify that the songs in the Current Queue page are shuffled")
+    public void iVerifyThatTheSongsInTheCurrentQueuePageAreShuffled() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSongsInCurrentQueueShuffled(),
+                "The songs in the Current Queue page are not shuffled.");
+    }
+
+    @When("I select clear queue button")
+    public void iSelectClearQueueButton() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectClearQueueButton();
+    }
+
+    @Then("I verify that the Current Queue page is cleared")
+    public void iVerifyThatTheCurrentQueuePageIsCleared() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isCurrentQueuePageCleared(),
+                "The Current Queue page is not cleared.");
+    }
+
+    @And ("I verify that a No songs queued. How about shuffling all songs?. message appears")
+    public void iVerifyThatANoSongsQueuedMessageAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isNoSongsQueuedMessageDisplayed(),
+                "The 'No songs queued. How about shuffling all songs?' message did not appear.");
+    }
+
+    @When("I select Shuffle all songs link from the message")
+    public void iSelectShuffleAllSongsLinkFromTheMessage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectShuffleAllSongsLinkFromTheMessage();
+    }
+
+    @Then("I verify that all songs appears in the Current Queue page")
+    public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areAllSongsInCurrentQueuePage(),
+                "Not all songs appeared in the Current Queue page.");
+    }
+
     @After
     public void closeBrowser() {
         if (driver != null) {
