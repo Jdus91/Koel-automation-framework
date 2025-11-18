@@ -94,6 +94,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//input[@type='checkbox' and @name='confirm_closing']")
     WebElement confirmBeforeClosingCheckbox;
 
+    @FindBy(xpath = "//input[@type='checkbox' and @name='show_album_art_overlay']")
+    WebElement showTranslucentBlurredOverlayCheckbox;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -430,5 +433,11 @@ public class HomePage extends BasePage {
             result = false;
         }
         return result;
+    }
+
+    public void iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm() {
+        if (!showTranslucentBlurredOverlayCheckbox.isSelected()) {
+            click(showTranslucentBlurredOverlayCheckbox);           
+        }
     }
 }

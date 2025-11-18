@@ -430,19 +430,13 @@ public class StepDefinitions extends BaseTest {
                 "Confirmation window is not displayed when attempting to close Koel.");
     }
 
-    /*
-     * @And
-     * ("I check the Show a translucent, blurred overlay of the current albums art checkbox in profile and preferences form"
-     * )
-     * public void
-     * iCheckTheShowATranslucentBlurredOverlayOfTheCurrentAlbumsArtCheckboxInProfileAndPreferencesForm
-     * () {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.
-     * checkShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm();
-     * }
-     * 
-     * @Then
+    @And("I check the Show a translucent, blurred overlay of the current albums art checkbox in profile and preferences form")
+    public void iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm();
+    }
+    
+    /* @Then
      * ("I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage"
      * )
      * public void

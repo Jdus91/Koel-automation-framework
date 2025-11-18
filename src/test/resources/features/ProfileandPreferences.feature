@@ -97,18 +97,18 @@ Feature: Profile and Preferences
     Then I verify that the confirmation window is displayed when attempting to close Koel
 
     #AC 9 ("Show a translucent, blurred overlay of the current album's art checkbox checked and overlay verification)
-    #@Album_Art_Overlay_Verification @AC_9
-    #Scenario: Enable "Show a translucent, blurred overlay of the current albums art" and verify overlay
-    #Given I open Login Page
-    #When I enter email "jennifer.de.jesus@testpro.io"
-    #And I enter password "FCVlLOni12!"
-    #And I submit
-    #Then I am logged ins
-    #When profile icon is available
-    #And I click profile icon
-    #When profile and preferences form appears
-    #And I check the "Show a translucent, blurred overlay of the current albums art" checkbox in profile and preferences form #code to be completed in HomePage.java
-    #And I select Home tab from the navigation menu
-    #Then I am on the Homepage
-    #When I play a song
+    @Album_Art_Overlay_Verification @AC_9
+    Scenario: Enable "Show a translucent, blurred overlay of the current albums art" and verify overlay
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    When profile icon is available
+    And I click profile icon
+    When profile and preferences form appears
+    And I check the "Show a translucent, blurred overlay of the current albums art" checkbox in profile and preferences form
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    When I play a song
     #Then I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage #code to be completed in HomePage.java
