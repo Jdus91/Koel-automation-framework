@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import java.time.Duration;
-import java.util.Map;
-
 import org.openqa.selenium.JavascriptExecutor;
 
 public class HomePage extends BasePage {
@@ -92,6 +90,9 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//input[@type='checkbox' and @name='notify']")
     WebElement nowPlayingCheckbox;
+
+    @FindBy(xpath = "//input[@type='checkbox' and @name='confirm_closing']")
+    WebElement confirmBeforeClosingCheckbox;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -406,5 +407,11 @@ public class HomePage extends BasePage {
             result = false;
         }
         return result;
+    }
+
+    public void iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
+        if (!confirmBeforeClosingCheckbox.isSelected()) {
+            click(confirmBeforeClosingCheckbox);           
+        }
     }
 }

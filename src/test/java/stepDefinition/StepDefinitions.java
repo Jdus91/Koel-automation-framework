@@ -417,17 +417,14 @@ public class StepDefinitions extends BaseTest {
                 "The Now Playing notification permission was NOT successfully granted by the browser.");
     }
 
-    /*
-     * @And
-     * ("I check the \"Confirm before closing Koel\" checkbox in profile and preferences form"
-     * )
-     * public void
-     * iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.checkConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm();
-     * }
-     * 
-     * @Then
+    
+    @And("I check the Confirm before closing Koel checkbox in profile and preferences form")
+    public void iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm();
+    }
+     
+    /*@Then
      * ("I verify that the confirmation window is displayed when attempting to close Koel"
      * )
      * public void
