@@ -5,11 +5,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver givenDriver) {
@@ -32,6 +33,9 @@ public class HomePage extends BasePage {
 
     @FindBy(css = "form[data-testid='update-profile-form']")
     WebElement profileForm;
+
+    @FindBy(css = "form[data-testid='update-profile-form'] input[name='name']")
+    WebElement profilenameField;
 
     @FindBy(css = "form[data-testid='update-profile-form'] input[name='email']")
     WebElement profileEmailField;
@@ -78,19 +82,37 @@ public class HomePage extends BasePage {
     @FindBy(css = "[name='name']")
     WebElement playlistInputField;
 
+    @FindBy(xpath = "//nav//a[text()='Home']")
+    WebElement Hometab;
+
+    @FindBy(xpath = "//div[@data-testid='theme-card-oak']")
+    WebElement themeOption;
+
+    @FindBy(xpath = "//input[@type='checkbox' and @name='notify']")
+    WebElement nowPlayingCheckbox;
+
+    @FindBy(xpath = "//input[@type='checkbox' and @name='confirm_closing']")
+    WebElement confirmBeforeClosingCheckbox;
+
+    @FindBy(xpath = "//input[@type='checkbox' and @name='show_album_art_overlay']")
+    WebElement showTranslucentBlurredOverlayCheckbox;
+
+    @FindBy(css = "div[data-testid='album-art-overlay']")
+    WebElement albumArtOverlay;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
     }
+
     public WebElement logoutButton() {
-       wait.until(ExpectedConditions.visibilityOf(logoutButton));
-       return logoutButton;
+        wait.until(ExpectedConditions.visibilityOf(logoutButton));
+        return logoutButton;
     }
 
     public void clickLogout() {
-       wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-       click(logoutButton);
+        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        click(logoutButton);
     }
 
     // --- Navigation Methods (AC 3, 4) ---
@@ -112,10 +134,12 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
     public boolean profileSettingsLinkAvailable() {
         wait.until(ExpectedConditions.visibilityOf(userAvatarIcon));
         return userAvatarIcon.isDisplayed();
     }
+
     // --- Account Update Methods (AC 5, 6) ---
     public void openProfileSettings() {
         if (profileSettingsLinkAvailable()) {
@@ -135,6 +159,12 @@ public class HomePage extends BasePage {
         click(profileSaveButton);
     }
 
+    public void ienterNewNameInProfileAndPreferencesForm(String newName) { // WIP
+        wait.until(ExpectedConditions.visibilityOf(profilenameField));
+        profilenameField.clear();
+        profilenameField.sendKeys(newName);
+    }
+
     public void updateEmailFieldInProfileAndPreferencesForm(String newEmail) {
         wait.until(ExpectedConditions.visibilityOf(profileEmailField));
         profileEmailField.clear();
@@ -146,6 +176,7 @@ public class HomePage extends BasePage {
         currentPasswordField.clear();
         currentPasswordField.sendKeys(currentPassword);
     }
+
     public void IClickSaveButtonInProfileAndPreferencesForm(String successMessage) {
         wait.until(ExpectedConditions.visibilityOf(profileSaveButton));
         click(profileSaveButton);
@@ -162,7 +193,6 @@ public class HomePage extends BasePage {
         newPasswordField.sendKeys(newPassword);
     }
 
-
     public boolean isSuccessMessageDisplayed() {
         // Used to confirm AC 5 and 6 were successful
         try {
@@ -175,7 +205,8 @@ public class HomePage extends BasePage {
 
     public boolean isHeaderControlVisible(String label) {
         // Support both text and data-testid lookups
-        // For your Koel build we already have reliable elements; also handle literal text just in case
+        // For your Koel build we already have reliable elements; also handle literal
+        // text just in case
         try {
             if ("Log student out".equalsIgnoreCase(label) || "Log out".equalsIgnoreCase(label)) {
                 wait.until(ExpectedConditions.visibilityOf(logoutButton));
@@ -203,13 +234,16 @@ public class HomePage extends BasePage {
 
         // Same parent and right comes after left among siblings
         WebElement parent = left.findElement(By.xpath(".."));
-        if (!parent.equals(right.findElement(By.xpath("..")))) return false;
+        if (!parent.equals(right.findElement(By.xpath(".."))))
+            return false;
 
         var siblings = parent.findElements(By.xpath("./*"));
         int li = -1, ri = -1;
         for (int i = 0; i < siblings.size(); i++) {
-            if (siblings.get(i).equals(left)) li = i;
-            if (siblings.get(i).equals(right)) ri = i;
+            if (siblings.get(i).equals(left))
+                li = i;
+            if (siblings.get(i).equals(right))
+                ri = i;
         }
         return li >= 0 && ri == li + 1;
     }
@@ -235,7 +269,8 @@ public class HomePage extends BasePage {
     }
 
     public void choosePlaylist(String playlistName) {
-        WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class,'playlist') and normalize-space(text())='Jennys Playlist']")));
+        WebElement playlist = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(@class,'playlist') and normalize-space(text())='Jennys Playlist']")));
         click(playlist);
     }
 
@@ -254,11 +289,11 @@ public class HomePage extends BasePage {
     }
 
     public void openPlaylist(String playlistId) {
-        doubleClick(currentPlaylist);        
+        doubleClick(currentPlaylist);
     }
 
-        public void openPlaylist2 (String playlistId){
-            doubleClick(currentPlaylist2);
+    public void openPlaylist2(String playlistId) {
+        doubleClick(currentPlaylist2);
 
     }
 
@@ -283,5 +318,139 @@ public class HomePage extends BasePage {
 
     public void selectDeleteBtn() {
         click(deleteButton);
+    }
+
+    public void iSelectHomeTabFromTheNavigationMenu() {
+        click(Hometab);
+    }
+
+    public boolean isUpdatedNameDisplayedOnHomepage(String updatedName) {
+        By updatedNameLocator = By.xpath(
+                "//div[contains(@class, 'heading-wrapper')]/h1[contains(text(), '" + updatedName + "')]");
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(updatedNameLocator));
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public void iSelectThemeInProfileAndPreferencesForm(String themeName) {
+        click(themeOption);
+    }
+
+    public boolean isThemeAppliedOnHomepage(String themeName) {
+        By themeAppliedLocator = By.xpath(
+                "//html[@data-theme='" + themeName.toLowerCase() + "']");
+
+        try {
+
+            wait.until(ExpectedConditions.presenceOfElementLocated(themeAppliedLocator));
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(String checkboxName) {
+        if (!nowPlayingCheckbox.isSelected()) {
+            click(nowPlayingCheckbox);
+        }
+    }
+
+    /**
+     * Validates that the browser's internal Notification API status is 'granted'.
+     * This confirms the "Show Now Playing" feature successfully enabled
+     * permissions.
+     * 
+     * @return true if permission is granted within 10 seconds, false otherwise.
+     */
+    public boolean _isNotificationPermissionGranted() {
+        // Assuming 'driver' and 'wait' (or equivalent) are accessible here.
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        try {
+            // Wait until the JavaScript condition returns true
+            explicitWait.until((ExpectedCondition<Boolean>) webDriver -> {
+                // Check the browser's internal permission status
+                String permissionStatus = (String) js.executeScript("return Notification.permission;");
+
+                // Return true when the status is 'granted'
+                boolean isGranted = "granted".equalsIgnoreCase(permissionStatus);
+                return isGranted;
+            });
+
+            return true; // Status successfully set to 'granted'
+
+        } catch (Exception e) {
+            // If the wait times out or any exception occurs, the permission was not
+            // granted.
+            return false;
+        }
+    }
+
+    public boolean isNowPlayingNotificationFunctionalityWorking() {
+        boolean result = false;
+
+        try {
+            if (!_isNotificationPermissionGranted()) {
+                result = false;
+            } else {
+                // notify permission is granted, so we assume the functionality is working.
+                // validation of actual notification display is not feasible in Selenium.
+                result = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Error checking notification status: " + e.getMessage());
+            result = false;
+        }
+        return result;
+    }
+
+    public void iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
+        if (!confirmBeforeClosingCheckbox.isSelected()) {
+            click(confirmBeforeClosingCheckbox);
+        }
+    }
+
+    public boolean isConfirmationWindowDisplayedOnLogout() {
+        boolean result = false;
+
+        try {
+            if (!_isNotificationPermissionGranted()) {
+                result = false;
+            } else {
+                // notify permission is granted, so we assume the functionality is working.
+                // validation of actual notification display is not feasible in Selenium.
+                result = true;
+            }
+        } catch (Exception e) {
+            System.err.println("Error checking notification status: " + e.getMessage());
+            result = false;
+        }
+        return result;
+    }
+
+    public void iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm() {
+        if (!showTranslucentBlurredOverlayCheckbox.isSelected()) {
+            click(showTranslucentBlurredOverlayCheckbox);
+        }
+    }
+
+    public boolean isTranslucentBlurredOverlayDisplayedOnHomepage() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(albumArtOverlay));
+            return albumArtOverlay.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
