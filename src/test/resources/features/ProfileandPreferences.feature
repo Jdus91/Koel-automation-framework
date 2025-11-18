@@ -26,27 +26,25 @@ Feature: Profile and Preferences
     Then I am on the Homepage
     And I verify that the updated name "Jennifer" is displayed on the Homepage
 
-    #UNBLOCK THIS WHEN READY TO DEPLOY PR
     #AC 3_4 (Email and Password update validation)
-    #@Email_and_Password_Update_Validation @AC_3_4
-    #Scenario: Update Email and Password in Profile and Preferences
-    #Given I open Login Page
-    #When I enter email "jennifer.de.jesus@testpro.io"
-    #And I enter password "FCVlLOni12!"
-    #And I submit
-    #Then I am logged in
-    #When profile icon is available
-    #And I click profile icon
-    #When profile and preferences form appears
-    #And I enter new email in profile and preferences form "jennifer.de.bademail@testpro.io"
-    #And I enter new password in profile and preferences form "badpassword!1"
-    #And I enter current password in profile and preferences form "FCVlLOni12!"
-    #When I click save on profile and preferences form a "Profile updated." message appears
-    #And I enter new email in profile and preferences form "jennifer.de.jesus@testpro.io"
-    #And I enter new password in profile and preferences form "FCVlLOni12!"
-    #And I enter current password in profile and preferences form "badpassword!1"
-    #When I click save on profile and preferences form a "Profile updated." message appears
-
+    @Email_and_Password_Update_Validation @AC_3_4
+    Scenario: Update Email and Password in Profile and Preferences
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    When profile icon is available
+    And I click profile icon
+    When profile and preferences form appears
+    And I enter new email in profile and preferences form "jennifer.de.bademail@testpro.io"
+    And I enter new password in profile and preferences form "badpassword!1"
+    And I enter current password in profile and preferences form "FCVlLOni12!"
+    When I click save on profile and preferences form a "Profile updated." message appears
+    And I enter new email in profile and preferences form "jennifer.de.jesus@testpro.io"
+    And I enter new password in profile and preferences form "FCVlLOni12!"
+    And I enter current password in profile and preferences form "badpassword!1"
+    When I click save on profile and preferences form a "Profile updated." message appears
 
     #AC 6 (Theme update validation - Classic to Oak)
     @Theme_Update_Validation @AC_6
