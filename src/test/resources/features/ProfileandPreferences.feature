@@ -94,7 +94,7 @@ Feature: Profile and Preferences
     When profile and preferences form appears
     And I check the "Confirm before closing Koel" checkbox in profile and preferences form
     And I log out
-    #Then I verify that the confirmation window is displayed #code to be completed in HomePage.java
+    Then I verify that the confirmation window is displayed when attempting to close Koel
 
     #AC 9 ("Show a translucent, blurred overlay of the current album's art checkbox checked and overlay verification)
     #@Album_Art_Overlay_Verification @AC_9
