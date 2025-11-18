@@ -111,4 +111,4 @@ Feature: Profile and Preferences
     And I select Home tab from the navigation menu
     Then I am on the Homepage
     When I play a song
-    #Then I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage #code to be completed in HomePage.java
+    Then I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage

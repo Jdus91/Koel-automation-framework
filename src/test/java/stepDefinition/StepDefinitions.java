@@ -436,18 +436,11 @@ public class StepDefinitions extends BaseTest {
         homePage.iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm();
     }
     
-    /* @Then
-     * ("I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage"
-     * )
-     * public void
-     * iVerifyThatTheTranslucentBlurredOverlayOfTheCurrentAlbumsArtIsDisplayedOnTheHomepage
-     * () {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(),
-     * "Translucent, blurred overlay of the current albums art is not displayed on the Homepage."
-     * );
-     * }
-     */
+    @Then("I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage")
+    public void iVerifyThatTheTranslucentBlurredOverlayOfTheCurrentAlbumsArtIsDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(),"Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
+    }
 
     @After
     public void closeBrowser() {

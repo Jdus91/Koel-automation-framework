@@ -97,6 +97,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//input[@type='checkbox' and @name='show_album_art_overlay']")
     WebElement showTranslucentBlurredOverlayCheckbox;
 
+    @FindBy(css = "div[data-testid='album-art-overlay']")
+    WebElement albumArtOverlay;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -358,7 +361,7 @@ public class HomePage extends BasePage {
 
     public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(String checkboxName) {
         if (!nowPlayingCheckbox.isSelected()) {
-            click(nowPlayingCheckbox);           
+            click(nowPlayingCheckbox);
         }
     }
 
@@ -414,7 +417,8 @@ public class HomePage extends BasePage {
 
     public void iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
         if (!confirmBeforeClosingCheckbox.isSelected()) {
-            click(confirmBeforeClosingCheckbox);}           
+            click(confirmBeforeClosingCheckbox);
+        }
     }
 
     public boolean isConfirmationWindowDisplayedOnLogout() {
@@ -437,7 +441,16 @@ public class HomePage extends BasePage {
 
     public void iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm() {
         if (!showTranslucentBlurredOverlayCheckbox.isSelected()) {
-            click(showTranslucentBlurredOverlayCheckbox);           
+            click(showTranslucentBlurredOverlayCheckbox);
+        }
+    }
+
+    public boolean isTranslucentBlurredOverlayDisplayedOnHomepage() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(albumArtOverlay));
+            return albumArtOverlay.isDisplayed();
+        } catch (Exception e) {
+            return false;
         }
     }
 }
