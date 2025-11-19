@@ -51,4 +51,5 @@ Feature: Current Queue
     Then I am on the Homepage
     When I select Album tab from the navigation menu
     Then I am on the Album page
+    And I double click to play a song from the Album page
 

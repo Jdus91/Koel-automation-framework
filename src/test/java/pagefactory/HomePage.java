@@ -113,6 +113,9 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//a[text()='Albums']")
     WebElement albumTab;
+    
+    @FindBy(xpath = "//*[@id=\"albumsWrapper\"]/div/article[1]/span/span/a")
+    WebElement firstAlbumSong;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -636,5 +639,9 @@ public class HomePage extends BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void iDoubleClickToPlayASongFromTheAlbumPage() {
+        doubleClick(firstAlbumSong);
     }
 }

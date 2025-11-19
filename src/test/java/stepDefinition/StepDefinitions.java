@@ -494,13 +494,13 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(homePage.isOnAlbumPage(), "Not on the Album page.");
     }
 
-    /*@And("I double click to play a song from the Album page")
+    @And("I double click to play a song from the Album page")
     public void iDoubleClickToPlayASongFromTheAlbumPage() {
         HomePage homePage = new HomePage(driver);
         homePage.iDoubleClickToPlayASongFromTheAlbumPage();
     }
 
-    @Then("I verify that I am navigated to the Current Queue page")
+    /*@Then("I verify that I am navigated to the Current Queue page")
     public void iVerifyThatIAmNavigatedToTheCurrentQueuePage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isOnCurrentQueuePage(), "Not navigated to the Current Queue page.");
