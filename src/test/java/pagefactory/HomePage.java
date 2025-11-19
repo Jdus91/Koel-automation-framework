@@ -100,6 +100,15 @@ public class HomePage extends BasePage {
     @FindBy(css = "div[data-testid='album-art-overlay']")
     WebElement albumArtOverlay;
 
+    @FindBy(xpath = "//ol[@class='top-song-list']//article[@data-test='song-card'][1]")
+    WebElement firstMostPlayedSong;
+
+    @FindBy(xpath = "//a[@href='#!/queue']")
+    WebElement currentQueueTab;
+
+    @FindBy(css = "tr.song-item.playing td.title")
+    WebElement currentlyPlayedSongLocator;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -449,6 +458,24 @@ public class HomePage extends BasePage {
         try {
             wait.until(ExpectedConditions.visibilityOf(albumArtOverlay));
             return albumArtOverlay.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void iPlayASongFromTheMostPlayedSection() {
+        doubleClick(firstMostPlayedSong);
+    }
+
+    public void iSelectCurrentQueueTabFromTheNavigationMenu() {
+        click(currentQueueTab);
+    }
+
+    public boolean isCurrentlyPlayedSongDisplayedInCurrentQueuePage(String expectedSongName) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(currentlyPlayedSongLocator));
+            String actualSongName = currentlyPlayedSongLocator.getText().trim();
+            return actualSongName.equalsIgnoreCase(expectedSongName);
         } catch (Exception e) {
             return false;
         }

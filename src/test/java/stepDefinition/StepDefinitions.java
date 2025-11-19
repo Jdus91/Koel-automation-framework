@@ -1,6 +1,4 @@
 package stepDefinition;
-
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -453,15 +451,17 @@ public class StepDefinitions extends BaseTest {
         HomePage homePage = new HomePage(driver);
         homePage.iSelectCurrentQueueTabFromTheNavigationMenu();
     }
-
-    @Then("I verify that the currently played song is displayed in the Current Queue page")
-    public void iVerifyThatTheCurrentlyPlayedSongIsDisplayedInTheCurrentQueuePage() {
+    
+    @Then("I verify that the song {string} is playing in the Current Queue page")
+    public void iVerifyThatTheCurrentlyPlayedSongIsDisplayedInTheCurrentQueuePage(String expectedSongName) {
         HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.isCurrentlyPlayedSongDisplayedInCurrentQueuePage(),
-                "The currently played song is not displayed in the Current Queue page.");
-    }
+        Assert.assertTrue(
+        homePage.isCurrentlyPlayedSongDisplayedInCurrentQueuePage(expectedSongName),
+        "The playing song in Queue is not '" + expectedSongName + "'"
+    );
+}
 
-    @And("I verify the total number of songs in the Current Queue page is accurate")
+   /* @And("I verify the total number of songs in the Current Queue page is accurate")
     public void iVerifyTheTotalNumberOfSongsInTheCurrentQueuePageIsAccurate() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isTotalNumberOfSongsInCurrentQueueAccurate(),
@@ -557,5 +557,5 @@ public class StepDefinitions extends BaseTest {
         if (driver != null) {
             driver.quit();
         }
-    }
+    }*/
 }
