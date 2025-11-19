@@ -644,4 +644,13 @@ public class HomePage extends BasePage {
     public void iDoubleClickToPlayASongFromTheAlbumPage() {
         doubleClick(firstAlbumSong);
     }
+
+    public boolean isOnCurrentQueuePage() {
+        try {
+            wait.until(ExpectedConditions.urlContains("queue"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

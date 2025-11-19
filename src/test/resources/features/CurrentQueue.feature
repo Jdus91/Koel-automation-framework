@@ -52,4 +52,6 @@ Feature: Current Queue
     When I select Album tab from the navigation menu
     Then I am on the Album page
     And I double click to play a song from the Album page
+    Then I verify that I am navigated to the Current Queue page
+
 

@@ -500,13 +500,13 @@ public class StepDefinitions extends BaseTest {
         homePage.iDoubleClickToPlayASongFromTheAlbumPage();
     }
 
-    /*@Then("I verify that I am navigated to the Current Queue page")
+    @Then("I verify that I am navigated to the Current Queue page")
     public void iVerifyThatIAmNavigatedToTheCurrentQueuePage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isOnCurrentQueuePage(), "Not navigated to the Current Queue page.");
     }
 
-    @When("I select shuffle all songs button")
+    /*@When("I select shuffle all songs button")
     public void iSelectShuffleAllSongsButton() {
         HomePage homePage = new HomePage(driver);
         homePage.iSelectShuffleAllSongsButton();
