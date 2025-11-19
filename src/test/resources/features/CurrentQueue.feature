@@ -37,3 +37,4 @@ Feature: Current Queue
     Then I verify that the song "Midnight in Mississippi" is playing in the Current Queue page
     And I verify the total number of songs in the Current Queue page is accurate
     And I verify the total duration of songs in the Current Queue page is accurate
+    And I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page

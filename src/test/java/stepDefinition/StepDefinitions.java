@@ -475,14 +475,14 @@ public class StepDefinitions extends BaseTest {
                 "The total duration of songs in the Current Queue page is not accurate.");
     }
 
-    /*@And("I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page")
+    @And("I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page")
     public void iVerifyThatIDTitleArtistAlbumAndTimeDetailsAreDisplayedInTheCurrentQueuePage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.areSongDetailsDisplayedInCurrentQueuePage(),
-                "ID, Title, Artist, Album, and time details are not displayed in the Current Queue page.");
+                "ID, Title, Artist, Album, and time details are not displayed in the Current Queue page (or are empty).");
     }
 
-    @When("I select Album tab from the navigation menu")
+    /*@When("I select Album tab from the navigation menu")
     public void iSelectAlbumTabFromTheNavigationMenu() {
         HomePage homePage = new HomePage(driver);
         homePage.iSelectAlbumTabFromTheNavigationMenu();

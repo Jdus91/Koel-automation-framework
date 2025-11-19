@@ -575,4 +575,50 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean areSongDetailsDisplayedInCurrentQueuePage() {
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            // You only need to wait for the general container to load.
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Check for presence of at least one song row
+            // We ensure we find songs inside the queue wrapper to avoid confusion.
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            if (songRows.isEmpty()) {
+                return false; // No songs found
+            }
+
+            // 3. Define the list of CSS selectors for the required fields
+            WebElement firstRow = songRows.get(0);
+            List<String> detailSelectors = List.of(
+                    "td.track-number.text-secondary", // ID
+                    "td.title",
+                    "td.artist",
+                    "td.album",
+                    "td.time.text-secondary"); // Duration
+
+            // 4. Iterate and verify all details are present and non-empty
+            for (String selector : detailSelectors) {
+                // Find the element within the first row
+                WebElement cell = firstRow.findElement(By.cssSelector(selector));
+
+                // Check if the cell text is empty. If any is empty, return false immediately.
+                if (cell.getText().trim().isEmpty()) {
+                    System.err.println("Verification Failed: The cell with selector '" + selector + "' was empty.");
+                    return false;
+                }
+            }
+
+            // If the loop completes without returning false, all details are displayed and
+            // non-empty.
+            return true;
+
+        } catch (Exception e) {
+            // If findElement throws NoSuchElementException for any of the required cells,
+            // it confirms the structure is wrong or elements are missing.
+            System.err.println("Error verifying song details (Missing Element): " + e.getMessage());
+            return false;
+        }
+    }
 }
