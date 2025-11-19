@@ -482,13 +482,13 @@ public class StepDefinitions extends BaseTest {
                 "ID, Title, Artist, Album, and time details are not displayed in the Current Queue page (or are empty).");
     }
 
-    /*@When("I select Album tab from the navigation menu")
+    @When("I select Album tab from the navigation menu")
     public void iSelectAlbumTabFromTheNavigationMenu() {
         HomePage homePage = new HomePage(driver);
         homePage.iSelectAlbumTabFromTheNavigationMenu();
     }
 
-    @Then("I am on the Album page")
+     /*@Then("I am on the Album page")
     public void iAmOnTheAlbumPage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isOnAlbumPage(), "Not on the Album page.");

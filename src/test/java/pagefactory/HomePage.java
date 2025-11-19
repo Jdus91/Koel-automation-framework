@@ -111,6 +111,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "tr.song-item.playing td.title")
     WebElement currentlyPlayedSongLocator;
 
+    @FindBy(xpath = "//a[text()='Albums']")
+    WebElement albumTab;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -620,5 +623,9 @@ public class HomePage extends BasePage {
             System.err.println("Error verifying song details (Missing Element): " + e.getMessage());
             return false;
         }
+    }
+    
+    public void iSelectAlbumTabFromTheNavigationMenu() {
+        click(albumTab);
     }
 }

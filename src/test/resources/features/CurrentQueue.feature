@@ -38,3 +38,16 @@ Feature: Current Queue
     And I verify the total number of songs in the Current Queue page is accurate
     And I verify the total duration of songs in the Current Queue page is accurate
     And I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page
+
+    #AC 5_6_7 (Current Queue actions, shuffle and clear queue validation)
+    @Current_Queue_Actions_Validation @AC_5_6_7
+    Scenario: Validate Current Queue Actions - Shuffle and Clear Queue
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    When I select Album tab from the navigation menu
+
