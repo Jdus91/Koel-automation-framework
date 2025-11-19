@@ -461,14 +461,14 @@ public class StepDefinitions extends BaseTest {
     );
 }
 
-   /* @And("I verify the total number of songs in the Current Queue page is accurate")
+   @And("I verify the total number of songs in the Current Queue page is accurate")
     public void iVerifyTheTotalNumberOfSongsInTheCurrentQueuePageIsAccurate() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isTotalNumberOfSongsInCurrentQueueAccurate(),
                 "The total number of songs in the Current Queue page is not accurate.");
     }
 
-    @And("I verify the total duration of songs in the Current Queue page is accurate")
+    /*@And("I verify the total duration of songs in the Current Queue page is accurate")
     public void iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isTotalDurationOfSongsInCurrentQueueAccurate(),

@@ -22,3 +22,17 @@ Feature: Current Queue
     And I select Current Queue tab from the navigation menu
     Then I verify that the song "Midnight in Mississippi" is playing in the Current Queue page
 
+    #AC 2_3_4 (Current Queue songs details validation)
+    @Current_Queue_Songs_Details_Validation @AC_2_3_4
+    Scenario: Validate Songs Details in Current Queue
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    When I play a song from the Most Played section 
+    And I select Current Queue tab from the navigation menu 
+    Then I verify that the song "Midnight in Mississippi" is playing in the Current Queue page
+    And I verify the total number of songs in the Current Queue page is accurate
