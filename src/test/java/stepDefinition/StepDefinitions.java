@@ -468,14 +468,14 @@ public class StepDefinitions extends BaseTest {
                 "The total number of songs in the Current Queue page is not accurate.");
     }
 
-    /*@And("I verify the total duration of songs in the Current Queue page is accurate")
+    @And("I verify the total duration of songs in the Current Queue page is accurate")
     public void iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate() {
         HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.isTotalDurationOfSongsInCurrentQueueAccurate(),
+        Assert.assertTrue(homePage.iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate(),
                 "The total duration of songs in the Current Queue page is not accurate.");
     }
 
-    @And("I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page")
+    /*@And("I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page")
     public void iVerifyThatIDTitleArtistAlbumAndTimeDetailsAreDisplayedInTheCurrentQueuePage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.areSongDetailsDisplayedInCurrentQueuePage(),

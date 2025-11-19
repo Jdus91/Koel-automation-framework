@@ -36,3 +36,4 @@ Feature: Current Queue
     And I select Current Queue tab from the navigation menu 
     Then I verify that the song "Midnight in Mississippi" is playing in the Current Queue page
     And I verify the total number of songs in the Current Queue page is accurate
+    And I verify the total duration of songs in the Current Queue page is accurate

@@ -487,12 +487,10 @@ public class HomePage extends BasePage {
 
         try {
             // 1. Ensure we are on the Queue tab and elements are visible
-            // (If you are already on the page via the previous step, you might skip the
-            // click)
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
 
             // 2. Count the actual rows in the DOM
-            // We target tr.song-item specifically inside the queue wrapper
+            // Target tr.song-item specifically inside the queue wrapper
             List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
             int actualRowCount = songRows.size();
 
@@ -514,6 +512,66 @@ public class HomePage extends BasePage {
 
         } catch (Exception e) {
             System.err.println("Error verifying queue count: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate() {
+
+        // Helper function to convert time string (MM:SS or HH:MM:SS) to total seconds.
+        // We define this locally or assume it's a private helper method in the class.
+        // This logic is necessary and correctly implemented in the original code's loop
+        // logic.
+        java.util.function.Function<String, Integer> timeToSecondsConverter = (timeText) -> {
+            String[] parts = timeText.split(":");
+            int totalSeconds = 0;
+
+            // Start from the right (seconds)
+            for (int i = 0; i < parts.length; i++) {
+                int value = Integer.parseInt(parts[parts.length - 1 - i].trim());
+                // i=0: seconds (value * 1)
+                // i=1: minutes (value * 60)
+                // i=2: hours (value * 3600)
+                totalSeconds += value * Math.pow(60, i);
+            }
+            return totalSeconds;
+        };
+
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Sum up the ACTUAL durations from each song row
+            List<WebElement> durationCells = driver.findElements(
+                    By.cssSelector("#queueWrapper tr.song-item td.time")); // Assuming the locator should be td.time as
+                                                                           // per previous advice
+            int calculatedTotalSeconds = 0;
+
+            for (WebElement cell : durationCells) {
+                String timeText = cell.getText().trim();
+                calculatedTotalSeconds += timeToSecondsConverter.apply(timeText);
+            }
+
+            // 3. Get the "meta" text string (e.g., "66 songs • 04:32:57")
+            WebElement metaTextElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//section[@id='queueWrapper']//span[contains(@class, 'meta')]")));
+            String metaText = metaTextElement.getText().trim();
+
+            // 4. Extract the duration part from the string (e.g., "04:32:57")
+            String[] metaParts = metaText.split("•");
+            String displayedTotalDuration = metaParts[1].trim();
+
+            // 5. Convert the DISPLAYED total duration to seconds
+            int displayedTotalSeconds = timeToSecondsConverter.apply(displayedTotalDuration);
+
+            System.out.println("Calculated Total: " + calculatedTotalSeconds + "s | Displayed Total: "
+                    + displayedTotalSeconds + "s");
+
+            // 6. Compare calculated vs displayed seconds
+            return calculatedTotalSeconds == displayedTotalSeconds;
+
+        } catch (Exception e) {
+            System.err.println("Error verifying total duration: " + e.getMessage());
             return false;
         }
     }
