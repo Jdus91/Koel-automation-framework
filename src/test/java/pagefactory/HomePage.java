@@ -624,8 +624,17 @@ public class HomePage extends BasePage {
             return false;
         }
     }
-    
+
     public void iSelectAlbumTabFromTheNavigationMenu() {
         click(albumTab);
+    }
+
+    public boolean isOnAlbumPage() {
+        try {
+            wait.until(ExpectedConditions.urlContains("albums"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

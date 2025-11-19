@@ -488,13 +488,13 @@ public class StepDefinitions extends BaseTest {
         homePage.iSelectAlbumTabFromTheNavigationMenu();
     }
 
-     /*@Then("I am on the Album page")
+    @Then("I am on the Album page")
     public void iAmOnTheAlbumPage() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isOnAlbumPage(), "Not on the Album page.");
     }
 
-    @And("I double click to play a song from the Album page")
+    /*@And("I double click to play a song from the Album page")
     public void iDoubleClickToPlayASongFromTheAlbumPage() {
         HomePage homePage = new HomePage(driver);
         homePage.iDoubleClickToPlayASongFromTheAlbumPage();

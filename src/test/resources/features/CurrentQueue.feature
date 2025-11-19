@@ -50,4 +50,5 @@ Feature: Current Queue
     And I select Home tab from the navigation menu
     Then I am on the Homepage
     When I select Album tab from the navigation menu
+    Then I am on the Album page
 
