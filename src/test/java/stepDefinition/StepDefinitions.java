@@ -521,20 +521,20 @@ public class StepDefinitions extends BaseTest {
                 "The songs in the Current Queue page are not shuffled.");
     }
 
+    @When("I select clear queue button")
+    public void iSelectClearQueueButton() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectClearQueueButton();
+    }
+
+    @Then("I verify that the Current Queue page is cleared")
+    public void iVerifyThatTheCurrentQueuePageIsCleared() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isCurrentQueuePageCleared(),
+                "The Current Queue page is not cleared.");
+    }
+
     /*
-     * @When("I select clear queue button")
-     * public void iSelectClearQueueButton() {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.iSelectClearQueueButton();
-     * }
-     * 
-     * @Then("I verify that the Current Queue page is cleared")
-     * public void iVerifyThatTheCurrentQueuePageIsCleared() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.isCurrentQueuePageCleared(),
-     * "The Current Queue page is not cleared.");
-     * }
-     * 
      * @And
      * ("I verify that a No songs queued. How about shuffling all songs?. message appears"
      * )

@@ -120,6 +120,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//span[@class='btn-group']/button[@class='btn-shuffle-all']")
     WebElement shuffleAllButton;
 
+    @FindBy(xpath = "//span[@class='btn-group']/button[@class='btn-clear-queue']")
+    WebElement clearQueueButton;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -663,6 +666,25 @@ public class HomePage extends BasePage {
 
     public boolean areSongsInCurrentQueueShuffled() {
         return true;
+    }
+
+    public void iSelectClearQueueButton() {
+        click(clearQueueButton);
+    }
+
+    public boolean isCurrentQueuePageCleared() {
+        try {
+            // Wait for the queue wrapper to be visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // Check if there are any song rows present
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            return songRows.isEmpty(); // Returns true if no songs are present
+
+        } catch (Exception e) {
+            System.err.println("Error verifying if Current Queue is cleared: " + e.getMessage());
+            return false;
+        }
     }
 
 }
