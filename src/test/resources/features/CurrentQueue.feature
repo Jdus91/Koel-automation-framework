@@ -53,5 +53,6 @@ Feature: Current Queue
     Then I am on the Album page
     And I double click to play a song from the Album page
     Then I verify that I am navigated to the Current Queue page
+    When I select shuffle all songs button
 
 

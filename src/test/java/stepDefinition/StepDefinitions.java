@@ -1,4 +1,6 @@
 package stepDefinition;
+
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -433,11 +435,12 @@ public class StepDefinitions extends BaseTest {
         HomePage homePage = new HomePage(driver);
         homePage.iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm();
     }
-    
+
     @Then("I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage")
     public void iVerifyThatTheTranslucentBlurredOverlayOfTheCurrentAlbumsArtIsDisplayedOnTheHomepage() {
         HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(),"Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
+        Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(),
+                "Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
     }
 
     @When("I play a song from the Most Played section")
@@ -451,17 +454,16 @@ public class StepDefinitions extends BaseTest {
         HomePage homePage = new HomePage(driver);
         homePage.iSelectCurrentQueueTabFromTheNavigationMenu();
     }
-    
+
     @Then("I verify that the song {string} is playing in the Current Queue page")
     public void iVerifyThatTheCurrentlyPlayedSongIsDisplayedInTheCurrentQueuePage(String expectedSongName) {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(
-        homePage.isCurrentlyPlayedSongDisplayedInCurrentQueuePage(expectedSongName),
-        "The playing song in Queue is not '" + expectedSongName + "'"
-    );
-}
+                homePage.isCurrentlyPlayedSongDisplayedInCurrentQueuePage(expectedSongName),
+                "The playing song in Queue is not '" + expectedSongName + "'");
+    }
 
-   @And("I verify the total number of songs in the Current Queue page is accurate")
+    @And("I verify the total number of songs in the Current Queue page is accurate")
     public void iVerifyTheTotalNumberOfSongsInTheCurrentQueuePageIsAccurate() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isTotalNumberOfSongsInCurrentQueueAccurate(),
@@ -506,56 +508,60 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(homePage.isOnCurrentQueuePage(), "Not navigated to the Current Queue page.");
     }
 
-    /*@When("I select shuffle all songs button")
+    @When("I select shuffle all songs button")
     public void iSelectShuffleAllSongsButton() {
         HomePage homePage = new HomePage(driver);
         homePage.iSelectShuffleAllSongsButton();
     }
 
-    @Then("I verify that the songs in the Current Queue page are shuffled")
-    public void iVerifyThatTheSongsInTheCurrentQueuePageAreShuffled() {
-        HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.areSongsInCurrentQueueShuffled(),
-                "The songs in the Current Queue page are not shuffled.");
-    }
-
-    @When("I select clear queue button")
-    public void iSelectClearQueueButton() {
-        HomePage homePage = new HomePage(driver);
-        homePage.iSelectClearQueueButton();
-    }
-
-    @Then("I verify that the Current Queue page is cleared")
-    public void iVerifyThatTheCurrentQueuePageIsCleared() {
-        HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.isCurrentQueuePageCleared(),
-                "The Current Queue page is not cleared.");
-    }
-
-    @And ("I verify that a No songs queued. How about shuffling all songs?. message appears")
-    public void iVerifyThatANoSongsQueuedMessageAppears() {
-        HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.isNoSongsQueuedMessageDisplayed(),
-                "The 'No songs queued. How about shuffling all songs?' message did not appear.");
-    }
-
-    @When("I select Shuffle all songs link from the message")
-    public void iSelectShuffleAllSongsLinkFromTheMessage() {
-        HomePage homePage = new HomePage(driver);
-        homePage.iSelectShuffleAllSongsLinkFromTheMessage();
-    }
-
-    @Then("I verify that all songs appears in the Current Queue page")
-    public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
-        HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.areAllSongsInCurrentQueuePage(),
-                "Not all songs appeared in the Current Queue page.");
-    }
-
+    /*
+     * @Then("I verify that the songs in the Current Queue page are shuffled")
+     * public void iVerifyThatTheSongsInTheCurrentQueuePageAreShuffled() {
+     * HomePage homePage = new HomePage(driver);
+     * Assert.assertTrue(homePage.areSongsInCurrentQueueShuffled(),
+     * "The songs in the Current Queue page are not shuffled.");
+     * }
+     * 
+     * @When("I select clear queue button")
+     * public void iSelectClearQueueButton() {
+     * HomePage homePage = new HomePage(driver);
+     * homePage.iSelectClearQueueButton();
+     * }
+     * 
+     * @Then("I verify that the Current Queue page is cleared")
+     * public void iVerifyThatTheCurrentQueuePageIsCleared() {
+     * HomePage homePage = new HomePage(driver);
+     * Assert.assertTrue(homePage.isCurrentQueuePageCleared(),
+     * "The Current Queue page is not cleared.");
+     * }
+     * 
+     * @And
+     * ("I verify that a No songs queued. How about shuffling all songs?. message appears"
+     * )
+     * public void iVerifyThatANoSongsQueuedMessageAppears() {
+     * HomePage homePage = new HomePage(driver);
+     * Assert.assertTrue(homePage.isNoSongsQueuedMessageDisplayed(),
+     * "The 'No songs queued. How about shuffling all songs?' message did not appear."
+     * );
+     * }
+     * 
+     * @When("I select Shuffle all songs link from the message")
+     * public void iSelectShuffleAllSongsLinkFromTheMessage() {
+     * HomePage homePage = new HomePage(driver);
+     * homePage.iSelectShuffleAllSongsLinkFromTheMessage();
+     * }
+     * 
+     * @Then("I verify that all songs appears in the Current Queue page")
+     * public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
+     * HomePage homePage = new HomePage(driver);
+     * Assert.assertTrue(homePage.areAllSongsInCurrentQueuePage(),
+     * "Not all songs appeared in the Current Queue page.");
+     * }
+     */
     @After
     public void closeBrowser() {
         if (driver != null) {
             driver.quit();
         }
-    }*/
+    }
 }

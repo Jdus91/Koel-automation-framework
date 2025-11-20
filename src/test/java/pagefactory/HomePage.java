@@ -117,6 +117,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"albumsWrapper\"]/div/article[1]/span/span/a")
     WebElement firstAlbumSong;
 
+    @FindBy(xpath = "//span[@class='btn-group']/button[@class='btn-shuffle-all']")
+    WebElement shuffleAllButton;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -652,5 +655,8 @@ public class HomePage extends BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+    public void iSelectShuffleAllSongsButton() {
+        click(shuffleAllButton);
     }
 }
