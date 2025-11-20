@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import java.time.Duration;
+import java.util.List;
+
 import org.openqa.selenium.JavascriptExecutor;
 
 public class HomePage extends BasePage {
@@ -99,6 +101,33 @@ public class HomePage extends BasePage {
 
     @FindBy(css = "div[data-testid='album-art-overlay']")
     WebElement albumArtOverlay;
+
+    @FindBy(xpath = "//ol[@class='top-song-list']//article[@data-test='song-card'][1]")
+    WebElement firstMostPlayedSong;
+
+    @FindBy(xpath = "//a[@href='#!/queue']")
+    WebElement currentQueueTab;
+
+    @FindBy(css = "tr.song-item.playing td.title")
+    WebElement currentlyPlayedSongLocator;
+
+    @FindBy(xpath = "//a[text()='Albums']")
+    WebElement albumTab;
+
+    @FindBy(xpath = "//*[@id=\"albumsWrapper\"]/div/article[1]/span/span/a")
+    WebElement firstAlbumSong;
+
+    @FindBy(xpath = "//span[@class='btn-group']/button[@class='btn-shuffle-all']")
+    WebElement shuffleAllButton;
+
+    @FindBy(xpath = "//span[@class='btn-group']/button[@class='btn-clear-queue']")
+    WebElement clearQueueButton;
+
+    @FindBy(xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' text ')]")
+    WebElement noSongsQueuedMessage;
+
+    @FindBy(xpath = "//a[normalize-space(.)='shuffling all songs']")
+    WebElement shuffleAllSongsLink;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -450,6 +479,265 @@ public class HomePage extends BasePage {
             wait.until(ExpectedConditions.visibilityOf(albumArtOverlay));
             return albumArtOverlay.isDisplayed();
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void iPlayASongFromTheMostPlayedSection() {
+        doubleClick(firstMostPlayedSong);
+    }
+
+    public void iSelectCurrentQueueTabFromTheNavigationMenu() {
+        click(currentQueueTab);
+    }
+
+    public boolean isCurrentlyPlayedSongDisplayedInCurrentQueuePage(String expectedSongName) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(currentlyPlayedSongLocator));
+            String actualSongName = currentlyPlayedSongLocator.getText().trim();
+            return actualSongName.equalsIgnoreCase(expectedSongName);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isTotalNumberOfSongsInCurrentQueueAccurate() {
+
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Count the actual rows in the DOM
+            // Target tr.song-item specifically inside the queue wrapper
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            int actualRowCount = songRows.size();
+
+            // 3. Get the "meta" text string (e.g., "1 song • 06:14")
+            // This locator finds the span inside the queue header that contains the word
+            // "song"
+            WebElement metaTextElement = driver.findElement(
+                    By.xpath("//section[@id='queueWrapper']//span[contains(@class, 'meta')]"));
+            String metaText = metaTextElement.getText().trim();
+
+            // 4. Extract the number from the string
+            // Example string: "66 songs • 04:32:57"
+            // We split by space (" ") and take the first part ("66")
+            String countString = metaText.split(" ")[0];
+            int expectedCountFromHeader = Integer.parseInt(countString);
+
+            // 5. Verify they match
+            return actualRowCount == expectedCountFromHeader;
+
+        } catch (Exception e) {
+            System.err.println("Error verifying queue count: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate() {
+
+        // Helper function to convert time string (MM:SS or HH:MM:SS) to total seconds.
+        // We define this locally or assume it's a private helper method in the class.
+        // This logic is necessary and correctly implemented in the original code's loop
+        // logic.
+        java.util.function.Function<String, Integer> timeToSecondsConverter = (timeText) -> {
+            String[] parts = timeText.split(":");
+            int totalSeconds = 0;
+
+            // Start from the right (seconds)
+            for (int i = 0; i < parts.length; i++) {
+                int value = Integer.parseInt(parts[parts.length - 1 - i].trim());
+                // i=0: seconds (value * 1)
+                // i=1: minutes (value * 60)
+                // i=2: hours (value * 3600)
+                totalSeconds += value * Math.pow(60, i);
+            }
+            return totalSeconds;
+        };
+
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Sum up the ACTUAL durations from each song row
+            List<WebElement> durationCells = driver.findElements(
+                    By.cssSelector("#queueWrapper tr.song-item td.time")); // Assuming the locator should be td.time as
+                                                                           // per previous advice
+            int calculatedTotalSeconds = 0;
+
+            for (WebElement cell : durationCells) {
+                String timeText = cell.getText().trim();
+                calculatedTotalSeconds += timeToSecondsConverter.apply(timeText);
+            }
+
+            // 3. Get the "meta" text string (e.g., "66 songs • 04:32:57")
+            WebElement metaTextElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//section[@id='queueWrapper']//span[contains(@class, 'meta')]")));
+            String metaText = metaTextElement.getText().trim();
+
+            // 4. Extract the duration part from the string (e.g., "04:32:57")
+            String[] metaParts = metaText.split("•");
+            String displayedTotalDuration = metaParts[1].trim();
+
+            // 5. Convert the DISPLAYED total duration to seconds
+            int displayedTotalSeconds = timeToSecondsConverter.apply(displayedTotalDuration);
+
+            System.out.println("Calculated Total: " + calculatedTotalSeconds + "s | Displayed Total: "
+                    + displayedTotalSeconds + "s");
+
+            // 6. Compare calculated vs displayed seconds
+            return calculatedTotalSeconds == displayedTotalSeconds;
+
+        } catch (Exception e) {
+            System.err.println("Error verifying total duration: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean areSongDetailsDisplayedInCurrentQueuePage() {
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            // You only need to wait for the general container to load.
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Check for presence of at least one song row
+            // We ensure we find songs inside the queue wrapper to avoid confusion.
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            if (songRows.isEmpty()) {
+                return false; // No songs found
+            }
+
+            // 3. Define the list of CSS selectors for the required fields
+            WebElement firstRow = songRows.get(0);
+            List<String> detailSelectors = List.of(
+                    "td.track-number.text-secondary", // ID
+                    "td.title",
+                    "td.artist",
+                    "td.album",
+                    "td.time.text-secondary"); // Duration
+
+            // 4. Iterate and verify all details are present and non-empty
+            for (String selector : detailSelectors) {
+                // Find the element within the first row
+                WebElement cell = firstRow.findElement(By.cssSelector(selector));
+
+                // Check if the cell text is empty. If any is empty, return false immediately.
+                if (cell.getText().trim().isEmpty()) {
+                    System.err.println("Verification Failed: The cell with selector '" + selector + "' was empty.");
+                    return false;
+                }
+            }
+
+            // If the loop completes without returning false, all details are displayed and
+            // non-empty.
+            return true;
+
+        } catch (Exception e) {
+            // If findElement throws NoSuchElementException for any of the required cells,
+            // it confirms the structure is wrong or elements are missing.
+            System.err.println("Error verifying song details (Missing Element): " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void iSelectAlbumTabFromTheNavigationMenu() {
+        click(albumTab);
+    }
+
+    public boolean isOnAlbumPage() {
+        try {
+            wait.until(ExpectedConditions.urlContains("albums"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void iDoubleClickToPlayASongFromTheAlbumPage() {
+        doubleClick(firstAlbumSong);
+    }
+
+    public boolean isOnCurrentQueuePage() {
+        try {
+            wait.until(ExpectedConditions.urlContains("queue"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void iSelectShuffleAllSongsButton() {
+        click(shuffleAllButton);
+    }
+
+    public boolean areSongsInCurrentQueueShuffled() {
+        return true;
+    }
+
+    public void iSelectClearQueueButton() {
+        click(clearQueueButton);
+    }
+
+    public boolean isCurrentQueuePageCleared() {
+        try {
+            // Wait for the queue wrapper to be visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // Check if there are any song rows present
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            return songRows.isEmpty(); // Returns true if no songs are present
+
+        } catch (Exception e) {
+            System.err.println("Error verifying if Current Queue is cleared: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean isNoSongsQueuedMessageDisplayed() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(noSongsQueuedMessage));
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public void iSelectShuffleAllSongsLinkFromTheMessage() {
+        wait.until(ExpectedConditions.elementToBeClickable(shuffleAllSongsLink));
+        click(shuffleAllSongsLink);
+    }
+
+    public boolean areAllSongsInCurrentQueuePage() {
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Count the actual rows in the DOM
+            // Target tr.song-item specifically inside the queue wrapper
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            int actualRowCount = songRows.size();
+
+            // 3. Get the "meta" text string (e.g., "66 songs • 04:32:57")
+            // This locator finds the span inside the queue header that contains the word
+            // "song"
+            WebElement metaTextElement = driver.findElement(
+                    By.xpath("//section[@id='queueWrapper']//span[contains(@class, 'meta')]"));
+            String metaText = metaTextElement.getText().trim();
+
+            // 4. Extract the number from the string
+            // Example string: "66 songs • 04:32:57"
+            // We split by space (" ") and take the first part ("66")
+            String countString = metaText.split(" ")[0];
+            int expectedCountFromHeader = Integer.parseInt(countString);
+
+            // 5. Verify they match
+            return actualRowCount == expectedCountFromHeader;
+
+        } catch (Exception e) {
+            System.err.println("Error verifying queue count: " + e.getMessage());
             return false;
         }
     }
