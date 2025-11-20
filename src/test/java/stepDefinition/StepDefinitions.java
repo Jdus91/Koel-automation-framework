@@ -534,17 +534,14 @@ public class StepDefinitions extends BaseTest {
                 "The Current Queue page is not cleared.");
     }
 
+    @And("I verify that a No songs queued. How about shuffling all songs?. message appears")
+    public void iVerifyThatANoSongsQueuedMessageAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isNoSongsQueuedMessageDisplayed(),
+                "The 'No songs queued. How about shuffling all songs?' message did not appear.");
+    }
+
     /*
-     * @And
-     * ("I verify that a No songs queued. How about shuffling all songs?. message appears"
-     * )
-     * public void iVerifyThatANoSongsQueuedMessageAppears() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.isNoSongsQueuedMessageDisplayed(),
-     * "The 'No songs queued. How about shuffling all songs?' message did not appear."
-     * );
-     * }
-     * 
      * @When("I select Shuffle all songs link from the message")
      * public void iSelectShuffleAllSongsLinkFromTheMessage() {
      * HomePage homePage = new HomePage(driver);

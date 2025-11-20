@@ -123,6 +123,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//span[@class='btn-group']/button[@class='btn-clear-queue']")
     WebElement clearQueueButton;
 
+    @FindBy(xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' text ')]")
+    WebElement noSongsQueuedMessage;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -683,6 +686,18 @@ public class HomePage extends BasePage {
 
         } catch (Exception e) {
             System.err.println("Error verifying if Current Queue is cleared: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean isNoSongsQueuedMessageDisplayed() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(noSongsQueuedMessage));
+
+            return true;
+
+        } catch (Exception e) {
+
             return false;
         }
     }
