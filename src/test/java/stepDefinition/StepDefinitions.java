@@ -547,14 +547,13 @@ public class StepDefinitions extends BaseTest {
         homePage.iSelectShuffleAllSongsLinkFromTheMessage();
     }
 
-    /*
-     * @Then("I verify that all songs appears in the Current Queue page")
-     * public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.areAllSongsInCurrentQueuePage(),
-     * "Not all songs appeared in the Current Queue page.");
-     * }
-     */
+    @Then("I verify that all songs appears in the Current Queue page")
+    public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areAllSongsInCurrentQueuePage(),
+                "Not all songs appeared in the Current Queue page.");
+    }
+
     @After
     public void closeBrowser() {
         if (driver != null) {

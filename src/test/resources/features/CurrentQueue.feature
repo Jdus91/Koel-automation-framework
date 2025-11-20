@@ -60,4 +60,5 @@ Feature: Current Queue
     Then I verify that the Current Queue page is cleared
     And I verify that a No songs queued. How about shuffling all songs?. message appears
     When I select Shuffle all songs link from the message
-    # Then I verify that all songs appears in the Current Queue page #code to be implemented in Current Queue
+    Then I verify that all songs appears in the Current Queue page
+    #This last step will fail as total of songs is different than what the header shows after shuffling all songs.

@@ -710,4 +710,35 @@ public class HomePage extends BasePage {
         click(shuffleAllSongsLink);
     }
 
+    public boolean areAllSongsInCurrentQueuePage() {
+        try {
+            // 1. Ensure we are on the Queue tab and elements are visible
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#queueWrapper")));
+
+            // 2. Count the actual rows in the DOM
+            // Target tr.song-item specifically inside the queue wrapper
+            List<WebElement> songRows = driver.findElements(By.cssSelector("#queueWrapper tr.song-item"));
+            int actualRowCount = songRows.size();
+
+            // 3. Get the "meta" text string (e.g., "66 songs • 04:32:57")
+            // This locator finds the span inside the queue header that contains the word
+            // "song"
+            WebElement metaTextElement = driver.findElement(
+                    By.xpath("//section[@id='queueWrapper']//span[contains(@class, 'meta')]"));
+            String metaText = metaTextElement.getText().trim();
+
+            // 4. Extract the number from the string
+            // Example string: "66 songs • 04:32:57"
+            // We split by space (" ") and take the first part ("66")
+            String countString = metaText.split(" ")[0];
+            int expectedCountFromHeader = Integer.parseInt(countString);
+
+            // 5. Verify they match
+            return actualRowCount == expectedCountFromHeader;
+
+        } catch (Exception e) {
+            System.err.println("Error verifying queue count: " + e.getMessage());
+            return false;
+        }
+    }
 }
