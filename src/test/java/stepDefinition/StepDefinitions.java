@@ -541,13 +541,13 @@ public class StepDefinitions extends BaseTest {
                 "The 'No songs queued. How about shuffling all songs?' message did not appear.");
     }
 
+    @When("I select Shuffle all songs link from the message")
+    public void iSelectShuffleAllSongsLinkFromTheMessage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectShuffleAllSongsLinkFromTheMessage();
+    }
+
     /*
-     * @When("I select Shuffle all songs link from the message")
-     * public void iSelectShuffleAllSongsLinkFromTheMessage() {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.iSelectShuffleAllSongsLinkFromTheMessage();
-     * }
-     * 
      * @Then("I verify that all songs appears in the Current Queue page")
      * public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
      * HomePage homePage = new HomePage(driver);

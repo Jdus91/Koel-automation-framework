@@ -126,6 +126,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' text ')]")
     WebElement noSongsQueuedMessage;
 
+    @FindBy(xpath = "//a[normalize-space(.)='shuffling all songs']")
+    WebElement shuffleAllSongsLink;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -700,6 +703,11 @@ public class HomePage extends BasePage {
 
             return false;
         }
+    }
+
+    public void iSelectShuffleAllSongsLinkFromTheMessage() {
+        wait.until(ExpectedConditions.elementToBeClickable(shuffleAllSongsLink));
+        click(shuffleAllSongsLink);
     }
 
 }
