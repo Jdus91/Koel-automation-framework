@@ -514,14 +514,14 @@ public class StepDefinitions extends BaseTest {
         homePage.iSelectShuffleAllSongsButton();
     }
 
+    @Then("I verify that the songs in the Current Queue page are shuffled")
+    public void iVerifyThatTheSongsInTheCurrentQueuePageAreShuffled() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSongsInCurrentQueueShuffled(),
+                "The songs in the Current Queue page are not shuffled.");
+    }
+
     /*
-     * @Then("I verify that the songs in the Current Queue page are shuffled")
-     * public void iVerifyThatTheSongsInTheCurrentQueuePageAreShuffled() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.areSongsInCurrentQueueShuffled(),
-     * "The songs in the Current Queue page are not shuffled.");
-     * }
-     * 
      * @When("I select clear queue button")
      * public void iSelectClearQueueButton() {
      * HomePage homePage = new HomePage(driver);

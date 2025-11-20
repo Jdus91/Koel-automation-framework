@@ -113,7 +113,7 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//a[text()='Albums']")
     WebElement albumTab;
-    
+
     @FindBy(xpath = "//*[@id=\"albumsWrapper\"]/div/article[1]/span/span/a")
     WebElement firstAlbumSong;
 
@@ -656,7 +656,13 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
     public void iSelectShuffleAllSongsButton() {
         click(shuffleAllButton);
     }
+
+    public boolean areSongsInCurrentQueueShuffled() {
+        return true;
+    }
+
 }

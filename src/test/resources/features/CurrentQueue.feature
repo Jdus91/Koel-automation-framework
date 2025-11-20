@@ -54,5 +54,12 @@ Feature: Current Queue
     And I double click to play a song from the Album page
     Then I verify that I am navigated to the Current Queue page
     When I select shuffle all songs button
+    Then I verify that the songs in the Current Queue page are shuffled
+    # When I select clear queue button #code to be implemented in Current Queue
+    # Then I verify that the Current Queue page is cleared #code to be implemented in Current Queue
+    # And I verify that a "No songs queued. How about shuffling all songs?." message appears #code to be implemented in Current Queue
+    # When I select "Shuffle all songs" link from the message #code to be implemented in Current Queue
+    # Then I verify that all songs appears in the Current Queue page #code to be implemented in Current Queue
+
 
 
