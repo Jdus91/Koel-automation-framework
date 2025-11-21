@@ -2,6 +2,7 @@ package pagefactory;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -742,18 +743,32 @@ public class HomePage extends BasePage {
         }
     }
 
-    /*
-     * public boolean doesHomepageDisplayPhrases() {
-     * try {
-     * List<WebElement> phrases = driver.findElements(By.xpath(
-     * "//div[contains(@class, 'homepage-phrases')]//h2[contains(text(), 'Welcome to Koel') or contains(text(), 'Your personal music streaming server')]"
-     * ));
-     * 
-     * return phrases.size() == 2;
-     * 
-     * } catch (Exception e) {
-     * return false;
-     * }
-     * }
-     */
+    public boolean doesHomepageDisplayPhrases() {
+        try {
+            // 1. Target the specific element shown in your screenshot
+            // We use CSS Selector because it's faster and cleaner for IDs.
+            // Structure: <section id="homeWrapper"> -> <div class="heading-wrapper"> ->
+            // <h1>
+            WebElement heading = driver.findElement(By.cssSelector("#homeWrapper .heading-wrapper h1"));
+
+            // 2. Check if the element is actually visible on the screen
+            if (!heading.isDisplayed()) {
+                System.out.println("Login Header element found in DOM but is hidden.");
+                return false;
+            }
+
+            // 3. Validate the text is present (Dynamic Check)
+            // Since the phrase changes (e.g., "Howdy", "Welcome"), we just check
+            // that the text is NOT empty.
+            String text = heading.getText().trim();
+            System.out.println("Current Homepage Phrase: " + text);
+
+            return text.length() > 0;
+
+        } catch (NoSuchElementException e) {
+            // This catches cases where the element isn't on the page at all
+            System.out.println("Could not find the Homepage phrase element.");
+            return false;
+        }
+    }
 }
