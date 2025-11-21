@@ -741,4 +741,19 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    /*
+     * public boolean doesHomepageDisplayPhrases() {
+     * try {
+     * List<WebElement> phrases = driver.findElements(By.xpath(
+     * "//div[contains(@class, 'homepage-phrases')]//h2[contains(text(), 'Welcome to Koel') or contains(text(), 'Your personal music streaming server')]"
+     * ));
+     * 
+     * return phrases.size() == 2;
+     * 
+     * } catch (Exception e) {
+     * return false;
+     * }
+     * }
+     */
 }
