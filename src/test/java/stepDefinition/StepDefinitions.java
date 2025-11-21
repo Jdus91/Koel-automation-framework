@@ -576,14 +576,14 @@ public class StepDefinitions extends BaseTest {
                 "The 'View All' button was not found inside the Recently Played section header.");
     }
 
+    @And("I verify that the Recently Played section has added songs")
+    public void iVerifyThatTheRecentlyPlayedSectionHasAddedSongs() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesRecentlyPlayedSectionHaveAddedSongs(),
+                "The Recently Played section does not have added songs.");
+    }
+
     /*
-     * @And("I verify that the Recently Played section has added songs")
-     * public void iVerifyThatTheRecentlyPlayedSectionHasAddedSongs() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.doesRecentlyPlayedSectionHaveAddedSongs(),
-     * "The Recently Played section does not have added songs.");
-     * }
-     * 
      * @And("I verify that Album names are displayed for the Recently Added songs section on the Homepage"
      * )
      * public void

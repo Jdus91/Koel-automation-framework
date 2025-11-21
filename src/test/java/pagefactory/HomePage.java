@@ -829,4 +829,21 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean doesRecentlyPlayedSectionHaveAddedSongs() {
+        try {
+            // 1. Locate the "Recently Played" section
+            WebElement section = driver.findElement(By.cssSelector("section.recent"));
+
+            // 2. Look for song items within the Recently Played section
+            List<WebElement> songItems = section.findElements(By.cssSelector("article[data-test='song-card']"));
+
+            // 3. Validate that there is at least one song item present
+            return !songItems.isEmpty();
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Could not find the Recently Played section or its songs.");
+            return false;
+        }
+    }
 }
