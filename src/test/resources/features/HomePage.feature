@@ -23,7 +23,7 @@ Feature: HomePage
     And I verify that Recently Played songs are displayed on the Homepage
     And I verify that the view all button in Homepage is displayed in the Recently Played section
     And I verify that the Recently Played section has added songs
-#     And I verify that Album names are displayed for the Recently Added songs section on the Homepage
+    And I verify that Album names are displayed for the Recently Added songs section on the Homepage
 #     And I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage
 #     #AC 7 (Search functionality validation)
 #   @Search_Functionality_Validation @AC_7

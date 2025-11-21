@@ -846,4 +846,41 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean areAlbumNamesDisplayedForRecentlyAddedSongs() {
+        try {
+            // 1. Define the Wait
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // 2. Use the specific list class visible in your screenshot breadcrumbs:
+            // ".recently-added-album-list"
+            // We check specifically for the 'a.name' inside that list.
+            // usage of 'visibilityOfAllElementsLocatedBy' handles the sync issue
+            // automatically.
+            List<WebElement> albumNames = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.cssSelector(".recently-added-album-list a.name")));
+
+            if (albumNames.isEmpty()) {
+                System.out.println("No albums found in the Recently Added list.");
+                return false;
+            }
+
+            // 3. Validate that each album name element has non-empty text
+            for (WebElement album : albumNames) {
+                String text = album.getText().trim();
+
+                if (text.isEmpty()) {
+                    System.out.println("Found an album in 'Recently Added' with empty text.");
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            // Catches TimeoutException or NoSuchElementException
+            System.out.println("Could not find the Recently Added albums within the timeout.");
+            return false;
+        }
+    }
 }

@@ -583,18 +583,14 @@ public class StepDefinitions extends BaseTest {
                 "The Recently Played section does not have added songs.");
     }
 
+    @And("I verify that Album names are displayed for the Recently Added songs section on the Homepage")
+    public void iVerifyThatAlbumNamesAreDisplayedForTheRecentlyAddedSongsSectionOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areAlbumNamesDisplayedForRecentlyAddedSongs(),
+                "Album names are not displayed for the Recently Added songs section on the Homepage.");
+    }
+
     /*
-     * @And("I verify that Album names are displayed for the Recently Added songs section on the Homepage"
-     * )
-     * public void
-     * iVerifyThatAlbumNamesAreDisplayedForTheRecentlyAddedSongsSectionOnTheHomepage
-     * () {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.areAlbumNamesDisplayedForRecentlyAddedSongs(),
-     * "Album names are not displayed for the Recently Added songs section on the Homepage."
-     * );
-     * }
-     * 
      * @And("I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage"
      * )
      * public void
