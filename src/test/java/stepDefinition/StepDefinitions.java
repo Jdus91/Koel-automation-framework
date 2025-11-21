@@ -568,17 +568,15 @@ public class StepDefinitions extends BaseTest {
                 "Recently Played songs are not displayed on the Homepage.");
     }
 
+    @And("I verify that the view all button in Homepage is displayed in the Recently Played section")
+    public void iVerifyThatTheViewAllButtonInHomepageIsDisplayedInRecentlyPlayedSection() {
+        HomePage homePage = new HomePage(driver);
+        // Calling the new robust method we created
+        Assert.assertTrue(homePage.isViewAllButtonInsideRecentlyPlayed(),
+                "The 'View All' button was not found inside the Recently Played section header.");
+    }
+
     /*
-     * @And("I verify that the view all button in Homepage is located next to Recently Played section"
-     * )
-     * public void
-     * iVerifyThatTheViewAllButtonInHomepageIsLocatedNextToRecentlyPlayedSection() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.isViewAllButtonNextToRecentlyPlayedSection(),
-     * "The view all button in Homepage is not located next to Recently Played section."
-     * );
-     * }
-     * 
      * @And("I verify that the Recently Played section has added songs")
      * public void iVerifyThatTheRecentlyPlayedSectionHasAddedSongs() {
      * HomePage homePage = new HomePage(driver);

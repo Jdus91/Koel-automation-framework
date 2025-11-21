@@ -802,4 +802,31 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean isViewAllButtonInsideRecentlyPlayed() {
+        try {
+            // 1. Locate the "Recently Played" section
+            WebElement section = driver.findElement(By.cssSelector("section.recent"));
+
+            // 2. Find the Header (h1) specifically INSIDE that section
+            WebElement header = section.findElement(By.tagName("h1"));
+
+            // 3. Verify the header text actually confirms it is "Recently Played"
+            if (!header.getText().contains("Recently Played")) {
+                System.out.println("Found a section, but the header was not 'Recently Played'.");
+                return false;
+            }
+
+            // 4. Now, look for the button INSIDE that header
+            // This confirms the button belongs to this specific section
+            WebElement viewAllBtn = header
+                    .findElement(By.cssSelector("button[data-testid='home-view-all-recently-played-btn']"));
+
+            return viewAllBtn.isDisplayed();
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Could not find the button inside the Recently Played section.");
+            return false;
+        }
+    }
 }
