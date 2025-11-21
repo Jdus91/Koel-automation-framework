@@ -20,6 +20,11 @@ public class HomePage extends BasePage {
         super(givenDriver);
     }
 
+    private void hoverOverElement(WebElement element) {
+        org.openqa.selenium.interactions.Actions actions = new org.openqa.selenium.interactions.Actions(driver);
+        actions.moveToElement(element).perform();
+    }
+
     @FindBy(css = "img.avatar")
     WebElement userAvatarIcon;
 
@@ -880,6 +885,47 @@ public class HomePage extends BasePage {
         } catch (Exception e) {
             // Catches TimeoutException or NoSuchElementException
             System.out.println("Could not find the Recently Added albums within the timeout.");
+            return false;
+        }
+    }
+
+    public boolean areShuffleAndDownloadIconsPresentForRecentlyAddedSongs() {
+        try {
+            // 1. Define the Wait
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // 2. Get all album items from the Recently Added list
+            List<WebElement> albumItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.cssSelector(".recently-added-album-list article.album-item")));
+
+            if (albumItems.isEmpty()) {
+                System.out.println("No albums found in the Recently Added list.");
+                return false;
+            }
+
+            // 3. Validate that each album item has both shuffle and download icons
+            for (WebElement album : albumItems) {
+                // Hover over the album item to reveal the buttons
+                hoverOverElement(album);
+
+                // Wait for the buttons to become visible
+                WebElement shuffleIcon = wait.until(ExpectedConditions.visibilityOf(
+                        album.findElement(By.cssSelector(".recently-added-album-list a.shuffle-album"))));
+                WebElement downloadIcon = wait.until(ExpectedConditions.visibilityOf(
+                        album.findElement(By.cssSelector(".recently-added-album-list a.download-album"))));
+
+                if (!shuffleIcon.isDisplayed() || !downloadIcon.isDisplayed()) {
+                    System.out.println("Missing shuffle or download icon for an album in 'Recently Added'.");
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            // Catches TimeoutException or NoSuchElementException
+            System.out.println("Could not find the Recently Added albums or their icons within the timeout.");
+            e.printStackTrace();
             return false;
         }
     }

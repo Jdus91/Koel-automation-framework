@@ -590,19 +590,13 @@ public class StepDefinitions extends BaseTest {
                 "Album names are not displayed for the Recently Added songs section on the Homepage.");
     }
 
+    @And("I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage")
+    public void iVerifyThatTheShuffleAndDownloadIconsArePresentForTheRecentlyAddedSongsSectionOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areShuffleAndDownloadIconsPresentForRecentlyAddedSongs(),
+                "Shuffle and Download icons are not present for the Recently Added songs section on the Homepage.");
+    }
     /*
-     * @And("I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage"
-     * )
-     * public void
-     * iVerifyThatTheShuffleAndDownloadIconsArePresentForTheRecentlyAddedSongsSectionOnTheHomepage
-     * () {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.
-     * areShuffleAndDownloadIconsPresentForRecentlyAddedSongs(),
-     * "Shuffle and Download icons are not present for the Recently Added songs section on the Homepage."
-     * );
-     * }
-     * 
      * @And("I verify that Search field is present on the Homepage")
      * public void iVerifyThatSearchFieldIsPresentOnTheHomepage() {
      * HomePage homePage = new HomePage(driver);
