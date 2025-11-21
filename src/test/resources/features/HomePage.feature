@@ -20,7 +20,7 @@ Feature: HomePage
     And I select Home tab from the navigation menu
     Then I am on the Homepage
     And I verify that the Homepage displays phrases
-#     And I verify that Recently Played songs are displayed on the Homepage
+    And I verify that Recently Played songs are displayed on the Homepage
 #     And I verify that the view all button in Homepage is located next to Recently Played section
 #     And I verify that the Recently Played section has added songs
 #     And I verify that Album names are displayed for the Recently Added songs section on the Homepage

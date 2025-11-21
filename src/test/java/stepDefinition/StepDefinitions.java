@@ -561,14 +561,14 @@ public class StepDefinitions extends BaseTest {
                 "The Homepage does not display phrases.");
     }
 
+    @And("I verify that Recently Played songs are displayed on the Homepage")
+    public void iVerifyThatRecentlyPlayedSongsAreDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areRecentlyPlayedSongsDisplayedOnHomepage(),
+                "Recently Played songs are not displayed on the Homepage.");
+    }
+
     /*
-     * @And("I verify that Recently Played songs are displayed on the Homepage")
-     * public void iVerifyThatRecentlyPlayedSongsAreDisplayedOnTheHomepage() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.areRecentlyPlayedSongsDisplayedOnHomepage(),
-     * "Recently Played songs are not displayed on the Homepage.");
-     * }
-     * 
      * @And("I verify that the view all button in Homepage is located next to Recently Played section"
      * )
      * public void

@@ -771,4 +771,35 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean areRecentlyPlayedSongsDisplayedOnHomepage() {
+        try {
+            // 1. Target the Recently Played section container
+            WebElement recentlyPlayedSection = driver.findElement(By.cssSelector("section[class='recent']"));
+
+            // 2. Check if the section is visible
+            if (!recentlyPlayedSection.isDisplayed()) {
+                System.out.println("Recently Played section is hidden.");
+                return false;
+            }
+
+            // 3. Look for song items within the Recently Played section
+            List<WebElement> songItems = recentlyPlayedSection
+                    .findElements(By.cssSelector("article[data-test='song-card']"));
+
+            // 4. Validate that there is at least one song item present
+            if (songItems.isEmpty()) {
+                System.out.println("No songs found in Recently Played section.");
+                return false;
+            }
+
+            // If we reach here, the section is visible and has songs
+            return true;
+
+        } catch (NoSuchElementException e) {
+            // This catches cases where the section or songs aren't on the page at all
+            System.out.println("Could not find the Recently Played section or its songs.");
+            return false;
+        }
+    }
 }
