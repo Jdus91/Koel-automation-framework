@@ -645,27 +645,25 @@ public class StepDefinitions extends BaseTest {
                 "Profile icon, Logout icon, and About Koel icons are not present on the Homepage.");
     }
 
-    /*
-     * @Then("I verify that profile and preferences form appears")
-     * public void iVerifyThatProfileAndPreferencesFormAppears() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.profileSettingsFormAvailable(),
-     * "Profile and Preferences form not available.");
-     * }
-     * 
-     * @When("I click on About Koel icon")
-     * public void iClickOnAboutKoelIcon() {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.clickOnAboutKoelIcon();
-     * }
-     * 
-     * @Then("I verify that About Koel modal appears")
-     * public void iVerifyThatAboutKoelModalAppears() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.isAboutKoelModalDisplayed(),
-     * "About Koel modal did not appear.");
-     * }
-     */
+    @Then("I verify that profile and preferences form appears")
+    public void iVerifyThatProfileAndPreferencesFormAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.profileSettingsFormAvailable(),
+                "Profile and Preferences form not available.");
+    }
+
+    @When("I click on About Koel icon")
+    public void iClickOnAboutKoelIcon() {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnAboutKoelIcon();
+    }
+
+    @Then("I verify that About Koel modal appears")
+    public void iVerifyThatAboutKoelModalAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isAboutKoelModalDisplayed(),
+                "About Koel modal did not appear.");
+    }
 
     @After
     public void closeBrowser() {

@@ -161,6 +161,9 @@ public class HomePage extends BasePage {
     @FindBy(id = "playlists")
     WebElement playlistSection;
 
+    @FindBy(css = "div[data-testid='about-modal']")
+    WebElement aboutKoelForm;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -1119,6 +1122,19 @@ public class HomePage extends BasePage {
             return false;
         } catch (Exception e) {
             System.out.println("❌ Error validating icons: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void clickOnAboutKoelIcon() {
+        click(aboutKoelIcon);
+    }
+
+    public boolean isAboutKoelModalDisplayed() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(aboutKoelForm));
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }

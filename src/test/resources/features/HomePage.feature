@@ -65,19 +65,19 @@ Feature: HomePage
     And I select Home tab from the navigation menu
     Then I am on the Homepage
     And I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage
-#     When profile icon is available
-#     And I click profile icon
-#     Then I verify that profile and preferences form appears
-#     And I select Home tab from the navigation menu
-#     Then I am on the Homepage
-#     Then Logout option is visible
-#     When I click on Logout option
-#     Then I am redirected to Login Page
-#     When I enter email "jennifer.de.jesus@testpro.io"
-#     And I enter password "FCVlLOni12!"
-#     And I submit
-#     Then I am logged in
-#     And I select Home tab from the navigation menu
-#     Then I am on the Homepage
-#     When I click on About Koel icon
-#     Then I verify that About Koel modal appears
+    When profile icon is available
+    And I click profile icon
+    Then I verify that profile and preferences form appears
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    Then Logout option is visible
+    When I click on Logout option
+    Then I am redirected to Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    When I click on About Koel icon
+    Then I verify that About Koel modal appears
