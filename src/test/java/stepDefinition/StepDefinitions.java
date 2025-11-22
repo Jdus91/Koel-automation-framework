@@ -554,6 +554,117 @@ public class StepDefinitions extends BaseTest {
                 "Not all songs appeared in the Current Queue page.");
     }
 
+    @And("I verify that the Homepage displays phrases")
+    public void iVerifyThatTheHomepageDisplaysPhrases() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesHomepageDisplayPhrases(),
+                "The Homepage does not display phrases.");
+    }
+
+    @And("I verify that Recently Played songs are displayed on the Homepage")
+    public void iVerifyThatRecentlyPlayedSongsAreDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areRecentlyPlayedSongsDisplayedOnHomepage(),
+                "Recently Played songs are not displayed on the Homepage.");
+    }
+
+    @And("I verify that the view all button in Homepage is displayed in the Recently Played section")
+    public void iVerifyThatTheViewAllButtonInHomepageIsDisplayedInRecentlyPlayedSection() {
+        HomePage homePage = new HomePage(driver);
+        // Calling the new robust method we created
+        Assert.assertTrue(homePage.isViewAllButtonInsideRecentlyPlayed(),
+                "The 'View All' button was not found inside the Recently Played section header.");
+    }
+
+    @And("I verify that the Recently Played section has added songs")
+    public void iVerifyThatTheRecentlyPlayedSectionHasAddedSongs() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesRecentlyPlayedSectionHaveAddedSongs(),
+                "The Recently Played section does not have added songs.");
+    }
+
+    @And("I verify that Album names are displayed for the Recently Added songs section on the Homepage")
+    public void iVerifyThatAlbumNamesAreDisplayedForTheRecentlyAddedSongsSectionOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areAlbumNamesDisplayedForRecentlyAddedSongs(),
+                "Album names are not displayed for the Recently Added songs section on the Homepage.");
+    }
+
+    @And("I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage")
+    public void iVerifyThatTheShuffleAndDownloadIconsArePresentForTheRecentlyAddedSongsSectionOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areShuffleAndDownloadIconsPresentForRecentlyAddedSongs(),
+                "Shuffle and Download icons are not present for the Recently Added songs section on the Homepage.");
+    }
+
+    @And("I verify that Search field is present on the Homepage")
+    public void iVerifyThatSearchFieldIsPresentOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isSearchFieldPresentOnHomepage(),
+                "Search field is not present on the Homepage.");
+    }
+
+    @When("I click on the Search field on the Homepage")
+    public void iClickOnTheSearchFieldOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnSearchField();
+    }
+
+    @And("I type F in the Search field")
+    public void iTypeFInTheSearchField() {
+        HomePage homePage = new HomePage(driver);
+        homePage.enterInSearchField("F");
+    }
+
+    @Then("I verify that search results related to {string} are displayed on the Homepage")
+    public void iVerifyThatSearchResultsRelatedToAreDisplayedOnTheHomepage(String searchTerm) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSearchResultsRelatedToDisplayedOnHomepage(searchTerm),
+                "Search results related to '" + searchTerm +
+                        "' are not displayed on the Homepage.");
+    }
+
+    @And("I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists")
+    public void iVerifyThatTheMusicPanelIncludesHomeCurrentQueueAllSongsAlbumsAndArtists() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesMusicPanelIncludeAllSections(),
+                "The Music panel does not include Home, Current Queue, All Songs, Albums, and Artists.");
+    }
+
+    @And("I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists")
+    public void iVerifyThatThePlaylistPanelIncludesFavoritesPlaylistRecentlyPlayedPlaylistSmartPlaylistsAndUserCreatedPlaylists() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesPlaylistPanelIncludeAllPlaylists(),
+                "The Playlist panel does not include favorites playlist, Recently played playlist, smart playlists and user created playlists.");
+    }
+
+    @And("I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage")
+    public void iVerifyThatProfileIconLogoutIconAndAboutKoelIconsArePresentOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areProfileLogoutAboutKoelIconsPresent(),
+                "Profile icon, Logout icon, and About Koel icons are not present on the Homepage.");
+    }
+
+    @Then("I verify that profile and preferences form appears")
+    public void iVerifyThatProfileAndPreferencesFormAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.profileSettingsFormAvailable(),
+                "Profile and Preferences form not available.");
+    }
+
+    @When("I click on About Koel icon")
+    public void iClickOnAboutKoelIcon() {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnAboutKoelIcon();
+    }
+
+    @Then("I verify that About Koel modal appears")
+    public void iVerifyThatAboutKoelModalAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isAboutKoelModalDisplayed(),
+                "About Koel modal did not appear.");
+    }
+
     @After
     public void closeBrowser() {
         if (driver != null) {

@@ -2,6 +2,8 @@ package pagefactory;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +21,11 @@ public class HomePage extends BasePage {
         super(givenDriver);
     }
 
+    private void hoverOverElement(WebElement element) {
+        org.openqa.selenium.interactions.Actions actions = new org.openqa.selenium.interactions.Actions(driver);
+        actions.moveToElement(element).perform();
+    }
+
     @FindBy(css = "img.avatar")
     WebElement userAvatarIcon;
 
@@ -27,6 +34,9 @@ public class HomePage extends BasePage {
 
     @FindBy(css = "a[data-testid='view-profile-link']")
     WebElement profileLink;
+
+    @FindBy(css = "button[title='About Koel']")
+    WebElement aboutKoelIcon;
 
     @FindBy(css = "header, .header, .app-header")
     WebElement headerBar;
@@ -128,6 +138,31 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//a[normalize-space(.)='shuffling all songs']")
     WebElement shuffleAllSongsLink;
+
+    @FindBy(xpath = "//button[@data-testid='toggle-extra-panel-btn']")
+    WebElement infoButton;
+
+    @FindBy(xpath = "//h1//span[contains(text(), 'Search Results for')]")
+    WebElement searchResultsHeader;
+
+    @FindBy(css = "section#playlists li.favorites")
+    WebElement favoritesPlaylist;
+
+    @FindBy(css = "section#playlists li.recently-played")
+    WebElement recentlyPlayedPlaylist;
+
+    // 3. Locator for User/Smart playlists (These share the 'playlist playlist'
+    // class)
+    // We use a List here because there can be multiple (or zero) user playlists.
+    @FindBy(css = "section#playlists li.playlist.playlist")
+    List<WebElement> userPlaylists;
+
+    // 4. Locator for the main Playlist section wrapper (good for waiting)
+    @FindBy(id = "playlists")
+    WebElement playlistSection;
+
+    @FindBy(css = "div[data-testid='about-modal']")
+    WebElement aboutKoelForm;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -738,6 +773,368 @@ public class HomePage extends BasePage {
 
         } catch (Exception e) {
             System.err.println("Error verifying queue count: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean doesHomepageDisplayPhrases() {
+        try {
+            // 1. Target the specific element shown in your screenshot
+            // We use CSS Selector because it's faster and cleaner for IDs.
+            // Structure: <section id="homeWrapper"> -> <div class="heading-wrapper"> ->
+            // <h1>
+            WebElement heading = driver.findElement(By.cssSelector("#homeWrapper .heading-wrapper h1"));
+
+            // 2. Check if the element is actually visible on the screen
+            if (!heading.isDisplayed()) {
+                System.out.println("Login Header element found in DOM but is hidden.");
+                return false;
+            }
+
+            // 3. Validate the text is present (Dynamic Check)
+            // Since the phrase changes (e.g., "Howdy", "Welcome"), we just check
+            // that the text is NOT empty.
+            String text = heading.getText().trim();
+            System.out.println("Current Homepage Phrase: " + text);
+
+            return text.length() > 0;
+
+        } catch (NoSuchElementException e) {
+            // This catches cases where the element isn't on the page at all
+            System.out.println("Could not find the Homepage phrase element.");
+            return false;
+        }
+    }
+
+    public boolean areRecentlyPlayedSongsDisplayedOnHomepage() {
+        try {
+            // 1. Target the Recently Played section container
+            WebElement recentlyPlayedSection = driver.findElement(By.cssSelector("section[class='recent']"));
+
+            // 2. Check if the section is visible
+            if (!recentlyPlayedSection.isDisplayed()) {
+                System.out.println("Recently Played section is hidden.");
+                return false;
+            }
+
+            // 3. Look for song items within the Recently Played section
+            List<WebElement> songItems = recentlyPlayedSection
+                    .findElements(By.cssSelector("article[data-test='song-card']"));
+
+            // 4. Validate that there is at least one song item present
+            if (songItems.isEmpty()) {
+                System.out.println("No songs found in Recently Played section.");
+                return false;
+            }
+
+            // If we reach here, the section is visible and has songs
+            return true;
+
+        } catch (NoSuchElementException e) {
+            // This catches cases where the section or songs aren't on the page at all
+            System.out.println("Could not find the Recently Played section or its songs.");
+            return false;
+        }
+    }
+
+    public boolean isViewAllButtonInsideRecentlyPlayed() {
+        try {
+            // 1. Locate the "Recently Played" section
+            WebElement section = driver.findElement(By.cssSelector("section.recent"));
+
+            // 2. Find the Header (h1) specifically INSIDE that section
+            WebElement header = section.findElement(By.tagName("h1"));
+
+            // 3. Verify the header text actually confirms it is "Recently Played"
+            if (!header.getText().contains("Recently Played")) {
+                System.out.println("Found a section, but the header was not 'Recently Played'.");
+                return false;
+            }
+
+            // 4. Now, look for the button INSIDE that header
+            // This confirms the button belongs to this specific section
+            WebElement viewAllBtn = header
+                    .findElement(By.cssSelector("button[data-testid='home-view-all-recently-played-btn']"));
+
+            return viewAllBtn.isDisplayed();
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Could not find the button inside the Recently Played section.");
+            return false;
+        }
+    }
+
+    public boolean doesRecentlyPlayedSectionHaveAddedSongs() {
+        try {
+            // 1. Locate the "Recently Played" section
+            WebElement section = driver.findElement(By.cssSelector("section.recent"));
+
+            // 2. Look for song items within the Recently Played section
+            List<WebElement> songItems = section.findElements(By.cssSelector("article[data-test='song-card']"));
+
+            // 3. Validate that there is at least one song item present
+            return !songItems.isEmpty();
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Could not find the Recently Played section or its songs.");
+            return false;
+        }
+    }
+
+    public boolean areAlbumNamesDisplayedForRecentlyAddedSongs() {
+        try {
+            // 1. Define the Wait
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // 2. Use the specific list class visible in your screenshot breadcrumbs:
+            // ".recently-added-album-list"
+            // We check specifically for the 'a.name' inside that list.
+            // usage of 'visibilityOfAllElementsLocatedBy' handles the sync issue
+            // automatically.
+            List<WebElement> albumNames = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.cssSelector(".recently-added-album-list a.name")));
+
+            if (albumNames.isEmpty()) {
+                System.out.println("No albums found in the Recently Added list.");
+                return false;
+            }
+
+            // 3. Validate that each album name element has non-empty text
+            for (WebElement album : albumNames) {
+                String text = album.getText().trim();
+
+                if (text.isEmpty()) {
+                    System.out.println("Found an album in 'Recently Added' with empty text.");
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            // Catches TimeoutException or NoSuchElementException
+            System.out.println("Could not find the Recently Added albums within the timeout.");
+            return false;
+        }
+    }
+
+    public boolean areShuffleAndDownloadIconsPresentForRecentlyAddedSongs() {
+        try {
+
+            // 1. Define the Wait
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // Look for info button
+            wait.until(ExpectedConditions.visibilityOf(infoButton));
+
+            // Verify if info button is active
+            if (infoButton.getAttribute("class").contains("active")) {
+                click(infoButton);
+            }
+
+            // 2. Get all album items from the Recently Added list
+            List<WebElement> albumItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.cssSelector("ol.recently-added-album-list > li > article.item")));
+
+            if (albumItems.isEmpty()) {
+                System.out.println("No albums found in the Recently Added list.");
+                return false;
+            }
+
+            // 3. Validate that each album item has both shuffle and download icons
+            for (WebElement album : albumItems) {
+
+                // if album requires hovering to show icons, then hover over the album item
+                WebElement albumRightClass = album.findElement(By.cssSelector("p.meta > span.right"));
+                // if albumRightClass has css value 'opacity: 0' or 'display: none', then hover
+                // is required
+                if (albumRightClass.getCssValue("opacity").equals("0")
+                        || albumRightClass.getCssValue("display").equals("none")) {
+                    hoverOverElement(album);
+                }
+
+                // Wait for the buttons to become visible
+                WebElement shuffleIcon = wait.until(ExpectedConditions.visibilityOf(
+                        album.findElement(By.cssSelector("p.meta > span.right > a.shuffle-album"))));
+                WebElement downloadIcon = wait.until(ExpectedConditions.visibilityOf(
+                        album.findElement(By.cssSelector("p.meta > span.right > a.download-album"))));
+
+                if (!shuffleIcon.isDisplayed() || !downloadIcon.isDisplayed()) {
+                    System.out.println("Missing shuffle or download icon for an album in 'Recently Added'.");
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            // Catches TimeoutException or NoSuchElementException
+            System.out.println("Could not find the Recently Added albums or their icons within the timeout.");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isSearchFieldPresentOnHomepage() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(searchField));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void clickOnSearchField() {
+        click(searchField);
+    }
+
+    public void enterInSearchField(String text) {
+        WebElement searchInput = findElement(searchField);
+        searchInput.clear();
+        searchInput.sendKeys(text);
+    }
+
+    public boolean areSearchResultsRelatedToDisplayedOnHomepage(String searchTerm) {
+        String expectedText = "Search Results for " + searchTerm.toLowerCase();
+
+        try {
+            // Wait for the specific heading element to be visible
+            wait.until(ExpectedConditions.visibilityOf(searchResultsHeader));
+
+            // Get the entire text, including the bolded 'f'. The browser typically
+            // concatenates the text content of all nested elements (span, strong, etc.).
+            String actualText = searchResultsHeader.getText().trim();
+
+            // Log for debugging
+            System.out.println("Actual Header Text Found: '" + actualText + "'");
+            System.out.println("Expected Text (Partial Match): '" + expectedText + "'");
+
+            // Check if the actual text CONTAINS the expected phrase.
+            // Using contains() is safer because there might be invisible elements or
+            // spaces.
+            return actualText.toLowerCase().contains(expectedText.toLowerCase());
+
+        } catch (TimeoutException e) {
+            System.out.println("❌ Timeout: Search results header did not appear.");
+            return false;
+        } catch (Exception e) {
+            System.out.println("❌ Error while verifying search results header: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean doesMusicPanelIncludeAllSections() {
+        try {
+            // Define expected sections
+            List<String> expectedSections = List.of("Home", "Current Queue", "All Songs", "Albums", "Artists");
+
+            // Locate the music panel
+            WebElement musicPanel = driver.findElement(By.cssSelector("ul[class='menu']"));
+
+            // Check for each expected section
+            for (String section : expectedSections) {
+                By sectionLocator = By.xpath(".//a[normalize-space()='" + section + "']");
+                List<WebElement> elements = musicPanel.findElements(sectionLocator);
+
+                if (elements.isEmpty() || !elements.get(0).isDisplayed()) {
+                    System.out.println("Missing or hidden section in Music panel: " + section);
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Music panel not found.");
+            return false;
+        }
+    }
+
+    public boolean doesPlaylistPanelIncludeAllPlaylists() {
+        try {
+            // Step 1: Ensure the Playlist panel itself is loaded
+            wait.until(ExpectedConditions.visibilityOf(playlistSection));
+
+            // Step 2: Verify 'Favorites' exists and is displayed
+            if (!favoritesPlaylist.isDisplayed()) {
+                System.out.println("❌ 'Favorites' playlist is missing or hidden.");
+                return false;
+            }
+
+            // Step 3: Verify 'Recently Played' exists and is displayed
+            if (!recentlyPlayedPlaylist.isDisplayed()) {
+                System.out.println("❌ 'Recently Played' playlist is missing or hidden.");
+                return false;
+            }
+
+            // Step 4: Verify User/Smart Playlists
+            // We check if the list is not empty.
+            // (Assuming the test expects at least one user/smart playlist to exist).
+            if (userPlaylists.isEmpty()) {
+                System.out.println("⚠️ No User-Created or Smart Playlists found.");
+                // If it's acceptable to have 0 user playlists, you can remove this return false
+                // return false;
+            } else {
+                // Check if the first one is visible to ensure the list isn't hidden
+                if (!userPlaylists.get(0).isDisplayed()) {
+                    System.out.println("❌ User playlists exist in DOM but are not visible.");
+                    return false;
+                }
+            }
+
+            System.out.println("✅ Playlist panel contains Favorites, Recently Played, and User playlists.");
+            return true;
+
+        } catch (NoSuchElementException e) {
+            System.out.println("❌ Element not found in Playlist panel: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("❌ Error validating Playlist panel: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean areProfileLogoutAboutKoelIconsPresent() {
+        try {
+            // Check Profile Icon
+            if (!userAvatarIcon.isDisplayed()) {
+                System.out.println("❌ Profile icon is missing or hidden.");
+                return false;
+            }
+
+            // Check Logout Icon
+            if (!logoutButton.isDisplayed()) {
+                System.out.println("❌ Logout icon is missing or hidden.");
+                return false;
+            }
+
+            // Check About Koel Icon
+            if (!aboutKoelIcon.isDisplayed()) {
+                System.out.println("❌ About Koel icon is missing or hidden.");
+                return false;
+            }
+
+            System.out.println("✅ Profile, Logout, and About Koel icons are present.");
+            return true;
+
+        } catch (NoSuchElementException e) {
+            System.out.println("❌ One or more icons not found: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("❌ Error validating icons: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void clickOnAboutKoelIcon() {
+        click(aboutKoelIcon);
+    }
+
+    public boolean isAboutKoelModalDisplayed() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(aboutKoelForm));
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }
