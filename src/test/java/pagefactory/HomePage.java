@@ -135,6 +135,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[normalize-space(.)='shuffling all songs']")
     WebElement shuffleAllSongsLink;
 
+    @FindBy(xpath = "//button[@data-testid='toggle-extra-panel-btn']")
+    WebElement infoButton;
+
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
 
@@ -891,12 +894,21 @@ public class HomePage extends BasePage {
 
     public boolean areShuffleAndDownloadIconsPresentForRecentlyAddedSongs() {
         try {
+
             // 1. Define the Wait
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
+            // Look for info button
+            wait.until(ExpectedConditions.visibilityOf(infoButton));
+
+            // Verify if info button is active
+            if (infoButton.getAttribute("class").contains("active")) {
+                click(infoButton);
+            }
+
             // 2. Get all album items from the Recently Added list
             List<WebElement> albumItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
-                    By.cssSelector(".recently-added-album-list article.album-item")));
+                    By.cssSelector("ol.recently-added-album-list > li > article.item")));
 
             if (albumItems.isEmpty()) {
                 System.out.println("No albums found in the Recently Added list.");
@@ -905,14 +917,21 @@ public class HomePage extends BasePage {
 
             // 3. Validate that each album item has both shuffle and download icons
             for (WebElement album : albumItems) {
-                // Hover over the album item to reveal the buttons
-                hoverOverElement(album);
+
+                // if album requires hovering to show icons, then hover over the album item
+                WebElement albumRightClass = album.findElement(By.cssSelector("p.meta > span.right"));
+                // if albumRightClass has css value 'opacity: 0' or 'display: none', then hover
+                // is required
+                if (albumRightClass.getCssValue("opacity").equals("0")
+                        || albumRightClass.getCssValue("display").equals("none")) {
+                    hoverOverElement(album);
+                }
 
                 // Wait for the buttons to become visible
                 WebElement shuffleIcon = wait.until(ExpectedConditions.visibilityOf(
-                        album.findElement(By.cssSelector(".recently-added-album-list a.shuffle-album"))));
+                        album.findElement(By.cssSelector("p.meta > span.right > a.shuffle-album"))));
                 WebElement downloadIcon = wait.until(ExpectedConditions.visibilityOf(
-                        album.findElement(By.cssSelector(".recently-added-album-list a.download-album"))));
+                        album.findElement(By.cssSelector("p.meta > span.right > a.download-album"))));
 
                 if (!shuffleIcon.isDisplayed() || !downloadIcon.isDisplayed()) {
                     System.out.println("Missing shuffle or download icon for an album in 'Recently Added'.");
