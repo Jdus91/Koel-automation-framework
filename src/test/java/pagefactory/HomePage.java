@@ -3,6 +3,7 @@ package pagefactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -137,6 +138,9 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//button[@data-testid='toggle-extra-panel-btn']")
     WebElement infoButton;
+
+    @FindBy(xpath = "//h1//span[contains(text(), 'Search Results for')]")
+    private WebElement searchResultsHeader;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -966,5 +970,34 @@ public class HomePage extends BasePage {
         WebElement searchInput = findElement(searchField);
         searchInput.clear();
         searchInput.sendKeys(text);
+    }
+
+    public boolean areSearchResultsRelatedToDisplayedOnHomepage(String searchTerm) {
+        String expectedText = "Search Results for " + searchTerm.toLowerCase();
+
+        try {
+            // Wait for the specific heading element to be visible
+            wait.until(ExpectedConditions.visibilityOf(searchResultsHeader));
+
+            // Get the entire text, including the bolded 'f'. The browser typically
+            // concatenates the text content of all nested elements (span, strong, etc.).
+            String actualText = searchResultsHeader.getText().trim();
+
+            // Log for debugging
+            System.out.println("Actual Header Text Found: '" + actualText + "'");
+            System.out.println("Expected Text (Partial Match): '" + expectedText + "'");
+
+            // Check if the actual text CONTAINS the expected phrase.
+            // Using contains() is safer because there might be invisible elements or
+            // spaces.
+            return actualText.toLowerCase().contains(expectedText.toLowerCase());
+
+        } catch (TimeoutException e) {
+            System.out.println("❌ Timeout: Search results header did not appear.");
+            return false;
+        } catch (Exception e) {
+            System.out.println("❌ Error while verifying search results header: " + e.getMessage());
+            return false;
+        }
     }
 }

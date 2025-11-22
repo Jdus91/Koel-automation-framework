@@ -38,8 +38,8 @@ Feature: HomePage
     Then I am on the Homepage
     And I verify that Search field is present on the Homepage
     When I click on the Search field on the Homepage
-    And I type f in the Search field
-#     Then I verify that search results related to "f" are displayed on the Homepage
+    And I type F in the Search field
+    Then I verify that search results related to "F" are displayed on the Homepage
 #     #AC 8-10 (Verification of music panel, playlist panel on Homepage)
 #   @Music_and_Playlist_Panels_Verification @AC_8-10
 #   Scenario: Verification of Music Panel, Playlist Panel, and Icons on Homepage

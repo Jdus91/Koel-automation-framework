@@ -610,24 +610,21 @@ public class StepDefinitions extends BaseTest {
         homePage.clickOnSearchField();
     }
 
-    @And("I type f in the Search field")
+    @And("I type F in the Search field")
     public void iTypeFInTheSearchField() {
         HomePage homePage = new HomePage(driver);
-        homePage.enterInSearchField("f");
+        homePage.enterInSearchField("F");
+    }
+
+    @Then("I verify that search results related to {string} are displayed on the Homepage")
+    public void iVerifyThatSearchResultsRelatedToAreDisplayedOnTheHomepage(String searchTerm) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSearchResultsRelatedToDisplayedOnHomepage(searchTerm),
+                "Search results related to '" + searchTerm +
+                        "' are not displayed on the Homepage.");
     }
 
     /*
-     * @Then("I verify that search results related to {string} are displayed on the Homepage"
-     * )
-     * public void iVerifyThatSearchResultsRelatedToAreDisplayedOnTheHomepage(String
-     * searchTerm) {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.areSearchResultsRelatedToDisplayedOnHomepage(
-     * searchTerm),
-     * "Search results related to '" + searchTerm +
-     * "' are not displayed on the Homepage.");
-     * }
-     * 
      * @And("I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists"
      * )
      * public void
