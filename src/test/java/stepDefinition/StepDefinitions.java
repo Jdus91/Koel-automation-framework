@@ -19,16 +19,24 @@ import pagefactory.HomePage;
 import pagefactory.LoginPage;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StepDefinitions extends BaseTest {
     WebDriver driver;
     WebDriverWait wait;
-    
+
     @Before
     public void openBrowser() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-notifications");
+
+        // options.addArguments("--disable-notifications");
+        // --- Allow notifications ---
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("profile.default_content_setting_values.notifications", 1);
+        options.setExperimentalOption("prefs", prefs);
+        // ---------------------------
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -78,7 +86,8 @@ public class StepDefinitions extends BaseTest {
         // 2. Define the form locator to ensure the element is still present
         By formLocator = By.xpath("//*[@id='app']/div/div/form");
 
-        // Assertion 1: Check that the URL did NOT change, proving submission was blocked.
+        // Assertion 1: Check that the URL did NOT change, proving submission was
+        // blocked.
         String currentUrl = driver.getCurrentUrl();
         Assert.assertEquals(currentUrl, expectedUrl,
                 "Expected to remain on the Login page, but the URL changed.");
@@ -96,7 +105,8 @@ public class StepDefinitions extends BaseTest {
         // 2. Define the form locator to ensure the element is still present
         By formLocator = By.xpath("//*[@id=\"app\"]/div/div/form/input[2]");
 
-        // Assertion 1: Check that the URL did NOT change, proving submission was blocked.
+        // Assertion 1: Check that the URL did NOT change, proving submission was
+        // blocked.
         String currentUrl = driver.getCurrentUrl();
         Assert.assertEquals(currentUrl, expectedUrl,
                 "Expected to remain on the Login page, but the URL changed.");
@@ -170,7 +180,6 @@ public class StepDefinitions extends BaseTest {
         homePage.IClickSaveButtonInProfileAndPreferencesForm(successMessage);
     }
 
-
     @Then("I can log in with {string} and password {string}")
     public void iCanLogInWithAndPassword(String email, String password) {
         // This is a full re-login, starting from the login page
@@ -220,14 +229,15 @@ public class StepDefinitions extends BaseTest {
 
     @Then("I am on the Login page")
     public void iAmOnTheLoginPageAssert() {
-        // Koel login is the base route; accept either / or /#!/login if your app uses hash routing
+        // Koel login is the base route; accept either / or /#!/login if your app uses
+        // hash routing
         String url = driver.getCurrentUrl();
         boolean looksLikeLogin = url.equals("https://qa.koel.app/") ||
                 url.contains("/#!/login");
         Assert.assertTrue(looksLikeLogin, "Not on Login page. URL: " + url);
     }
 
-    //New step definitions for AC5
+    // New step definitions for AC5
 
     @When("profile icon is available")
     public void profileIconIsAvailable() {
@@ -248,13 +258,13 @@ public class StepDefinitions extends BaseTest {
 
     }
 
-    //Logout new sep definitions
-     @Then("Logout option is visible")
+    // Logout new sep definitions
+    @Then("Logout option is visible")
     public void logoutOptionIsVisible() {
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.logoutButton().isDisplayed(), "Logout option not visible.");
     }
-    
+
     @When("I click on Logout option")
     public void iClickOnLogoutOption() {
         HomePage homePage = new HomePage(driver);
@@ -265,7 +275,7 @@ public class StepDefinitions extends BaseTest {
     }
 
     @Then("I am logged out")
-    public void iAmLoggedOut() {    
+    public void iAmLoggedOut() {
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageVisible());
     }
@@ -276,7 +286,7 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(loginPage.isPageVisible());
     }
 
-    //Step definitions for InfoPanel.feature
+    // Step definitions for InfoPanel.feature
 
     @When("I play a song")
     public void iPlayASong() {
@@ -285,7 +295,7 @@ public class StepDefinitions extends BaseTest {
         allSongsPage.clickPlay();
     }
 
-    @Then ("I verify Album name is displayed")
+    @Then("I verify Album name is displayed")
     public void iVerifyAlbumNameIsDisplayed() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
         Assert.assertTrue(allSongsPage.isAlbumNameDisplayed(), "Album name is not displayed.");
@@ -297,19 +307,20 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(allSongsPage.isCoverNameDisplayed(), "Cover name is not displayed.");
     }
 
-   @And("I verify Lyrics is displayed in Progress Pane")
+    @And("I verify Lyrics is displayed in Progress Pane")
     public void iVerifyLyricsIsDisplayedInProgressPane() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
-        Assert.assertFalse(allSongsPage.isLyricsInProgressPane(), "FAILURE: A Lyrics element was unexpectedly found inside the progress pane.");
+        Assert.assertFalse(allSongsPage.isLyricsInProgressPane(),
+                "FAILURE: A Lyrics element was unexpectedly found inside the progress pane.");
     }
 
-    @And ("I verify Artist name is displayed")
+    @And("I verify Artist name is displayed")
     public void iVerifyArtistNameIsDisplayed() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
         Assert.assertTrue(allSongsPage.isArtistNameDisplayed(), "Artist name is not displayed in Info Panel.");
     }
 
-   @And ("I open Info Panel")
+    @And("I open Info Panel")
     public void iOpenInfoPanel() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
         allSongsPage.iOpenInfoPanel();
@@ -331,7 +342,7 @@ public class StepDefinitions extends BaseTest {
     public void iVerifyInfoPanelIsClosed() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
         Assert.assertTrue(allSongsPage.isInfoPanelClosed(), "Info Panel is not closed.");
-    }       
+    }
 
     @When("I select Album tab in Info Panel")
     public void iSelectAlbumTabInInfoPanel() {
@@ -339,24 +350,320 @@ public class StepDefinitions extends BaseTest {
         allSongsPage.selectAlbumTab();
     }
 
-    @Then ("I select and verify that Shuffle button from Album tab was clicked")
+    @Then("I select and verify that Shuffle button from Album tab was clicked")
     public void iSelectAndVerifyShuffleButtonFromAlbumTabClicked() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
-        Assert.assertTrue(allSongsPage.clickShuffleButtonFromAlbumTabAndConfirm(), "Shuffle button from Album tab was not clicked.");
+        Assert.assertTrue(allSongsPage.clickShuffleButtonFromAlbumTabAndConfirm(),
+                "Shuffle button from Album tab was not clicked.");
     }
 
-   @When("I select Artist tab from the Info Panel")//Add method in AllSongsPage
+    @When("I select Artist tab from the Info Panel")
     public void iSelectArtistTabFromTheInfoPanel() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
         allSongsPage.selectArtistTab();
     }
 
-    @Then ("I select and verify that Shuffle button from Artist tab was clicked")
+    @Then("I select and verify that Shuffle button from Artist tab was clicked")
     public void iSelectAndVerifyShuffleButtonFromArtistTabClicked() {
         AllSongsPage allSongsPage = new AllSongsPage(driver);
-        Assert.assertTrue(allSongsPage.clickShuffleButtonFromArtistTabAndConfirm(), "Shuffle button from Artist tab was not clicked.");
+        Assert.assertTrue(allSongsPage.clickShuffleButtonFromArtistTabAndConfirm(),
+                "Shuffle button from Artist tab was not clicked.");
     }
 
+    // Step definitions for ProfileandPreferences.feature
+    @And("I enter new name in profile and preferences form {string}")
+    public void ienterNewNameInProfileAndPreferencesForm(String newName) {
+        HomePage homePage = new HomePage(driver);
+        homePage.ienterNewNameInProfileAndPreferencesForm(newName);
+
+    }
+
+    @And("I select Home tab from the navigation menu")
+    public void iSelectHomeTabFromTheNavigationMenu() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectHomeTabFromTheNavigationMenu();
+    }
+
+    @Then("I verify that the updated name {string} is displayed on the Homepage")
+    public void iVerifyThatTheUpdatedNameIsDisplayedOnTheHomepage(String updatedName) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isUpdatedNameDisplayedOnHomepage(updatedName),
+                "Updated name is not displayed on the Homepage.");
+    }
+
+    @And("I select {string} theme in profile and preferences form")
+    public void iSelectThemeInProfileAndPreferencesForm(String themeName) {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectThemeInProfileAndPreferencesForm(themeName);
+    }
+
+    @And("I verify that the {string} theme is applied on the Homepage")
+    public void iVerifyThatTheThemeIsAppliedOnTheHomepage(String themeName) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isThemeAppliedOnHomepage(themeName), "Theme is not applied on the Homepage.");
+    }
+
+    @And("I check the {string} checkbox in profile and preferences form")
+    public void iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(String checkboxName) {
+        HomePage homePage = new HomePage(driver);
+        homePage.iCheckTheShowNowPlayingCheckboxInProfileAndPreferencesForm(checkboxName);
+    }
+
+    @Then("I verify that the Now Playing notification is displayed on the Homepage")
+    public void iVerifyThatTheNowPlayingNotificationIsDisplayedOnTheHomepage() {
+
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isNowPlayingNotificationFunctionalityWorking(),
+                "The Now Playing notification permission was NOT successfully granted by the browser.");
+    }
+
+    @And("I check the Confirm before closing Koel checkbox in profile and preferences form")
+    public void iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iCheckTheConfirmBeforeClosingKoelCheckboxInProfileAndPreferencesForm();
+    }
+
+    @Then("I verify that the confirmation window is displayed when attempting to close Koel")
+    public void iVerifyThatTheConfirmationWindowIsDisplayedWhenAttemptingToCloseKoel() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isConfirmationWindowDisplayedOnLogout(),
+                "Confirmation window is not displayed when attempting to close Koel.");
+    }
+
+    @And("I check the Show a translucent, blurred overlay of the current albums art checkbox in profile and preferences form")
+    public void iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iCheckTheShowTranslucentBlurredOverlayCheckboxInProfileAndPreferencesForm();
+    }
+
+    @Then("I verify that the translucent, blurred overlay of the current albums art is displayed on the Homepage")
+    public void iVerifyThatTheTranslucentBlurredOverlayOfTheCurrentAlbumsArtIsDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isTranslucentBlurredOverlayDisplayedOnHomepage(),
+                "Translucent, blurred overlay of the current albums art is not displayed on the Homepage.");
+    }
+
+    @When("I play a song from the Most Played section")
+    public void iPlayASongFromTheMostPlayedSection() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iPlayASongFromTheMostPlayedSection();
+    }
+
+    @And("I select Current Queue tab from the navigation menu")
+    public void iSelectCurrentQueueTabFromTheNavigationMenu() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectCurrentQueueTabFromTheNavigationMenu();
+    }
+
+    @Then("I verify that the song {string} is playing in the Current Queue page")
+    public void iVerifyThatTheCurrentlyPlayedSongIsDisplayedInTheCurrentQueuePage(String expectedSongName) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(
+                homePage.isCurrentlyPlayedSongDisplayedInCurrentQueuePage(expectedSongName),
+                "The playing song in Queue is not '" + expectedSongName + "'");
+    }
+
+    @And("I verify the total number of songs in the Current Queue page is accurate")
+    public void iVerifyTheTotalNumberOfSongsInTheCurrentQueuePageIsAccurate() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isTotalNumberOfSongsInCurrentQueueAccurate(),
+                "The total number of songs in the Current Queue page is not accurate.");
+    }
+
+    @And("I verify the total duration of songs in the Current Queue page is accurate")
+    public void iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.iVerifyTheTotalDurationOfSongsInTheCurrentQueuePageIsAccurate(),
+                "The total duration of songs in the Current Queue page is not accurate.");
+    }
+
+    @And("I verify that ID, Title, Artist, Album, and time details are displayed in the Current Queue page")
+    public void iVerifyThatIDTitleArtistAlbumAndTimeDetailsAreDisplayedInTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSongDetailsDisplayedInCurrentQueuePage(),
+                "ID, Title, Artist, Album, and time details are not displayed in the Current Queue page (or are empty).");
+    }
+
+    @When("I select Album tab from the navigation menu")
+    public void iSelectAlbumTabFromTheNavigationMenu() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectAlbumTabFromTheNavigationMenu();
+    }
+
+    @Then("I am on the Album page")
+    public void iAmOnTheAlbumPage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isOnAlbumPage(), "Not on the Album page.");
+    }
+
+    @And("I double click to play a song from the Album page")
+    public void iDoubleClickToPlayASongFromTheAlbumPage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iDoubleClickToPlayASongFromTheAlbumPage();
+    }
+
+    @Then("I verify that I am navigated to the Current Queue page")
+    public void iVerifyThatIAmNavigatedToTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isOnCurrentQueuePage(), "Not navigated to the Current Queue page.");
+    }
+
+    @When("I select shuffle all songs button")
+    public void iSelectShuffleAllSongsButton() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectShuffleAllSongsButton();
+    }
+
+    @Then("I verify that the songs in the Current Queue page are shuffled")
+    public void iVerifyThatTheSongsInTheCurrentQueuePageAreShuffled() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSongsInCurrentQueueShuffled(),
+                "The songs in the Current Queue page are not shuffled.");
+    }
+
+    @When("I select clear queue button")
+    public void iSelectClearQueueButton() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectClearQueueButton();
+    }
+
+    @Then("I verify that the Current Queue page is cleared")
+    public void iVerifyThatTheCurrentQueuePageIsCleared() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isCurrentQueuePageCleared(),
+                "The Current Queue page is not cleared.");
+    }
+
+    @And("I verify that a No songs queued. How about shuffling all songs?. message appears")
+    public void iVerifyThatANoSongsQueuedMessageAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isNoSongsQueuedMessageDisplayed(),
+                "The 'No songs queued. How about shuffling all songs?' message did not appear.");
+    }
+
+    @When("I select Shuffle all songs link from the message")
+    public void iSelectShuffleAllSongsLinkFromTheMessage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.iSelectShuffleAllSongsLinkFromTheMessage();
+    }
+
+    @Then("I verify that all songs appears in the Current Queue page")
+    public void iVerifyThatAllSongsAppearsInTheCurrentQueuePage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areAllSongsInCurrentQueuePage(),
+                "Not all songs appeared in the Current Queue page.");
+    }
+
+    @And("I verify that the Homepage displays phrases")
+    public void iVerifyThatTheHomepageDisplaysPhrases() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesHomepageDisplayPhrases(),
+                "The Homepage does not display phrases.");
+    }
+
+    @And("I verify that Recently Played songs are displayed on the Homepage")
+    public void iVerifyThatRecentlyPlayedSongsAreDisplayedOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areRecentlyPlayedSongsDisplayedOnHomepage(),
+                "Recently Played songs are not displayed on the Homepage.");
+    }
+
+    @And("I verify that the view all button in Homepage is displayed in the Recently Played section")
+    public void iVerifyThatTheViewAllButtonInHomepageIsDisplayedInRecentlyPlayedSection() {
+        HomePage homePage = new HomePage(driver);
+        // Calling the new robust method we created
+        Assert.assertTrue(homePage.isViewAllButtonInsideRecentlyPlayed(),
+                "The 'View All' button was not found inside the Recently Played section header.");
+    }
+
+    @And("I verify that the Recently Played section has added songs")
+    public void iVerifyThatTheRecentlyPlayedSectionHasAddedSongs() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesRecentlyPlayedSectionHaveAddedSongs(),
+                "The Recently Played section does not have added songs.");
+    }
+
+    @And("I verify that Album names are displayed for the Recently Added songs section on the Homepage")
+    public void iVerifyThatAlbumNamesAreDisplayedForTheRecentlyAddedSongsSectionOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areAlbumNamesDisplayedForRecentlyAddedSongs(),
+                "Album names are not displayed for the Recently Added songs section on the Homepage.");
+    }
+
+    @And("I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage")
+    public void iVerifyThatTheShuffleAndDownloadIconsArePresentForTheRecentlyAddedSongsSectionOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areShuffleAndDownloadIconsPresentForRecentlyAddedSongs(),
+                "Shuffle and Download icons are not present for the Recently Added songs section on the Homepage.");
+    }
+
+    @And("I verify that Search field is present on the Homepage")
+    public void iVerifyThatSearchFieldIsPresentOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isSearchFieldPresentOnHomepage(),
+                "Search field is not present on the Homepage.");
+    }
+
+    @When("I click on the Search field on the Homepage")
+    public void iClickOnTheSearchFieldOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnSearchField();
+    }
+
+    @And("I type F in the Search field")
+    public void iTypeFInTheSearchField() {
+        HomePage homePage = new HomePage(driver);
+        homePage.enterInSearchField("F");
+    }
+
+    @Then("I verify that search results related to {string} are displayed on the Homepage")
+    public void iVerifyThatSearchResultsRelatedToAreDisplayedOnTheHomepage(String searchTerm) {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areSearchResultsRelatedToDisplayedOnHomepage(searchTerm),
+                "Search results related to '" + searchTerm +
+                        "' are not displayed on the Homepage.");
+    }
+
+    @And("I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists")
+    public void iVerifyThatTheMusicPanelIncludesHomeCurrentQueueAllSongsAlbumsAndArtists() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesMusicPanelIncludeAllSections(),
+                "The Music panel does not include Home, Current Queue, All Songs, Albums, and Artists.");
+    }
+
+    @And("I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists")
+    public void iVerifyThatThePlaylistPanelIncludesFavoritesPlaylistRecentlyPlayedPlaylistSmartPlaylistsAndUserCreatedPlaylists() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesPlaylistPanelIncludeAllPlaylists(),
+                "The Playlist panel does not include favorites playlist, Recently played playlist, smart playlists and user created playlists.");
+    }
+
+    @And("I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage")
+    public void iVerifyThatProfileIconLogoutIconAndAboutKoelIconsArePresentOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areProfileLogoutAboutKoelIconsPresent(),
+                "Profile icon, Logout icon, and About Koel icons are not present on the Homepage.");
+    }
+
+    @Then("I verify that profile and preferences form appears")
+    public void iVerifyThatProfileAndPreferencesFormAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.profileSettingsFormAvailable(),
+                "Profile and Preferences form not available.");
+    }
+
+    @When("I click on About Koel icon")
+    public void iClickOnAboutKoelIcon() {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnAboutKoelIcon();
+    }
+
+    @Then("I verify that About Koel modal appears")
+    public void iVerifyThatAboutKoelModalAppears() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isAboutKoelModalDisplayed(),
+                "About Koel modal did not appear.");
+    }
 
     @After
     public void closeBrowser() {
