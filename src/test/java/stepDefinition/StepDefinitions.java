@@ -631,18 +631,14 @@ public class StepDefinitions extends BaseTest {
                 "The Music panel does not include Home, Current Queue, All Songs, Albums, and Artists.");
     }
 
+    @And("I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists")
+    public void iVerifyThatThePlaylistPanelIncludesFavoritesPlaylistRecentlyPlayedPlaylistSmartPlaylistsAndUserCreatedPlaylists() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesPlaylistPanelIncludeAllPlaylists(),
+                "The Playlist panel does not include favorites playlist, Recently played playlist, smart playlists and user created playlists.");
+    }
+
     /*
-     * @And("I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists"
-     * )
-     * public void
-     * iVerifyThatThePlaylistPanelIncludesFavoritesPlaylistRecentlyPlayedPlaylistSmartPlaylistsAndUserCreatedPlaylists
-     * () {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.doesPlaylistPanelIncludeAllPlaylists(),
-     * "The Playlist panel does not include favorites playlist, Recently played playlist, smart playlists and user created playlists."
-     * );
-     * }
-     * 
      * @And("I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage"
      * )
      * public void

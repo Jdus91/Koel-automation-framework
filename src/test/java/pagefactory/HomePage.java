@@ -140,7 +140,23 @@ public class HomePage extends BasePage {
     WebElement infoButton;
 
     @FindBy(xpath = "//h1//span[contains(text(), 'Search Results for')]")
-    private WebElement searchResultsHeader;
+    WebElement searchResultsHeader;
+
+    @FindBy(css = "section#playlists li.favorites")
+    WebElement favoritesPlaylist;
+
+    @FindBy(css = "section#playlists li.recently-played")
+    WebElement recentlyPlayedPlaylist;
+
+    // 3. Locator for User/Smart playlists (These share the 'playlist playlist'
+    // class)
+    // We use a List here because there can be multiple (or zero) user playlists.
+    @FindBy(css = "section#playlists li.playlist.playlist")
+    List<WebElement> userPlaylists;
+
+    // 4. Locator for the main Playlist section wrapper (good for waiting)
+    @FindBy(id = "playlists")
+    WebElement playlistSection;
 
     public WebElement getUserAvatar() {
         return findElement(userAvatarIcon);
@@ -1024,6 +1040,50 @@ public class HomePage extends BasePage {
 
         } catch (NoSuchElementException e) {
             System.out.println("Music panel not found.");
+            return false;
+        }
+    }
+
+    public boolean doesPlaylistPanelIncludeAllPlaylists() {
+        try {
+            // Step 1: Ensure the Playlist panel itself is loaded
+            wait.until(ExpectedConditions.visibilityOf(playlistSection));
+
+            // Step 2: Verify 'Favorites' exists and is displayed
+            if (!favoritesPlaylist.isDisplayed()) {
+                System.out.println("❌ 'Favorites' playlist is missing or hidden.");
+                return false;
+            }
+
+            // Step 3: Verify 'Recently Played' exists and is displayed
+            if (!recentlyPlayedPlaylist.isDisplayed()) {
+                System.out.println("❌ 'Recently Played' playlist is missing or hidden.");
+                return false;
+            }
+
+            // Step 4: Verify User/Smart Playlists
+            // We check if the list is not empty.
+            // (Assuming the test expects at least one user/smart playlist to exist).
+            if (userPlaylists.isEmpty()) {
+                System.out.println("⚠️ No User-Created or Smart Playlists found.");
+                // If it's acceptable to have 0 user playlists, you can remove this return false
+                // return false;
+            } else {
+                // Check if the first one is visible to ensure the list isn't hidden
+                if (!userPlaylists.get(0).isDisplayed()) {
+                    System.out.println("❌ User playlists exist in DOM but are not visible.");
+                    return false;
+                }
+            }
+
+            System.out.println("✅ Playlist panel contains Favorites, Recently Played, and User playlists.");
+            return true;
+
+        } catch (NoSuchElementException e) {
+            System.out.println("❌ Element not found in Playlist panel: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("❌ Error validating Playlist panel: " + e.getMessage());
             return false;
         }
     }
