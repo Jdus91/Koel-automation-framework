@@ -25,19 +25,20 @@ Feature: HomePage
     And I verify that the Recently Played section has added songs
     And I verify that Album names are displayed for the Recently Added songs section on the Homepage
     And I verify that the Shuffle and Download icons are present for the Recently Added songs section on the Homepage
-#     #AC 7 (Search functionality validation)
-#   @Search_Functionality_Validation @AC_7
-#   Scenario: Search Functionality Validation on Homepage
-#     Given I open Login Page
-#     When I enter email "jennifer.de.jesus@testpro.io"
-#     And I enter password "FCVlLOni12!"
-#     And I submit
-#     Then I am logged in
-#     And I select Home tab from the navigation menu
-#     Then I am on the Homepage
-#     And I verify that Search field is present on the Homepage
-#     When I click on the Search field on the Homepage
-#     And I type f in the Search field
+     #AC 7 (Search functionality validation)
+
+  @Search_Functionality_Validation @AC_7
+  Scenario: Search Functionality Validation on Homepage
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    And I verify that Search field is present on the Homepage
+    When I click on the Search field on the Homepage
+#    And I type f in the Search field
 #     Then I verify that search results related to "f" are displayed on the Homepage
 #     #AC 8-10 (Verification of music panel, playlist panel on Homepage)
 #   @Music_and_Playlist_Panels_Verification @AC_8-10

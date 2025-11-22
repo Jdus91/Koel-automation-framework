@@ -596,20 +596,21 @@ public class StepDefinitions extends BaseTest {
         Assert.assertTrue(homePage.areShuffleAndDownloadIconsPresentForRecentlyAddedSongs(),
                 "Shuffle and Download icons are not present for the Recently Added songs section on the Homepage.");
     }
+
+    @And("I verify that Search field is present on the Homepage")
+    public void iVerifyThatSearchFieldIsPresentOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isSearchFieldPresentOnHomepage(),
+                "Search field is not present on the Homepage.");
+    }
+
+    @When("I click on the Search field on the Homepage")
+    public void iClickOnTheSearchFieldOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnSearchField();
+    }
+
     /*
-     * @And("I verify that Search field is present on the Homepage")
-     * public void iVerifyThatSearchFieldIsPresentOnTheHomepage() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.isSearchFieldPresentOnHomepage(),
-     * "Search field is not present on the Homepage.");
-     * }
-     * 
-     * @When("I click on the Search field on the Homepage")
-     * public void iClickOnTheSearchFieldOnTheHomepage() {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.clickOnSearchField();
-     * }
-     * 
      * @And("I type f in the Search field")
      * public void iTypeFInTheSearchField() {
      * HomePage homePage = new HomePage(driver);

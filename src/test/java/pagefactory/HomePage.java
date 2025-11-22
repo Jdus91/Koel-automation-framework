@@ -948,4 +948,17 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean isSearchFieldPresentOnHomepage() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(searchField));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void clickOnSearchField() {
+        click(searchField);
+    }
 }
