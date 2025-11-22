@@ -1000,4 +1000,31 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
+    public boolean doesMusicPanelIncludeAllSections() {
+        try {
+            // Define expected sections
+            List<String> expectedSections = List.of("Home", "Current Queue", "All Songs", "Albums", "Artists");
+
+            // Locate the music panel
+            WebElement musicPanel = driver.findElement(By.cssSelector("ul[class='menu']"));
+
+            // Check for each expected section
+            for (String section : expectedSections) {
+                By sectionLocator = By.xpath(".//a[normalize-space()='" + section + "']");
+                List<WebElement> elements = musicPanel.findElements(sectionLocator);
+
+                if (elements.isEmpty() || !elements.get(0).isDisplayed()) {
+                    System.out.println("Missing or hidden section in Music panel: " + section);
+                    return false;
+                }
+            }
+
+            return true;
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Music panel not found.");
+            return false;
+        }
+    }
 }

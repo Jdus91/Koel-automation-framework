@@ -40,19 +40,20 @@ Feature: HomePage
     When I click on the Search field on the Homepage
     And I type F in the Search field
     Then I verify that search results related to "F" are displayed on the Homepage
-#     #AC 8-10 (Verification of music panel, playlist panel on Homepage)
-#   @Music_and_Playlist_Panels_Verification @AC_8-10
-#   Scenario: Verification of Music Panel, Playlist Panel, and Icons on Homepage
-#     Given I open Login Page
-#     When I enter email "jennifer.de.jesus@testpro.io"
-#     And I enter password "FCVlLOni12!"
-#     And I submit
-#     Then I am logged in
-#     And I select Home tab from the navigation menu
-#     Then I am on the Homepage
-#     And I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists
-#     And I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists
-#     #AC 11 (Verification of Profile, Logout, About Koel links on Homepage)
+     #AC 8-10 (Verification of music panel, playlist panel on Homepage)
+
+  @Music_and_Playlist_Panels_Verification @AC_8-10
+  Scenario: Verification of Music Panel, Playlist Panel, and Icons on Homepage
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    And I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists
+     #And I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists
+    #AC 11 (Verification of Profile, Logout, About Koel links on Homepage)
 #   @Profile_Logout_AboutKoel_Icons_Verification @AC_11
 #   Scenario: Verification of Profile, Logout, and About Koel Icons on Homepage
 #     Given I open Login Page

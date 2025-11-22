@@ -624,17 +624,14 @@ public class StepDefinitions extends BaseTest {
                         "' are not displayed on the Homepage.");
     }
 
+    @And("I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists")
+    public void iVerifyThatTheMusicPanelIncludesHomeCurrentQueueAllSongsAlbumsAndArtists() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.doesMusicPanelIncludeAllSections(),
+                "The Music panel does not include Home, Current Queue, All Songs, Albums, and Artists.");
+    }
+
     /*
-     * @And("I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists"
-     * )
-     * public void
-     * iVerifyThatTheMusicPanelIncludesHomeCurrentQueueAllSongsAlbumsAndArtists() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.doesMusicPanelIncludeAllSections(),
-     * "The Music panel does not include Home, Current Queue, All Songs, Albums, and Artists."
-     * );
-     * }
-     * 
      * @And("I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists"
      * )
      * public void
