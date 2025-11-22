@@ -961,4 +961,10 @@ public class HomePage extends BasePage {
     public void clickOnSearchField() {
         click(searchField);
     }
+
+    public void enterInSearchField(String text) {
+        WebElement searchInput = findElement(searchField);
+        searchInput.clear();
+        searchInput.sendKeys(text);
+    }
 }

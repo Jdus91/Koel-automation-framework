@@ -610,13 +610,13 @@ public class StepDefinitions extends BaseTest {
         homePage.clickOnSearchField();
     }
 
+    @And("I type f in the Search field")
+    public void iTypeFInTheSearchField() {
+        HomePage homePage = new HomePage(driver);
+        homePage.enterInSearchField("f");
+    }
+
     /*
-     * @And("I type f in the Search field")
-     * public void iTypeFInTheSearchField() {
-     * HomePage homePage = new HomePage(driver);
-     * homePage.enterInSearchField("f");
-     * }
-     * 
      * @Then("I verify that search results related to {string} are displayed on the Homepage"
      * )
      * public void iVerifyThatSearchResultsRelatedToAreDisplayedOnTheHomepage(String
