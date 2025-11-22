@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.testng:testng:7.6.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.5.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:6.0.1'
+
+    //Cucumber
+    implementation 'io.cucumber:cucumber-testng:7.30.0'
+    implementation 'io.cucumber:cucumber-core:7.30.0'
+    implementation 'io.cucumber:cucumber-java:7.30.0'
+    implementation 'io.cucumber:gherkin:35.1.0'
+}
+
+test {
+    useTestNG() {
+        suites "src/test/resources/Cucumber.xml"
+        systemProperty "browser", System.getProperty("browser")
+    }
+
+    // Add these lines for remote debugging
+    debugOptions {
+        enabled = false  // Set to 'true' to enable debugging
+        // Set the port to listen on (5005 is the default)
+        port = 5005
+        // 'true' means it waits for the debugger before running tests
+        suspend = false 
+    }
+
+}
