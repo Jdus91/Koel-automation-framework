@@ -638,17 +638,14 @@ public class StepDefinitions extends BaseTest {
                 "The Playlist panel does not include favorites playlist, Recently played playlist, smart playlists and user created playlists.");
     }
 
+    @And("I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage")
+    public void iVerifyThatProfileIconLogoutIconAndAboutKoelIconsArePresentOnTheHomepage() {
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.areProfileLogoutAboutKoelIconsPresent(),
+                "Profile icon, Logout icon, and About Koel icons are not present on the Homepage.");
+    }
+
     /*
-     * @And("I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage"
-     * )
-     * public void
-     * iVerifyThatProfileIconLogoutIconAndAboutKoelIconsArePresentOnTheHomepage() {
-     * HomePage homePage = new HomePage(driver);
-     * Assert.assertTrue(homePage.areProfileLogoutAboutKoelIconsPresent(),
-     * "Profile icon, Logout icon, and About Koel icons are not present on the Homepage."
-     * );
-     * }
-     * 
      * @Then("I verify that profile and preferences form appears")
      * public void iVerifyThatProfileAndPreferencesFormAppears() {
      * HomePage homePage = new HomePage(driver);

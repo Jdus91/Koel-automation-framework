@@ -54,16 +54,17 @@ Feature: HomePage
     And I verify that the Music panel includes Home, Current Queue, All Songs, Albums, and Artists
     And I verify that the Playlist panel includes Favorites playlist, Recently played playlist, Smart playlists and user created playlists
     #AC 11 (Verification of Profile, Logout, About Koel links on Homepage)
-#   @Profile_Logout_AboutKoel_Icons_Verification @AC_11
-#   Scenario: Verification of Profile, Logout, and About Koel Icons on Homepage
-#     Given I open Login Page
-#     When I enter email "jennifer.de.jesus@testpro.io"
-#     And I enter password "FCVlLOni12!"
-#     And I submit
-#     Then I am logged in
-#     And I select Home tab from the navigation menu
-#     Then I am on the Homepage
-#     And I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage
+
+  @Profile_Logout_AboutKoel_Icons_Verification @AC_11
+  Scenario: Verification of Profile, Logout, and About Koel Icons on Homepage
+    Given I open Login Page
+    When I enter email "jennifer.de.jesus@testpro.io"
+    And I enter password "FCVlLOni12!"
+    And I submit
+    Then I am logged in
+    And I select Home tab from the navigation menu
+    Then I am on the Homepage
+    And I verify that Profile icon, Logout icon, and About Koel icons are present on the Homepage
 #     When profile icon is available
 #     And I click profile icon
 #     Then I verify that profile and preferences form appears

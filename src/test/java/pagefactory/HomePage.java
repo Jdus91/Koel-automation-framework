@@ -35,6 +35,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "a[data-testid='view-profile-link']")
     WebElement profileLink;
 
+    @FindBy(css = "button[title='About Koel']")
+    WebElement aboutKoelIcon;
+
     @FindBy(css = "header, .header, .app-header")
     WebElement headerBar;
 
@@ -1084,6 +1087,38 @@ public class HomePage extends BasePage {
             return false;
         } catch (Exception e) {
             System.out.println("❌ Error validating Playlist panel: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean areProfileLogoutAboutKoelIconsPresent() {
+        try {
+            // Check Profile Icon
+            if (!userAvatarIcon.isDisplayed()) {
+                System.out.println("❌ Profile icon is missing or hidden.");
+                return false;
+            }
+
+            // Check Logout Icon
+            if (!logoutButton.isDisplayed()) {
+                System.out.println("❌ Logout icon is missing or hidden.");
+                return false;
+            }
+
+            // Check About Koel Icon
+            if (!aboutKoelIcon.isDisplayed()) {
+                System.out.println("❌ About Koel icon is missing or hidden.");
+                return false;
+            }
+
+            System.out.println("✅ Profile, Logout, and About Koel icons are present.");
+            return true;
+
+        } catch (NoSuchElementException e) {
+            System.out.println("❌ One or more icons not found: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("❌ Error validating icons: " + e.getMessage());
             return false;
         }
     }
